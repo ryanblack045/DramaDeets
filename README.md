@@ -13,7 +13,6 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -197,7 +196,7 @@ Stretch Goals
 [contributors-url]: https://github.com/ryanblack045/DramaDeets/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
 [forks-url]: https://github.com/ryanblack045/DramaDeets/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/ryanblack045/DramaDeets.svg?style=for-the-badge
 [stars-url]: https://github.com/ryanblack045/DramaDeets/stargazers
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/ryanblack045/
