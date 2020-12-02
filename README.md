@@ -19,24 +19,20 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href=>
+    <img src="DramaDeets/react-app/src/assets/DramaDeetsLogo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Drama Deets!</h3>
+  <h3 align="center">Thank you for exploring Drama Deets!</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/ryanblack045/DramaDeets.svg"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href=>View Demo</a>
     ·
   </p>
 </p>
 
-
+---
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -61,7 +57,7 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
-       <li><a href="#mvp">MVP</a></li>
+    <li><a href="#mvp">MVP</a></li>
   </ol>
 </details>
 
