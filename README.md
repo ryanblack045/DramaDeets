@@ -51,8 +51,8 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
     <li><a href="#mvp">MVP</a></li>
     <li><a href="#front-end-routes">Front End Routes</a></li>
     <li><a href="#back-end-routes">Back End Routes</a></li>
-    <li><a href="#redux-architecture">Back End Routes</a></li>
-    <li><a href="#Schema">Back End Routes</a></li>
+    <li><a href="#redux-architecture">Redux Architecture</a></li>
+    <li><a href="#Schema">Schema</a></li>
   </ol>
 </details>
 
