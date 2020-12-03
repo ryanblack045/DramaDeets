@@ -14,9 +14,6 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 [![Stargazers][stars-shield]][stars-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
-<!-- PROJECT LOGO -->
     
     ## [![DramaDeets](./react-app/src/assets/DramaDeetsLogo.png)]
 
