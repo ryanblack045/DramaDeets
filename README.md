@@ -220,7 +220,7 @@ Stretch Goals
 
 ## **Schema**
 
-![Database Schema](./react-app/src/assets/schema.png)
+![Database Schema](react-app/src/assets/Schema.png)
 
 
 
