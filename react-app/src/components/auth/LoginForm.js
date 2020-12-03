@@ -4,8 +4,8 @@ import { login } from "../../services/auth";
 
 const LoginForm = ({ authenticated, setAuthenticated }) => {
   const [errors, setErrors] = useState([]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("demo@aa.io");
+  const [password, setPassword] = useState("password");
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
         <input
           name="email"
           type="text"
-          placeholder="Email"
+          placeholder="demo@aa.io"
           value={email}
           onChange={updateEmail}
         />
@@ -51,7 +51,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
         <input
           name="password"
           type="password"
-          placeholder="Password"
+          placeholder="password"
           value={password}
           onChange={updatePassword}
         />
