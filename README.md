@@ -19,14 +19,14 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src=./react-app/src/assets/DramaDeetsLogo.png width="80" height="80">
+    
+    ## [![DramaDeets](./react-app/src/assets/DramaDeetsLogo.png)]
 
   <h3 align="center">Thank you for exploring Drama Deets!</h3>
 
   <p align="center">
     <br />
     <a href=>View Demo</a>
-    ·
   </p>
 </p>
 
