@@ -6,7 +6,6 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 *** I'm using markdown "reference style" links for readability.
 *** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
 *** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 [![Contributors][contributors-shield]][contributors-url]
@@ -14,14 +13,16 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 [![Stargazers][stars-shield]][stars-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+<p align="center">
     
-   ![alt text](react-app/src/assets/DramaDeetsLogo.png)
+ <img src="react-app/src/assets/DramaDeetsLogo.png">
 
   <h3 align="center">Thank you for exploring Drama Deets!</h3>
 
   <p align="center">
     <a href=>View Demo</a>
   </p>
+</p>
 
 ---
 
@@ -45,10 +46,13 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
     <li><a href="#mvp">MVP</a></li>
+    <li><a href="#front-end-routes">Front End Routes</a></li>
+    <li><a href="#back-end-routes">Back End Routes</a></li>
+    <li><a href="#redux-architecture">Redux Architecture</a></li>
+    <li><a href="#Schema">Schema</a></li>
   </ol>
 </details>
 
@@ -133,9 +137,9 @@ Contributions are what make the open source community such an amazing place to b
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Ryan Black - RyanBlack045@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/ryanblack045/DramaDeets](https://github.com/ryanblack045/DramaDeets)
 
 
 ## Acknowledgements
@@ -168,38 +172,6 @@ Stretch Goals
   * Have a report button on reviews so admin can review if "proof" of review is real
   * Users can search for businesses
   * User must send "proof image" that they did business with the business they reviewed 
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/ryanblack045/DramaDeets.svg?style=for-the-badge
-[contributors-url]: https://github.com/ryanblack045/DramaDeets/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ryanblack045/DramaDeets.svg?style=for-the-badge
-[forks-url]: https://github.com/ryanblack045/DramaDeets/network/members
-[stars-shield]: https://img.shields.io/github/stars/ryanblack045/DramaDeets.svg?style=for-the-badge
-[stars-url]: https://github.com/ryanblack045/DramaDeets/stargazers
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/ryanblack045/
-[product-screenshot]: images/screenshot.png
-
-Check out the app: [Live Demo]()
-
-## Table of Contents
-
-1. [Technologies Used](#technologies-used)
-2. [Feature List](#feature-list)
-3. [MVP](#mvp)
-4. [Front End Routes](#front-end-routes)
-5. [Back End Routes](#back-end-routes)
-6. [Redux Architechture](#redux-architecture
-7. [Database Schema](#database-schema)
-
----
-
-
 
 ---
 
@@ -248,4 +220,23 @@ Check out the app: [Live Demo]()
 
 ## **Schema**
 
-![Database Schema]()
+![Database Schema](react-app/src/assets/schema.png)
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/ryanblack045/DramaDeets.svg?style=for-the-badge
+[contributors-url]: https://github.com/ryanblack045/DramaDeets/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ryanblack045/DramaDeets.svg?style=for-the-badge
+[forks-url]: https://github.com/ryanblack045/DramaDeets/network/members
+[stars-shield]: https://img.shields.io/github/stars/ryanblack045/DramaDeets.svg?style=for-the-badge
+[stars-url]: https://github.com/ryanblack045/DramaDeets/stargazers
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/ryanblack045/
+[product-screenshot]: images/screenshot.png
+
+
+
+
+
