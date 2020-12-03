@@ -137,9 +137,9 @@ Contributions are what make the open source community such an amazing place to b
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Ryan Black - RyanBlack045@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/ryanblack045/DramaDeets](https://github.com/ryanblack045/DramaDeets)
 
 
 ## Acknowledgements
@@ -236,7 +236,6 @@ Stretch Goals
 [linkedin-url]: https://www.linkedin.com/in/ryanblack045/
 [product-screenshot]: images/screenshot.png
 
-Check out the app: [Live Demo]()
 
 
 
