@@ -5,28 +5,30 @@ class Business(db.Model):
   __tablename__ = 'businesses'
 
   id = db.Column(db.Integer, primary_key = True)
-  username = db.Column(db.String(40), nullable = False, unique = True)
-  email = db.Column(db.String(255), nullable = False, unique = True)
-  hashed_password = db.Column(db.String(255), nullable = False)
+  user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  name = db.Column(db.String(100), nullable = False, unique = True)
+  description = db.Column(db.Text, nullable = False)
+  lat = db.Column(db.String(20), nullable=False)
+  lng = db.Column(db.String(20), nullable=False)
+  address = db.Column(db.String(100), nullable=False)
+  state = db.Column(db.String(15), nullable=False)
+  zipcode = db.Column(db.String(10), nullable=False)
+  imgURL = db.Column(db.String, nullable=False)
 
-
-  @property
-  def password(self):
-    return self.hashed_password
-
-
-  @password.setter
-  def password(self, password):
-    self.hashed_password = generate_password_hash(password)
-
-
-  def check_password(self, password):
-    return check_password_hash(self.password, password)
-
+  types = db.relationship('BusinessType', back_populates='business', lazy='joined')
+  judgements = db.relationship('Judgement', back_populates='business', lazy='joined')
+  user = db.relationship('User', back_populates='businesses', lazy='joined')
 
   def to_dict(self):
     return {
       "id": self.id,
-      "username": self.username,
-      "email": self.email
+      "user_id": self.user_id,
+      "name": self.name,
+      "description": self.description,
+      "lat": self.lat,
+      "lng": self.lng,
+      "address": self.address,
+      "state": self.state,
+      "zipcode": self.zipcode,
+      "imgURL": self.imgURL
     }
