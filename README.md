@@ -1,4 +1,4 @@
-# DramaDeets
+# Drama Deets
 Drama Deets is a platform for artists to anonymously share their reviews of art related businesses/classes/instructors.
 
 <!-- PROJECT SHIELDS -->
