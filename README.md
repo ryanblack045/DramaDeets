@@ -208,13 +208,14 @@ Stretch Goals
 
 ## **Redux Architecture**
 * Entity
- * ?
+    * Backend info needed
 * Session
- * current user
+    * current user
+    * current post etc
 * UI
- * maintains UI (modal show etc)
+    * maintains UI (modal show etc)
 * Errors
- * any errors made by fetch calls/login etc
+    * any errors made by fetch calls/login etc
 
 ---
 
