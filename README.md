@@ -188,7 +188,7 @@ Stretch Goals
 ---
 
 ## **Back End Routes**
- * users
+* users
   * GET api/users/:id -> get a single users info 
   * POST api/users => create a new user (returns userId and token)
   * POST api/users/token => verifies user login and returns token for the user
