@@ -28,5 +28,5 @@ def seed_businessTypes():
 
 
 def undo_businessTypes():
-    db.session.execute('TRUNCATE businessTypes;')
+    db.session.execute('TRUNCATE "businessTypes" RESTART IDENTITY CASCADE;')
     db.session.commit()

@@ -32,5 +32,18 @@ class User(db.Model, UserMixin):
     return {
       "id": self.id,
       "username": self.username,
-      "email": self.email
+      "email": self.email,
+      "reviews": [review.to_dict() for review in self.reviews]
     }
+      # "reviews": {
+      #   "id": self.reviews.id,
+      #   "user_id": self.reviews.user_id,
+      #   "business_id": self.reviews.business_id,
+      #   "title": self.reviews.title,
+      #   "body": self.reviews.body,
+      #   "rating": self.reviews.rating,
+      #   "imgURL": self.img_URL
+      # },
+
+      #  "businesses": self.businesses,
+      #  "judgements": self.judgements

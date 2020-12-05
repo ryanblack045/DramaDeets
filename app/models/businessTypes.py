@@ -7,7 +7,7 @@ class BusinessType(db.Model):
   type_id = db.Column(db.Integer, db.ForeignKey("types.id"), nullable = False)
   business_id = db.Column(db.Integer, db.ForeignKey("businesses.id"), nullable=False)
 
-  type = db.relationship("Type")
+  type = db.relationship("Type", back_populates="businessTypes")
   business = db.relationship("Business", back_populates="types")
 
   def to_dict(self):

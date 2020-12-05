@@ -23,5 +23,5 @@ def seed_types():
 
 
 def undo_types():
-    db.session.execute('TRUNCATE types;')
+    db.session.execute('TRUNCATE types RESTART IDENTITY CASCADE;')
     db.session.commit()

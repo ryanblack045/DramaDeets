@@ -1,10 +1,8 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
-from app.forms import LoginForm
-from app.forms import SignUpForm
-from flask_login import current_user, login_user, logout_user, login_required
+from app.models import Business, db
 
-auth_routes = Blueprint('auth', __name__)
+
+business_routes = Blueprint('business', __name__)
 
 
 def validation_errors_to_error_messages(validation_errors):
@@ -18,13 +16,10 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@auth_routes.route('/')
-def authenticate():
-    """
-    Authenticates a user.
-    """
-    if current_user.is_authenticated:
-        return current_user.to_dict()
+@business_routes.route('/')
+def fetchBusinesses():
+    business = Business.query.filter(User.email == form.data['email']).first()
+        return business.to_dict()
     return {'errors': ['Unauthorized']}, 401
 
 

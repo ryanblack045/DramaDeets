@@ -10,14 +10,15 @@ class Business(db.Model):
   description = db.Column(db.Text, nullable = False)
   lat = db.Column(db.String(20), nullable=False)
   lng = db.Column(db.String(20), nullable=False)
-  address = db.Column(db.String(100), nullable=False)
+  address = db.Column(db.String(100), nullable=True)
   state = db.Column(db.String(15), nullable=False)
   zipcode = db.Column(db.String(10), nullable=False)
   imgURL = db.Column(db.String, nullable=False)
 
-  types = db.relationship('BusinessType', back_populates='business', lazy='joined')
-  judgements = db.relationship('Judgement', back_populates='business', lazy='joined')
-  user = db.relationship('User', back_populates='businesses', lazy='joined')
+  types = db.relationship('BusinessType', back_populates='business',) # lazy='joined')
+  judgements = db.relationship('Judgement', back_populates='business',) #  lazy='joined')
+  user = db.relationship('User', back_populates='businesses',) #lazy='joined')
+  reviews = db.relationship('Review', back_populates='business', ) #lazy='joined')
 
   def to_dict(self):
     return {

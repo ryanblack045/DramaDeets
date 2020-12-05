@@ -1,7 +1,7 @@
 from .db import db
 
 
-class Judgment(db.Model):
+class Judgement(db.Model):
   __tablename__ = 'judgements'
 
   id = db.Column(db.Integer, primary_key = True)
@@ -11,9 +11,9 @@ class Judgment(db.Model):
   recommend = db.Column(db.Boolean)
   avoid = db.Column(db.Boolean)
 
-  user = db.relationship('User', back_populates='judgements', lazy='joined')
-  review = db.relationship('Review', back_populates='judgements', lazy='joined')
-  business = db.relationship('Business', back_populates='judgements', lazy='joined')
+  user = db.relationship('User', back_populates='judgements',) #lazy='joined')
+  review = db.relationship('Review', back_populates='judgements',) #lazy='joined')
+  business = db.relationship('Business', back_populates='judgements',) # lazy='joined')
 
   def to_dict(self):
     return {
