@@ -1,15 +1,10 @@
-export const fetchBusinesses = async (email, password) => {
-  const response = await fetch('/api/auth/login', {
-    method: 'POST',
+export const fetchBusinesses = async () => {
+  const response = await fetch('/api/business/', {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      email,
-      password
-    })
   });
-  const user = await response.json();
-  console.log(user)
-  return user
+  const business = await response.json();
+  console.log(business)
+  return business
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { login } from "../../services/auth";
+import { fetchBusinesses } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from '../../store/actions/session'
 
@@ -16,6 +17,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
     if (!user.errors) {
       dispatch(setCurrentUser(user))
       setAuthenticated(true);
+      const businesses = await fetchBusinesses()
     } else {
       setErrors(user.errors);
     }
