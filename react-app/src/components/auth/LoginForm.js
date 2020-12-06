@@ -4,6 +4,7 @@ import { login } from "../../services/auth";
 import { fetchBusinesses } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from '../../store/actions/session'
+import { getAllBusinesses } from '../../store/actions/entities'
 
 const LoginForm = ({ authenticated, setAuthenticated }) => {
   const [errors, setErrors] = useState([]);
@@ -18,6 +19,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
       dispatch(setCurrentUser(user))
       setAuthenticated(true);
       const businesses = await fetchBusinesses()
+      dispatch(getAllBusinesses(businesses))
     } else {
       setErrors(user.errors);
     }

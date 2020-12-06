@@ -7,7 +7,7 @@ export default function reducer(state = {}, action) {
     case SET_CURRENT_USER:
       newState["currentUser"] = {
         id: action.user.id,
-        userName: action.user.userName,
+        userName: action.user.username,
         reviews: action.user.reviews
       }
       return newState
