@@ -5,16 +5,26 @@ export default function reducer(state = {}, action) {
   let newState = Object.assign({}, state)
   switch (action.type) {
     case GET_ALL_BUSINESSES:
-      newState =
-         action.business
-        // id: action.business.id,
-        // description: action.business.description,
-        // lat: action.business.lat,
-        // lng: action.business.lng,
-        // address: action.business.address,
-        // state: action.business.state,
-        // zipcode: action.business.zipcode,
-        // imgURL: action.business.imgURL
+      // const businesses = action.business
+      newState["businesses"] = { byId: {}, allId: [] }
+      let mappedData = action.business.map(each => {
+        return {
+          id: each.id,
+          description: each.description,
+          lat: each.lat,
+          lng: each.lng,
+          address: each.address,
+          state: each.state,
+          zipcode: each.zipcode,
+          imgURL: each.imgURL
+        }
+
+      })
+      mappedData.forEach(each => {
+        newState.businesses.byId[each.id] = { ...each }
+        newState.businesses.allId=[...newState.businesses.allId, each.id]
+     })
+
       return newState
     default:
       return state;

@@ -1,0 +1,57 @@
+.carousel {
+  position: ;
+  margin-top: -65px;
+  height: 101vh;
+  width: 100vw;
+  background-size: cover ;
+  background-color: black;
+  background-position: center top;
+  background-repeat: no-repeat;
+  transition: all 3s ease-in-out;
+  border-right: 1px solid black;
+  margin-bottom: -10px;
+  /* top: 0;
+  left: 0; */
+}
+
+
+
+.default {
+  background-image: url("../assets/splash.png")
+}
+
+.home {
+  background-image: url("../assets/splash.png")
+}
+
+.photographer {
+  background-image: url("../assets/photographer.png")
+}
+
+.Azir {
+  background-image: url("https://tft-buildmanager.s3.amazonaws.com/Champions/Azir.jpg");
+}
+
+.Teemo {
+  background-image: url("https://tft-buildmanager.s3.amazonaws.com/Champions/Teemo.jpg");
+}
+
+.Lux {
+  background-image: url("https://tft-buildmanager.s3.amazonaws.com/Champions/Lux.jpg");
+}
+
+.Acting {
+  background-image: url("../assets/defaultHome.png");
+}
+
+.Kindred {
+  background-image: url("https://tft-buildmanager.s3.amazonaws.com/Champions/Kindred.jpg");
+}
+
+.Yone {
+  background-image: url("https://tft-buildmanager.s3.amazonaws.com/Champions/Yone.jpg");
+}
+
+.Akali {
+  background-image: url("https://tft-buildmanager.s3.amazonaws.com/Champions/Akali.jpg");
+}

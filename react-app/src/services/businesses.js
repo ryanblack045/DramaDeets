@@ -6,5 +6,5 @@ export const fetchBusinesses = async () => {
   });
   const business = await response.json();
   console.log(business)
-  return business
+  return business.businesses
 }

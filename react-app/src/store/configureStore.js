@@ -48,7 +48,7 @@ const store = createStore(
 store.subscribe(() => {
   saveState({
     // entities: ,
-    entities: store.getState().session,
+    entities: store.getState().entities,
     session: store.getState().session,
     // ui: ,
     // errors ,

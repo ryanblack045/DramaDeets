@@ -16,14 +16,24 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
     e.preventDefault();
     const user = await login(email, password);
     if (!user.errors) {
-      dispatch(setCurrentUser(user))
+      console.log("before")
       setAuthenticated(true);
+      console.log("after")
+      dispatch(setCurrentUser(user))
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
     } else {
       setErrors(user.errors);
     }
-  };
+    if (authenticated) {
+      console.log("inhere")
+      return <Redirect to="/" />;
+    }
+
+    if (!authenticated) {
+      console.log("nope")
+    }
+};
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -33,9 +43,6 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
     setPassword(e.target.value);
   };
 
-  if (authenticated) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <form onSubmit={onLogin}>

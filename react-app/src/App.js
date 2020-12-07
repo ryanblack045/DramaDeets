@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Theme from './styles/Theme';
 import { CssBaseline } from "@material-ui/core";
 import LoginForm from "./components/auth/LoginForm";
+import Splash from "./components/Splash"
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -34,7 +35,7 @@ function App() {
         <BrowserRouter>
           <NavBar setAuthenticated={setAuthenticated} authenticated={authenticated} />
           <Route path="/login" exact={true}>
-            <LoginForm
+            <Splash
               authenticated={authenticated}
               setAuthenticated={setAuthenticated}
             />
