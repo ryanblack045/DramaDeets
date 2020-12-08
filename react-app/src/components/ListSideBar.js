@@ -10,6 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import { PhotoCamera, Face, LocationCity, MovieFilter } from '@material-ui/icons';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,8 @@ export default function ListSideBar() {
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
+
+
   const businessTypes = useSelector((state) => (state.entities.businesses.byId))
 
   function typeFinder(id) {

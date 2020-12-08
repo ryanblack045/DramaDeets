@@ -1,7 +1,7 @@
 """reconfigured
 
 Revision ID: 5355fc118132
-Revises: 
+Revises:
 Create Date: 2020-12-04 11:14:16.158716
 
 """
@@ -41,6 +41,7 @@ def upgrade():
     sa.Column('lat', sa.String(length=20), nullable=False),
     sa.Column('lng', sa.String(length=20), nullable=False),
     sa.Column('address', sa.String(length=100), nullable=True),
+    sa.Column('city', sa.String(length=50), nullable=False),
     sa.Column('state', sa.String(length=15), nullable=False),
     sa.Column('zipcode', sa.String(length=10), nullable=False),
     sa.Column('imgURL', sa.String(), nullable=False),

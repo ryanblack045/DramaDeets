@@ -8,7 +8,11 @@ def seed_businessTypes():
     stephanieType = BusinessType(type_id=1, business_id=3)
     krakowerType = BusinessType(type_id=3, business_id=1)
     krakowerType2 = BusinessType(type_id=4, business_id=1)
-    barrowType= BusinessType(type_id=4, business_id=2)
+    krakowerType3 = BusinessType(type_id=2, business_id=1)
+    barrowType = BusinessType(type_id=4, business_id=2)
+    barrowType2 = BusinessType(type_id=2, business_id=2)
+    barrowType3 = BusinessType(type_id=3, business_id=2)
+
 
 
 
@@ -17,7 +21,10 @@ def seed_businessTypes():
     db.session.add(stephanieType)
     db.session.add(krakowerType)
     db.session.add(krakowerType2)
+    db.session.add(krakowerType3)
     db.session.add(barrowType)
+    db.session.add(barrowType2)
+    db.session.add(barrowType3)
 
     db.session.commit()
 
