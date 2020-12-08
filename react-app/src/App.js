@@ -5,6 +5,7 @@ import { CssBaseline } from "@material-ui/core";
 import LoginForm from "./components/auth/LoginForm";
 import Splash from "./components/Splash"
 import SignUpForm from "./components/auth/SignUpForm";
+import ListSideBar from "./components/ListSideBar"
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
@@ -50,7 +51,7 @@ function App() {
             <User />
           </ProtectedRoute>
           <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-            <h1>My Home Page</h1>
+            <ListSideBar />
           </ProtectedRoute>
         </BrowserRouter>
       </Theme>

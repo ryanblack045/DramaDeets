@@ -11,12 +11,16 @@ export default function reducer(state = {}, action) {
         return {
           id: each.id,
           description: each.description,
+          name: each.name,
           lat: each.lat,
           lng: each.lng,
           address: each.address,
+          city: each.city,
           state: each.state,
           zipcode: each.zipcode,
-          imgURL: each.imgURL
+          imgURL: each.imgURL,
+          reviews: each.reviews,
+          types: each.types
         }
 
       })

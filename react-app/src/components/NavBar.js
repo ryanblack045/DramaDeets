@@ -86,14 +86,19 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   const signupModal = (
     <div style={modalStyle} border="none" className={classes.paper}>
       <SignUpForm className={classes.signUp} setAuthenticated={setAuthenticated}
-              authenticated={authenticated} />
+        authenticated={authenticated}
+        open={open}
+        setOpen={setOpen}/>
     </div>
   );
 
   const loginModal = (
     <div style={modalStyle} border="none" className={classes.paper}>
       <LoginForm setAuthenticated={setAuthenticated}
-              authenticated={authenticated} />
+        authenticated={authenticated}
+        open2={open2}
+        setOpen2={setOpen2}
+        />
     </div>
   );
 
@@ -106,11 +111,13 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
               <NavLink to="/" exact={true} activeClassName="active">
                 Home
               </NavLink>
-              : null}
+              : false}
           </Typography>
+          {!authenticated ?
             <Button background="blue" color="secondary" className={classes.signup} onClick={handleOpen}>
-                Sign Up
+              Sign Up
             </Button>
+            : true}
             <Modal
               open={open}
               onClose={handleClose}
@@ -121,26 +128,29 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
             >
               {signupModal}
             </Modal>
+
           {authenticated ?
-            <LogoutButton authenticated={authenticated} setAuthenticated={setAuthenticated}/>
+            <LogoutButton setAuthenticated={setAuthenticated}/>
             :
-            <>
              <Button className={classes.login} onClick={handleOpen2} >
-              Login
+                Login
               </Button>
-                <Modal
-                  open={open2}
-                  onClose={handleClose2}
-                  setAuthenticated={setAuthenticated}
-                  authenticated={authenticated}
-                  className={classes.modal1}
-                  aria-labelledby="simple-modal-title2"
-                  aria-describedby="simple-modal-description2"
-                >
-                  {loginModal}
-              </Modal>
-              </>
-             }
+          }
+
+            <Modal
+              open={open2}
+              onClose={handleClose2}
+              setAuthenticated={setAuthenticated}
+              authenticated={authenticated}
+              className={classes.modal1}
+              aria-labelledby="simple-modal-title2"
+              aria-describedby="simple-modal-description2"
+            >
+              {loginModal}
+            </Modal>
+
+
+
 
         </Toolbar>
       </AppBar>

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../services/auth';
+import { fetchBusinesses } from "../../services/businesses";
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentUser } from '../../store/actions/session'
+import { getAllBusinesses } from '../../store/actions/entities'
 
-const SignUpForm = ({authenticated, setAuthenticated}) => {
+const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const dispatch = useDispatch();
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -14,6 +19,10 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
       const user = await signUp(username, email, password);
       if (!user.errors) {
         setAuthenticated(true);
+        dispatch(setCurrentUser(user))
+        const businesses = await fetchBusinesses()
+        dispatch(getAllBusinesses(businesses))
+        setOpen(false)
       }
     }
   };

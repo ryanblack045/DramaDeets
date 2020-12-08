@@ -1,27 +1,28 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from 'react-router-dom';
 import { login } from "../../services/auth";
 import { fetchBusinesses } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 
-const LoginForm = ({ authenticated, setAuthenticated }) => {
+const LoginForm = ({ authenticated, setAuthenticated, open2, setOpen2}) => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('demo@aa.io');
   const [password, setPassword] = useState('password');
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const onLogin = async (e) => {
     e.preventDefault();
     const user = await login(email, password);
     if (!user.errors) {
-      console.log("before")
       setAuthenticated(true);
-      console.log("after")
       dispatch(setCurrentUser(user))
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
+      setOpen2(false)
+      history.push("/")
     } else {
       setErrors(user.errors);
     }
@@ -45,6 +46,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
 
 
   return (
+
     <form onSubmit={onLogin}>
       <div>
         {errors.map((error) => (
