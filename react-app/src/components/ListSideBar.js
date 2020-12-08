@@ -7,12 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+import { PhotoCamera, Face, LocationCity, MovieFilter } from '@material-ui/icons';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
+  primeIcons: {
+    color: "blue"
+  }
 }));
 
 export default function ListSideBar() {
@@ -99,7 +99,7 @@ export default function ListSideBar() {
     >
       <ListItem button onClick={handleClick2}>
         <ListItemIcon>
-          <SendIcon />
+          <MovieFilter className={classes.primeIcons}/>
         </ListItemIcon>
         <ListItemText primary="On Camera Classes" />
         {open2 ? <ExpandLess /> : <ExpandMore />}
@@ -110,7 +110,9 @@ export default function ListSideBar() {
             return(
             <>
               <ListItem button className={classes.nested}>
-                <ListItemText primary={onCameraClass.name} secondary={onCameraClass.state} />
+                  <ListItemText
+                    primary={onCameraClass.name}
+                    secondary={<div>{onCameraClass.city}, { onCameraClass.state}</div> }/>
               </ListItem>
             </>
             )
@@ -119,7 +121,7 @@ export default function ListSideBar() {
       </Collapse>
       <ListItem button onClick={handleClick3}>
         <ListItemIcon>
-          <DraftsIcon />
+          <LocationCity className={classes.primeIcons} />
         </ListItemIcon>
         <ListItemText primary="Acting Schools" />
         {open3 ? <ExpandLess /> : <ExpandMore />}
@@ -130,10 +132,9 @@ export default function ListSideBar() {
             return(
             <>
               <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary={actingSchool.name} />
+                  <ListItemText
+                    primary={actingSchool.name}
+                    secondary={<div>{actingSchool.city}, { actingSchool.state}</div> }/>
               </ListItem>
             </>
             )
@@ -142,7 +143,7 @@ export default function ListSideBar() {
       </Collapse>
       <ListItem button onClick={handleClick4}>
         <ListItemIcon>
-          <InboxIcon />
+          <Face className={classes.primeIcons} />
         </ListItemIcon>
         <ListItemText primary="Scene Study" />
         {open4 ? <ExpandLess /> : <ExpandMore />}
@@ -153,10 +154,9 @@ export default function ListSideBar() {
             return(
             <>
               <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary={sceneStudy.name} />
+                  <ListItemText
+                    primary={sceneStudy.name}
+                    secondary={<div>{sceneStudy.city}, { sceneStudy.state}</div> }/>
               </ListItem>
             </>
             )
@@ -165,7 +165,7 @@ export default function ListSideBar() {
       </Collapse>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
-          <InboxIcon />
+          <PhotoCamera className={classes.primeIcons} />
         </ListItemIcon>
         <ListItemText primary="Photographers" />
         {open ? <ExpandLess /> : <ExpandMore />}
@@ -176,10 +176,9 @@ export default function ListSideBar() {
             return(
             <>
               <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary={photographer.name} />
+                  <ListItemText
+                    primary={photographer.name}
+                    secondary={<div>{photographer.city}, { photographer.state}</div> }/>
               </ListItem>
             </>
             )
