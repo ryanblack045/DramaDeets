@@ -11,11 +11,11 @@ export default function Home() {
 
   return (
     <>
-       <Grid container  spacing={3}>
+       <Grid container  spacing={0}>
         <Grid item xs={3}>
           <ListSideBar />
         </Grid>
-        <Grid item style={{marginLeft:"10em"}}  xs={6}>
+        <Grid item  xs={9}>
           <BusinessDetail />
         </Grid>
       </Grid>

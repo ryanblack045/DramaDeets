@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '1px',
+    marginTop: '1.5px',
     width: '100%',
     height: '100%',
     maxHeight: '100vh',
