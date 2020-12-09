@@ -8,3 +8,14 @@ export const fetchBusinesses = async () => {
   console.log(business)
   return business.businesses
 }
+
+export const getBusiness = async (id) => {
+  const response = await fetch(`/api/business/${id}`, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+  const business = await response.json();
+  console.log(business)
+  return business
+}

@@ -10,8 +10,10 @@ import Collapse from '@material-ui/core/Collapse';
 import { PhotoCamera, Face, LocationCity, MovieFilter } from '@material-ui/icons';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { getBusiness } from "../services/businesses";
+import { setCurrentBusiness } from '../store/actions/session'
+import { useSelector, useDispatch } from "react-redux";
 
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     maxHeight: '100vh',
     maxWidth: 360,
+    minWidth:260,
     backgroundColor: theme.palette.background.paper,
   },
   nested: {
@@ -36,28 +39,33 @@ export default function ListSideBar() {
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
+  const dispatch = useDispatch();
 
 
   const businessTypes = useSelector((state) => (state.entities.businesses.byId))
-
+// a function built to grab businesses out of redux by a certain type id, logic should be reused
   function typeFinder(id) {
      return Object.values(businessTypes).filter(data => {
       let typeArray = data.types.filter(eachType => {
         if (eachType.type_id == id) {
-          // console.log(eachType, "herre")
           return eachType
         }
       })
        if (typeArray.length > 0) {
          console.log(data, "data")
          return data
-        //  return data.sort(function (a, b) {
-        //   return a.data.name.localeCompare(b.data.name);
-        // })
       }
     })
-      }
+  }
 
+  //This will handle the click of a business and set it to
+  //the current business so that it may be rendered in another component
+  const businessClick = async (id) => {
+    const business = await getBusiness(id);
+    dispatch(setCurrentBusiness(business))
+  }
+
+// These are grabbing all businesses by certain types out of the redux store
   const photographers = typeFinder(1).sort(function (a, b) {
     return a.name.localeCompare(b.name);
   })
@@ -70,6 +78,8 @@ export default function ListSideBar() {
   const sceneStudys = typeFinder(4).sort(function (a, b) {
     return a.name.localeCompare(b.name);
   })
+
+// These handle opening and closing the side bar subcomoponents
 
   const handleClick = () => {
     setOpen(!open);
@@ -112,7 +122,10 @@ export default function ListSideBar() {
           {onCameraClasses.map((onCameraClass) => {
             return(
             <>
-              <ListItem button className={classes.nested}>
+                <ListItem
+                  button
+                  onClick={() => businessClick(onCameraClass.id)}
+                  className={classes.nested}>
                   <ListItemText
                     primary={onCameraClass.name}
                     secondary={<div>{onCameraClass.city}, { onCameraClass.state}</div> }/>
@@ -134,7 +147,10 @@ export default function ListSideBar() {
           {actingSchools.map((actingSchool) => {
             return(
             <>
-              <ListItem button className={classes.nested}>
+                <ListItem
+                  button
+                  onClick={() => businessClick(actingSchool.id)}
+                  className={classes.nested}>
                   <ListItemText
                     primary={actingSchool.name}
                     secondary={<div>{actingSchool.city}, { actingSchool.state}</div> }/>
@@ -156,7 +172,10 @@ export default function ListSideBar() {
           {sceneStudys.map((sceneStudy) => {
             return(
             <>
-              <ListItem button className={classes.nested}>
+                <ListItem
+                  button
+                  onClick={() => businessClick(sceneStudy.id)}
+                  className={classes.nested}>
                   <ListItemText
                     primary={sceneStudy.name}
                     secondary={<div>{sceneStudy.city}, { sceneStudy.state}</div> }/>
@@ -178,7 +197,9 @@ export default function ListSideBar() {
           {photographers.map((photographer) => {
             return(
             <>
-              <ListItem button className={classes.nested}>
+                <ListItem button
+                  onClick={() => businessClick(photographer.id)}
+                  className={classes.nested}>
                   <ListItemText
                     primary={photographer.name}
                     secondary={<div>{photographer.city}, { photographer.state}</div> }/>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 
-const LoginForm = ({ authenticated, setAuthenticated, open2, setOpen2}) => {
+const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('demo@aa.io');
   const [password, setPassword] = useState('password');

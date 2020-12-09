@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from app.models import Business, db
+from flask_login import login_required
 
 
 business_routes = Blueprint('business', __name__)
@@ -21,7 +22,11 @@ def fetchBusinesses():
     businesses = Business.query.order_by(Business.name).all()
     return{"businesses": [business.to_dict() for business in businesses]}
 
-
+@business_routes.route('/<int:id>')
+@login_required
+def business(id):
+    business = Business.query.get(id)
+    return business.to_dict()
 
 # @auth_routes.route('/login', methods=['POST'])
 # def login():
