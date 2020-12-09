@@ -56,7 +56,14 @@ export default function Map() {
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: '100% ' }} />}
         containerElement={
-          <div style={{ marginLeft: "4em", width: `60vw`, height: '40vh', maxHeight: 'auto' }} />
+          <div style={{
+            marginLeft: "4em",
+            marginBottom: "1em",
+            marginTop: "1em",
+            width: `60vw`,
+            height: '40vh',
+            maxHeight: 'auto'
+          }} />
         }
         mapElement={<div style={{ height: '100% ' }} />}
       />

@@ -65,6 +65,10 @@ export default function BusinessDetail() {
             <div className={classes.businessCSZ}>
               {currentBusiness.city}, {currentBusiness.state} {currentBusiness.zipcode}
             </div>
+            <div className={classes.businessCSZ}>
+              <a href={currentBusiness.website}>{currentBusiness.website}</a>
+            </div>
+            <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>

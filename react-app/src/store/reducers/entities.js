@@ -18,6 +18,8 @@ export default function reducer(state = {}, action) {
           city: each.city,
           state: each.state,
           zipcode: each.zipcode,
+          website: each.website,
+          contact: each.contact,
           imgURL: each.imgURL,
           reviews: each.reviews,
           types: each.types

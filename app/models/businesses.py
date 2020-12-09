@@ -14,6 +14,8 @@ class Business(db.Model):
   city = db.Column(db.String(50), nullable=False)
   state = db.Column(db.String(15), nullable=False)
   zipcode = db.Column(db.String(10), nullable=False)
+  website = db.Column(db.String, nullable=True)
+  contact = db.Column(db.String, nullable=False)
   imgURL = db.Column(db.String, nullable=False)
 
   types = db.relationship('BusinessType', back_populates='business',) # lazy='joined')
@@ -33,6 +35,8 @@ class Business(db.Model):
       "city": self.city,
       "state": self.state,
       "zipcode": self.zipcode,
+      "website": self.website,
+      "contact": self.contact,
       "imgURL": self.imgURL,
       "reviews": [review.to_dict() for review in self.reviews],
       "types": [type.to_dict() for type in self.types]

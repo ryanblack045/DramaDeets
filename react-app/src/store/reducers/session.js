@@ -25,11 +25,12 @@ export default function reducer(state = {}, action) {
         city: action.business.city,
         state: action.business.state,
         zipcode: action.business.zipcode,
+        website: action.business.website,
+        contact: action.business.contact,
         imgURL: action.business.imgURL,
         reviews: action.business.reviews,
         types: action.business.types
       }
-      console.log(action.business)
       return newState
 
     default:
