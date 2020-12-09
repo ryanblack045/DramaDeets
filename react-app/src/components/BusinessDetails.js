@@ -45,6 +45,18 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
     marginLeft: "auto",
     marginRight: "auto"
+  },
+  reviewButton: {
+    display: "block",
+    width: "50%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    color: "white",
+    background: "#74c69d",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#2d6a4f"
+  }
   }
 
 }));
@@ -52,7 +64,21 @@ const useStyles = makeStyles((theme) => ({
 export default function BusinessDetail() {
   const classes = useStyles();
   const currentBusiness = useSelector((state) => (state.session.currentBusiness))
+  const currentUserId = useSelector((state) => (state.session.currentUser.id))
   const currentReviews = currentBusiness.reviews
+
+  function canReview(currentUserId) {
+   let reviewChecker= currentReviews.filter(eachReview => {
+      if (eachReview.userId == currentUserId) {
+        return eachReview
+      }
+   })
+
+   return reviewChecker
+  }
+// determines whether the review button displays
+  const canReviewArray = canReview(currentUserId)
+
 
   return (
     <div className={classes.root}>
@@ -72,6 +98,11 @@ export default function BusinessDetail() {
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>
+            {canReviewArray.length < 1 ?
+              <Button className={classes.reviewButton}>
+                Submit a Review
+              </Button>
+              : ""}
             <Grid container spacing={3}>
               {currentReviews.map((currentReview) => {
                 return (
