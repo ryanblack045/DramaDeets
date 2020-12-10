@@ -26,12 +26,17 @@ def submitReview():
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        review = Review(
-            username=form.data['username'],
-            email=form.data['email'],
-            password=form.data['password']
-        )
-        db.session.add(review)
-        db.session.commit()
-        return review.to_dict()
+      data = request.json
+
+      review = Review(
+          user_id=data['user_id'],
+          business_id=data['business_id'],
+          title=form.data['title'],
+          body=form.data['body'],
+          rating=form.data['rating']
+      )
+      
+      db.session.add(review)
+      db.session.commit()
+      return review.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}

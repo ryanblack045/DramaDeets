@@ -45,6 +45,11 @@ const useStyles = makeStyles((theme) => ({
   signup: {
     background: "white",
     color: "blue"
+  },
+  logo: {
+    height: "4em",
+    width: "4em",
+    marginTop: ".5em"
   }
 }));
 
@@ -108,9 +113,7 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             {authenticated ?
-              <NavLink to="/" exact={true} activeClassName="active">
-                Home
-              </NavLink>
+              <img className={classes.logo} src="/DramaDeetsLogo.png" />
               : false}
           </Typography>
           {!authenticated ?

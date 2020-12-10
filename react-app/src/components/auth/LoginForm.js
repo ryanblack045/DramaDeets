@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from "../../services/auth";
-import { fetchBusinesses } from "../../services/businesses";
+import { fetchBusinesses, getBusiness } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentUser } from '../../store/actions/session'
+import { setCurrentUser , setCurrentBusiness} from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 
 const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
@@ -21,6 +21,8 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
       dispatch(setCurrentUser(user))
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
+      const business = await getBusiness(1)
+      dispatch(setCurrentBusiness(business))
       setOpen2(false)
       history.push("/")
     } else {

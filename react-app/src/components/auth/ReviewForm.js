@@ -1,87 +1,68 @@
 import React, { useState } from "react";
-import { Redirect } from 'react-router-dom';
-import { signUp } from '../../services/auth';
 import { submitReview } from "../../services/reviews";
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentUser } from '../../store/actions/session'
-import { getAllBusinesses } from '../../store/actions/entities'
+import { setCurrentBusiness } from '../../store/actions/session'
+import { getBusiness} from "../../services/businesses";
 
-const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
+
+const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [rating, setRating] = useState("");
   const dispatch = useDispatch();
+  const business_id = useSelector((state) => (state.session.currentBusiness.id))
+  const user_id = useSelector((state) => (state.session.currentUser.id))
+
 
   const onSubmitReview = async (e) => {
     e.preventDefault();
-      const review = await submitReview(title, body, rating);
-      if (!user.errors) {
-        setAuthenticated(true);
-        dispatch(setCurrentUser(user))
-        const businesses = await fetchBusinesses()
-        dispatch(getAllBusinesses(businesses))
+      const review = await submitReview(user_id, business_id, title, body, rating);
+    if (!review.errors) {
+      const business = await getBusiness(business_id);
+      dispatch(setCurrentBusiness(business))
         setOpen(false)
       }
     }
+
+  const updateTitle = (e) => {
+    setTitle(e.target.value);
   };
 
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
+  const updateBody = (e) => {
+    setBody(e.target.value);
   };
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
+  const updateRating = (e) => {
+    setRating(e.target.value);
   };
-
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
-
-  if (authenticated) {
-    return <Redirect to="/" />;
-  }
 
   return (
-    <form onSubmit={onSignUp}>
+    <form onSubmit={onSubmitReview}>
       <div>
-        <label>User Name</label>
+        <label>Title</label>
         <input
           type="text"
-          name="username"
-          onChange={updateUsername}
-          value={username}
+          name="title"
+          onChange={updateTitle}
+          value={title}
         ></input>
       </div>
       <div>
-        <label>Email</label>
+        <label>Your Review</label>
         <input
           type="text"
-          name="email"
-          onChange={updateEmail}
-          value={email}
+          name="body"
+          onChange={updateBody}
+          value={body}
         ></input>
       </div>
       <div>
-        <label>Password</label>
+        <label>Rating (1-10)</label>
         <input
-          type="password"
-          name="password"
-          onChange={updatePassword}
-          value={password}
-        ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
-          type="password"
-          name="repeat_password"
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
+          type="text"
+          name="rating"
+          onChange={updateRating}
+          value={rating}
         ></input>
       </div>
       <button type="submit">Sign Up</button>
@@ -89,4 +70,4 @@ const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   );
 };
 
-export default SignUpForm;
+export default ReviewForm;

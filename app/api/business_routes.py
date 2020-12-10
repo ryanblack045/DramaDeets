@@ -29,24 +29,27 @@ def business(id):
     business = Business.query.get(id)
     return business.to_dict()
 
-@business_routes.route('/<int:id>/reviews', methods=['POST'])
-def submitReview():
-    """
-    Creates a new user and logs them in
-    """
+@business_routes.route('/<int:business_id>/reviews', methods=['POST'])
+@login_required
+def submitReview(business_id):
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        review = Review(
-            userId=
-            username=form.data['username'],
-            email=form.data['email'],
-            password=form.data['password']
-        )
-        db.session.add(review)
-        db.session.commit()
-        return review.to_dict()
+      data = request.json
+      print(data, "heeeeeeerrree")
+      review = Review(
+          user_id=data['user_id'],
+          business_id=data['business_id'],
+          title=form.data['title'],
+          body=form.data['body'],
+          rating=form.data['rating']
+      )
+      print(review.to_dict())
+      db.session.add(review)
+      db.session.commit()
+      return review.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}
+
 
 # @auth_routes.route('/login', methods=['POST'])
 # def login():

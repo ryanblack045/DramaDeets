@@ -14,5 +14,5 @@ from app.models import User
 
 class ReviewForm(FlaskForm):
     title = StringField('title', validators=[DataRequired()])
-    body = StringField('email', validators=[DataRequired()])
+    body = StringField('body', validators=[DataRequired()])
     rating = IntegerField('rating', validators=[DataRequired() ])

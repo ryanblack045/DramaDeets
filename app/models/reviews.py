@@ -23,7 +23,8 @@ class Review(db.Model):
       "title": self.title,
       "body": self.body,
       "rating": self.rating,
-      "imgURL": self.imgURL
+      "imgURL": self.imgURL,
+      "businesId": self.business_id,
     }
 
   # def info()

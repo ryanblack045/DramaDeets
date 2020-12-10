@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
@@ -8,8 +8,11 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import ReviewForm from './auth/ReviewForm'
+import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { setCurrentBusiness } from '../store/actions/session'
 import Map from './Map'
 
 
@@ -48,6 +51,16 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto"
   },
+  reviewModal: {
+    position: 'absolute',
+      width: 400,
+      height: 600,
+      backgroundColor: theme.palette.background.paper,
+      outline: "none",
+      borderRadius: 16,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3)
+  },
   reviewButton: {
     display: "block",
     width: "50%",
@@ -80,13 +93,32 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function BusinessDetail() {
+function getModalStyle() {
+  const top =  50
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    border: "none",
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+export default function BusinessDetail({ currentReviews2 }) {
   const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false)
+  const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
-  const currentBusiness = useSelector((state) => (state.session.currentBusiness))
-  const currentUserId = useSelector((state) => (state.session.currentUser.id))
-  const currentReviews = currentBusiness.reviews
+  const businesses = useSelector((state)=>(state.entities.businesses))
+  const currentBusiness = useSelector((state) => (state.session.currentBusiness));
+  const currentUserId = useSelector((state) => (state.session.currentUser.id));
+  const currentReviews = currentBusiness.reviews;
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    console.log("did it")
+   dispatch(setCurrentBusiness(currentBusiness))
+  }, [businesses])
 
   function canReview(currentUserId) {
    let reviewChecker= currentReviews.filter(eachReview => {
@@ -107,22 +139,14 @@ export default function BusinessDetail() {
     setOpen(false);
   };
 
-  const handleOpen2 = () => {
-    setOpen2(true);
-  };
 
-  const handleClose2 = () => {
-    setOpen2(false);
-  };
-
-  // const submitReviewModal = (
-  //   <div style={modalStyle} border="none" className={classes.paper}>
-  //     <SignUpForm className={classes.signUp} setAuthenticated={setAuthenticated}
-  //       authenticated={authenticated}
-  //       open={open}
-  //       setOpen={setOpen}/>
-  //   </div>
-  // );
+  const submitReviewModal = (
+    <div style={modalStyle} border="none" className={classes.reviewModal}>
+      <ReviewForm className={classes.reviewForm}
+        open={open}
+        setOpen={setOpen}/>
+    </div>
+  );
 
   return (
     <div className={classes.root}>
@@ -143,10 +167,20 @@ export default function BusinessDetail() {
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>
             {canReviewArray.length < 1 ?
-              <Button className={classes.reviewButton}>
-                Submit a Review
+              <>
+              <Button className={classes.reviewButton} onClick={handleOpen}>
+                  Submit a Review
               </Button>
+                </>
               : ""}
+              <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="Review form modal"
+              aria-describedby="Review form"
+              >
+              {submitReviewModal}
+            </Modal>
             <Grid container spacing={3}>
               {currentReviews.map((currentReview) => {
                 return (
@@ -179,24 +213,6 @@ export default function BusinessDetail() {
             </Grid>
           </Paper>
         </Grid>
-        {/* <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>xs=3</Paper>
-        </Grid> */}
       </Grid>
     </div>
   );
