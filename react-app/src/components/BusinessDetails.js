@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Map from './Map'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,12 +58,31 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       //you want this to be the same as the backgroundColor above
       backgroundColor: "#2d6a4f"
+    },
+  },
+  likeButton: {
+      marginLeft: "1em",
+      color: "#2d6a4f",
+      cursor: "pointer"
+  },
+  dislikeButton: {
+    color: "red",
+    cursor: "pointer",
+  },
+  edit: {
+    marginLeft: "20em",
+    background: "black",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#2d6a4f"
+    },
   }
-  }
-
 }));
 
 export default function BusinessDetail() {
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false)
   const classes = useStyles();
   const currentBusiness = useSelector((state) => (state.session.currentBusiness))
   const currentUserId = useSelector((state) => (state.session.currentUser.id))
@@ -78,7 +99,30 @@ export default function BusinessDetail() {
   }
 // determines whether the review button displays
   const canReviewArray = canReview(currentUserId)
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  // const submitReviewModal = (
+  //   <div style={modalStyle} border="none" className={classes.paper}>
+  //     <SignUpForm className={classes.signUp} setAuthenticated={setAuthenticated}
+  //       authenticated={authenticated}
+  //       open={open}
+  //       setOpen={setOpen}/>
+  //   </div>
+  // );
 
   return (
     <div className={classes.root}>
@@ -119,12 +163,13 @@ export default function BusinessDetail() {
                         </CardContent>
                       </CardActionArea>
                       <CardActions>
-                        <Button size="small" color="primary">
-                          Share
-                        </Button>
-                        <Button size="small" color="primary">
-                          Learn More
-                        </Button>
+                        <ThumbUp className={classes.likeButton} />
+                        <div>10</div>
+                        <ThumbDown className={classes.dislikeButton} />
+                        <div>3</div>
+                        {currentReview.userId == currentUserId ?
+                          <Button className={classes.edit}>Edit</Button>
+                          : ""}
                       </CardActions>
                     </Card>
                   </Grid>
