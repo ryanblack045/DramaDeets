@@ -18,9 +18,9 @@ class Judgement(db.Model):
   def to_dict(self):
     return {
       "id": self.id,
-      "userId": self.userId,
-      "reviewId": self.reviewId,
-      "businessId": self.businessId,
+      "userId": self.user_id,
+      "reviewId": self.review_id,
+      "businessId": self.business_id,
       "recommend": self.recommend,
-      "neutral": self.neutral
+      "avoid": self.avoid
     }

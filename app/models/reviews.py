@@ -25,6 +25,7 @@ class Review(db.Model):
       "rating": self.rating,
       "imgURL": self.imgURL,
       "businesId": self.business_id,
+      "judgements": [judgement.to_dict() for judgement in self.judgements],
     }
 
   # def info()
