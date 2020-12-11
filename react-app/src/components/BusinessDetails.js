@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {createRef, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
       color: "#2d6a4f",
       cursor: "pointer"
   },
+  likeButtonDisabled: {
+    marginLeft: "1em",
+    color: "black",
+},
   dislikeButton: {
     color: "red",
     cursor: "pointer",
@@ -126,9 +130,25 @@ export default function BusinessDetail({ currentReviews2 }) {
         return eachReview
       }
    })
-
    return reviewChecker
   }
+
+  function canLike(currentUserId) {
+    let reviewChecker = currentReviews.filter(eachReview => {
+      eachReview.judgements.filter(judgement => {
+        if (judgement.userId == currentUserId) {
+          console.log(judgement, "judgement")
+        } else {
+          console.log(judgement, "judgment not working")
+        }
+      })
+    }
+    )
+
+    return reviewChecker
+  }
+
+canLike(currentUserId)
 // determines whether the review button displays
   const canReviewArray = canReview(currentUserId)
   const handleOpen = () => {
@@ -147,6 +167,31 @@ export default function BusinessDetail({ currentReviews2 }) {
         setOpen={setOpen}/>
     </div>
   );
+
+  const counter = (obj) => {
+    const newObject = Object.assign({}, obj)
+    const filteredObject = newObject.judgements
+    const newJudgement = new Object()
+    // {}
+    newJudgement["like"] = 0
+    newJudgement["dislike"] = 0
+    newJudgement["userLikes"]=0
+    //  newJudgement = {like:0, dislike:0}
+    filteredObject.forEach(each=>{
+        if (!each.avoid){
+            newJudgement.like ++
+        } else {
+            newJudgement.dislike ++
+        }
+    })
+    filteredObject.forEach(each=>{
+      if (each.userId == currentUserId){
+          newJudgement.userLikes ++
+      }
+  })
+    newObject.judgements = newJudgement
+    return newObject
+}
 
   return (
     <div className={classes.root}>
@@ -182,14 +227,17 @@ export default function BusinessDetail({ currentReviews2 }) {
               {submitReviewModal}
             </Modal>
             <Grid container spacing={3}>
-              {currentReviews.map((currentReview) => {
+
+              {currentReviews.map((each) => {
+                let currentReview = counter(each)
+
                 return (
                   <Grid item xs={6}>
                      <Card className={classes.card}>
                       <CardActionArea>
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">
-                            "{currentReview.title}""
+                            "{currentReview.title}"
                           </Typography>
                           <Typography variant="body2" color="textSecondary" component="p">
                            {currentReview.body}
@@ -197,10 +245,12 @@ export default function BusinessDetail({ currentReviews2 }) {
                         </CardContent>
                       </CardActionArea>
                       <CardActions>
-                        <ThumbUp className={classes.likeButton} />
-                        <div>10</div>
+                        {currentReview.judgements.userLikes < 1 ?
+                          <ThumbUp className={classes.likeButton} />
+                        : <ThumbUp className={classes.likeButtonDisabled} />}
+                        <div>{currentReview.judgements.like}</div>
                         <ThumbDown className={classes.dislikeButton} />
-                        <div>3</div>
+                        <div>{currentReview.judgements.dislike}</div>
                         {currentReview.userId == currentUserId ?
                           <Button className={classes.edit}>Edit</Button>
                           : ""}
