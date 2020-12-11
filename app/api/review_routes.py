@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import Review, db
+from app.models import Review, Judgement, db
 from app.forms import LoginForm
 from app.forms import ReviewForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -18,25 +18,17 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@review_routes.route('/submitReview', methods=['POST'])
-def submitReview():
-    """
-    Creates a new user and logs them in
-    """
-    form = ReviewForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-      data = request.json
+@review_routes.route('/<int:review_id>/like', methods=['POST'])
+def judgeReview(review_id):
+    data = request.json
+    judgement = Judgement(
+        user_id=data['user_id'],
+        business_id=data['business_id'],
+        review_id=data['review_id'],
+        recommend=data['recommend'],
+        avoid=data['avoid']
+    )
 
-      review = Review(
-          user_id=data['user_id'],
-          business_id=data['business_id'],
-          title=form.data['title'],
-          body=form.data['body'],
-          rating=form.data['rating']
-      )
-      
-      db.session.add(review)
-      db.session.commit()
-      return review.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}
+    db.session.add(judgement)
+    db.session.commit()
+    return judgement.to_dict()

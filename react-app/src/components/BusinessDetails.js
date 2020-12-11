@@ -1,19 +1,30 @@
-import React, {createRef, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+// import Paper from '@material-ui/core/Paper';
+// import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from "react-redux";
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+// import Card from '@material-ui/core/Card';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
 import ReviewForm from './auth/ReviewForm'
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import {
+  Modal,
+  Button,
+  Typography,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Paper
+} from '@material-ui/core';
+// import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
 import { setCurrentBusiness } from '../store/actions/session'
 import Map from './Map'
+import { addingLike } from '../services/reviews'
+import { getBusiness} from "../services/businesses";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,12 +86,13 @@ const useStyles = makeStyles((theme) => ({
   },
   likeButton: {
       marginLeft: "1em",
-      color: "#2d6a4f",
+      color: "black",
       cursor: "pointer"
   },
   likeButtonDisabled: {
     marginLeft: "1em",
-    color: "black",
+    color: "#74c69d",
+    cursor: "pointer"
 },
   dislikeButton: {
     color: "red",
@@ -121,36 +133,53 @@ export default function BusinessDetail({ currentReviews2 }) {
 
   useEffect(() => {
     console.log("did it")
-   dispatch(setCurrentBusiness(currentBusiness))
-  }, [businesses])
+    dispatch(setCurrentBusiness(currentBusiness))
+  }, [businesses,dispatch])
 
   function canReview(currentUserId) {
    let reviewChecker= currentReviews.filter(eachReview => {
       if (eachReview.userId == currentUserId) {
         return eachReview
       }
-   })
-   return reviewChecker
-  }
-
-  function canLike(currentUserId) {
-    let reviewChecker = currentReviews.filter(eachReview => {
-      eachReview.judgements.filter(judgement => {
-        if (judgement.userId == currentUserId) {
-          console.log(judgement, "judgement")
-        } else {
-          console.log(judgement, "judgment not working")
-        }
-      })
-    }
-    )
-
+     return
+    })
     return reviewChecker
   }
 
-canLike(currentUserId)
-// determines whether the review button displays
+  // determines whether the review button displays
   const canReviewArray = canReview(currentUserId)
+
+  // function canLike(currentUserId) {
+  //   let reviewChecker = currentReviews.filter(eachReview => {
+  //     eachReview.judgements.filter(judgement => {
+  //       if (judgement.userId == currentUserId) {
+  //         console.log(judgement, "judgement")
+  //       } else {
+  //         console.log(judgement, "judgment not working")
+  //       }
+  //     })
+  //   }
+  //   )
+
+  //   return reviewChecker
+  // }
+// determines if user can like a review
+  // canLike(currentUserId)
+
+// likes a review
+  const postLike = async (currentReviewId) => {
+    let recommend = true
+    let avoid = false
+    const like = await addingLike(currentUserId, currentReviewId, currentBusiness.id, recommend, avoid)
+    const business = await getBusiness(currentBusiness.id);
+      dispatch(setCurrentBusiness(business))
+  }
+
+  const deleteLike = async (currentJudgmentId) => {
+    console.log(currentJudgmentId)
+  }
+
+// handles opening review modal
   const handleOpen = () => {
     setOpen(true);
   };
@@ -234,7 +263,6 @@ canLike(currentUserId)
                 return (
                   <Grid item xs={6}>
                      <Card className={classes.card}>
-                      <CardActionArea>
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">
                             "{currentReview.title}"
@@ -243,11 +271,10 @@ canLike(currentUserId)
                            {currentReview.body}
                           </Typography>
                         </CardContent>
-                      </CardActionArea>
                       <CardActions>
                         {currentReview.judgements.userLikes < 1 ?
-                          <ThumbUp className={classes.likeButton} />
-                        : <ThumbUp className={classes.likeButtonDisabled} />}
+                          <ThumbUp onClick={()=>postLike(currentReview.id)} className={classes.likeButton} />
+                        : <ThumbUp onClick={()=>deleteLike(each.judgements)} className={classes.likeButtonDisabled} />}
                         <div>{currentReview.judgements.like}</div>
                         <ThumbDown className={classes.dislikeButton} />
                         <div>{currentReview.judgements.dislike}</div>

@@ -1,4 +1,4 @@
-/* global google */
+// /* global google */
 import React, { useState, useEffect } from 'react';
 import {
   GoogleMap,
@@ -6,11 +6,10 @@ import {
   withGoogleMap,
   Marker
 } from 'react-google-maps';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 //  use withScriptjs and withGoogleMap to wrap the map in order to get the map to load correctly
 
-const InitMap = ({}) => {
-  const dispatch = useDispatch();
+const InitMap = () => {
   const currentBusinessLat = useSelector((state) => (state.session.currentBusiness.lat))
   const currentBusinessLng = useSelector((state) => (state.session.currentBusiness.lng))
   const currentBusiness = useSelector((state) => (state.session.currentBusiness))

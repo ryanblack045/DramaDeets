@@ -97,7 +97,6 @@ export default function ListSideBar() {
     setOpen4(!open4);
   };
 
-  console.log(onCameraClasses)
 
   return (
     <List
