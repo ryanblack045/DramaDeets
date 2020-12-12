@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import Review, Judgement, db
 from app.forms import LoginForm
 from app.forms import ReviewForm
+from sqlalchemy.sql import func
 from flask_login import current_user, login_user, logout_user, login_required
 
 review_routes = Blueprint('review', __name__)
@@ -16,6 +17,23 @@ def validation_errors_to_error_messages(validation_errors):
         for error in validation_errors[field]:
             errorMessages.append(f"{field} : {error}")
     return errorMessages
+
+
+@review_routes.route('/<int:review_id>', methods=['PUT'])
+def updateReview(review_id):
+    data = request.json
+    title=data['title'],
+    body=data['body'],
+    rating = data['rating']
+
+    review = Review.query.get(review_id)
+    review.title = title
+    review.body = body
+    review.rating = rating
+    review.updated_at = func.now()
+
+    db.session.commit()
+    return review.to_dict()
 
 
 @review_routes.route('/<int:review_id>/like', methods=['POST'])

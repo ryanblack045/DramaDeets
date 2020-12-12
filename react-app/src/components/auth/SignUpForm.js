@@ -5,6 +5,10 @@ import { fetchBusinesses } from "../../services/businesses";
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   const [username, setUsername] = useState("");
@@ -12,6 +16,21 @@ const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const dispatch = useDispatch();
+
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      background: "black",
+      color: "white",
+      marginTop: "1em"
+    },
+    input: {
+      borderRadius: "1em",
+      backgroundColor: "white",
+      marginTop: ".5em",
+      marginBottom: ".5em"
+  }
+  }));
+  const classes = useStyles();
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -48,45 +67,46 @@ const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
+    <form className={classes.signupForm} onSubmit={onSignUp}>
       <div>
-        <label>User Name</label>
-        <input
-          type="text"
+        <TextField
+          variant="outlined"
+          label="User Name"
+          className={classes.input}
           name="username"
           onChange={updateUsername}
           value={username}
-        ></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input
+        />
+        <TextField
+          variant="outlined"
+          className={classes.input}
+          label="Email"
           type="text"
           name="email"
           onChange={updateEmail}
           value={email}
-        ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
+        />
+        <TextField
+          variant="outlined"
+          className={classes.input}
+          label="Password"
           type="password"
           name="password"
           onChange={updatePassword}
           value={password}
-        ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
+        />
+        <TextField
+          variant="outlined"
+          className={classes.input}
+          label="Repeat Password"
           type="password"
           name="repeat_password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
-        ></input>
+        />
       </div>
-      <button type="submit">Sign Up</button>
+      <Button className={classes.button} variant="Contained" type="submit">Sign Up</Button>
     </form>
   );
 };

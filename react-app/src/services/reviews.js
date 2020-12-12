@@ -44,3 +44,20 @@ export const deletingLike = async (likeId) => {
   });
   return await response.json();
 }
+
+
+export const sendUpdatedReviw = async (review_id, title, body, rating) => {
+  const response = await fetch(`api/reviews/${review_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      review_id,
+      title,
+      body,
+      rating,
+    })
+  })
+    return await response.json();
+}

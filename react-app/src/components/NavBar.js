@@ -1,18 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 // import { theme } from '../styles/Theme';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import {
+  Paper,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Modal,
+  makeStyles
+} from '@material-ui/core';
 import SignUpForm from './auth/SignUpForm'
 import LoginForm from './auth/LoginForm'
-// import Box from '@material-ui/core/Box';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,11 +28,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
       width: 400,
       height: 600,
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: "#1b4332",
       outline: "none",
       borderRadius: 16,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3)
+      padding: theme.spacing(2, 4, 3),
+      textAlign: "center"
+
   },
   title: {
     flexGrow: 1,
@@ -44,6 +46,24 @@ const useStyles = makeStyles((theme) => ({
   signup: {
     background: "white",
     color: "blue"
+  },
+  signupHeader: {
+    backgroundColor: theme.palette.background.paper,
+    height: "100%",
+  },
+  signupSubheader: {
+   fontSize: "1.1em"
+  },
+  signupSubheaderBold: {
+    fontSize: "1.1em",
+    fontWeight: "bold",
+    textDecoration: "underline"
+   },
+  signupTitle: {
+    fontSize: "3em",
+    lineHeight: ".75em",
+    fontFamily: "brandon-grotesque, sans-serif",
+    marginBottom: ".25em",
   },
   logo: {
     height: "4em",
@@ -89,10 +109,29 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
 
   const signupModal = (
     <div style={modalStyle} border="none" className={classes.paper}>
+      <Paper className={classes.signupHeader}>
+        <div>
+          <div className={classes.signupTitle}>
+            <br></br>
+            Join our community.
+          </div>
+          <span className={classes.signupSubheader}>We believe through unfiltered reviews that we can all work together
+          to provide a </span>
+          <span className={classes.signupSubheaderBold}>safer</span>
+          <span className={classes.signupSubheader}>, more </span>
+          <span className={classes.signupSubheaderBold}>inclusive</span>
+          <span className={classes.signupSubheader}> and </span>
+          <span className={classes.signupSubheaderBold}>reliable</span>
+          <span className={classes.signupSubheader}> experience for </span>
+          <span className={classes.signupSubheaderBold}>everyone.</span>
+
+
+        </div>
       <SignUpForm className={classes.signUp} setAuthenticated={setAuthenticated}
         authenticated={authenticated}
         open={open}
         setOpen={setOpen}/>
+        </Paper>
     </div>
   );
 

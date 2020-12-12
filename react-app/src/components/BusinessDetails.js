@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { setCurrentBusiness } from '../store/actions/session'
 import Map from './Map'
-import { addingLike, deletingLike } from '../services/reviews'
+import { addingLike, deletingLike, sendUpdatedReviw } from '../services/reviews'
 import { getBusiness} from "../services/businesses";
 
 
@@ -53,14 +53,17 @@ const useStyles = makeStyles((theme) => ({
   dislikeButton: {
     color: "black",
     cursor: "pointer",
+    marginLeft: "2em",
   },
   dislikeButtonDisabled: {
     marginLeft: "1em",
     color: "red",
-    cursor: "pointer"
+    cursor: "pointer",
+    marginLeft: "1em",
   },
   edit: {
     background: "black",
+    height: "1.5em",
     color: "white",
     "&:hover": {
       //you want this to be the same as the backgroundColor above
@@ -126,6 +129,7 @@ const useStyles = makeStyles((theme) => ({
   },
   saveButton: {
     background: "red",
+    height: "1.5em",
     color: "white",
     "&:hover": {
       //you want this to be the same as the backgroundColor above
@@ -243,6 +247,25 @@ export default function BusinessDetail({ currentReviews2 }) {
     setOpen(false);
   };
 
+  const updateTitle = e => {
+    setTitle(e.target.value)
+  }
+
+  const updateBody = e => {
+    setBody(e.target.value)
+  }
+
+  const updateRating = e => {
+    setRating(e.target.value)
+  }
+
+  const updateReview = async (currentReviewId) => {
+    await sendUpdatedReviw(currentReviewId, title, body, rating)
+    const business = await getBusiness(currentBusiness.id);
+    setEdit(!edit)
+    dispatch(setCurrentBusiness(business))
+  }
+
 
   const submitReviewModal = (
     <div style={modalStyle} border="none" className={classes.reviewModal}>
@@ -278,10 +301,10 @@ export default function BusinessDetail({ currentReviews2 }) {
       if (each.userId === currentUserId && each.avoid === true) {
         newJudgement.userDislikes++
       }
-  })
-    newObject.judgements = newJudgement
-    return newObject
-}
+      })
+        newObject.judgements = newJudgement
+        return newObject
+    }
 
   return (
     <div className={classes.root}>
@@ -331,12 +354,14 @@ export default function BusinessDetail({ currentReviews2 }) {
                               <TextField
                                 className={classes.title}
                                 value={title}
+                                onChange={updateTitle}
                                 label="Title"
                                 placeholder={currentReview.title}
                                 variant="outlined"/>
                               <TextField
                                 className={classes.body}
                                 multiline
+                                onChange={updateBody}
                                 value={body}
                                 label="Description"
                                 placeholder={currentReview.body}
@@ -344,6 +369,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                               <TextField
                                 placeholder={currentReview.rating}
                                 label="Rating 1-10"
+                                onChange={updateRating}
                                 value={rating}
                                 variant="outlined"/>
                             </div>
@@ -359,7 +385,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                         </>
                         }
                         </CardContent>
-                      <CardActions className={classes.actionFooter}>
+                      <CardActions spacing={0} className={classes.actionFooter}>
                         {currentReview.judgements.userLikes < 1 ?
                           <ThumbUp onClick={()=>postLike(currentReview.id)} className={classes.likeButton} />
                         : <ThumbUp onClick={()=>deleteLike(each.judgements)} className={classes.likeButtonDisabled} />}
@@ -383,7 +409,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                               :
                               <Button
                                 className={classes.saveButton}
-                                onClick={ () => setEdit(!edit)} >
+                                onClick={() => updateReview(currentReview.id)} >
                                 Save
                                 </Button>
                             }
