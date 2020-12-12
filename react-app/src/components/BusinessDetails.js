@@ -4,6 +4,7 @@ import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import { useSelector, useDispatch } from "react-redux";
 import ReviewForm from './auth/ReviewForm'
 import {
+  TextField,
   Modal,
   Button,
   Typography,
@@ -20,27 +21,13 @@ import { getBusiness} from "../services/businesses";
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  actionFooter: {
+      justifyContent:"center"
   },
-  paper: {
-    padding: theme.spacing(2),
-    marginTop: "1px",
-    boxShadow: "none",
-    borderRadius: "0",
-    color: theme.palette.text.secondary,
-  },
-  businessTitle: {
-    fontSize: "3em",
-    textAlign: "center"
-  },
-  pageBreak: {
-    width: "100%",
-    borderBottom: "2px solid black",
-  },
-  reviewsHeader: {
-    fontSize: "2em",
-    textAlign: "center"
+  body: {
+    color: "black",
+    marginTop: "1em",
+    marginBottom: "1em"
   },
   businessContainer: {
     width: "90"
@@ -56,15 +43,57 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto"
   },
-  reviewModal: {
-    position: 'absolute',
-      width: 400,
-      height: 600,
-      backgroundColor: theme.palette.background.paper,
-      outline: "none",
-      borderRadius: 16,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3)
+  businessTitle: {
+    fontSize: "3em",
+    textAlign: "center"
+  },
+  card: {
+    textAlign:"center"
+  },
+  dislikeButton: {
+    color: "black",
+    cursor: "pointer",
+  },
+  dislikeButtonDisabled: {
+    marginLeft: "1em",
+    color: "red",
+    cursor: "pointer"
+  },
+  edit: {
+    background: "black",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#2d6a4f"
+    },
+  },
+  editContainer: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  likeButton: {
+    marginLeft: "1em",
+    color: "black",
+    cursor: "pointer"
+  },
+  likeButtonDisabled: {
+    marginLeft: "1em",
+    color: "#74c69d",
+    cursor: "pointer"
+  },
+  pageBreak: {
+    width: "100%",
+    borderBottom: "2px solid black",
+  },
+  paper: {
+    padding: theme.spacing(2),
+    marginTop: "1px",
+    boxShadow: "none",
+    borderRadius: "0",
+    color: theme.palette.text.secondary,
+  },
+  ratingLabel: {
+    fontWeight: "bold"
   },
   reviewButton: {
     display: "block",
@@ -78,32 +107,29 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#2d6a4f"
     },
   },
-  likeButton: {
-      marginLeft: "1em",
-      color: "black",
-      cursor: "pointer"
+  reviewsHeader: {
+    fontSize: "2em",
+    textAlign: "center"
   },
-  likeButtonDisabled: {
-    marginLeft: "1em",
-    color: "#74c69d",
-    cursor: "pointer"
-},
-  dislikeButton: {
-    color: "black",
-    cursor: "pointer",
+  reviewModal: {
+    position: 'absolute',
+    width: 400,
+    height: 600,
+    backgroundColor: theme.palette.background.paper,
+    outline: "none",
+    borderRadius: 16,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
   },
-  dislikeButtonDisabled: {
-    marginLeft: "1em",
-    color: "red",
-    cursor: "pointer"
-},
-  edit: {
-    marginLeft: "20em",
-    background: "black",
+  root: {
+    flexGrow: 1,
+  },
+  saveButton: {
+    background: "red",
     color: "white",
     "&:hover": {
       //you want this to be the same as the backgroundColor above
-      backgroundColor: "#2d6a4f"
+      backgroundColor: "#890909"
     },
   }
 }));
@@ -123,6 +149,10 @@ function getModalStyle() {
 export default function BusinessDetail({ currentReviews2 }) {
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
+  const [edit, setEdit] = React.useState(false);
+  const [title, setTitle] = React.useState("")
+  const [body, setBody] = React.useState("")
+  const [rating, setRating]= React.useState("")
   const classes = useStyles();
   const businesses = useSelector((state)=>(state.entities.businesses))
   const currentBusiness = useSelector((state) => (state.session.currentBusiness));
@@ -240,9 +270,8 @@ export default function BusinessDetail({ currentReviews2 }) {
         }
     })
     filteredObject.forEach(each => {
-       console.log(each, "one")
+       //determines if a user can like or dislike a review
       if (each.userId === currentUserId && each.recommend === true) {
-        console.log("like")
         newJudgement.userLikes++
       }
 
@@ -294,16 +323,43 @@ export default function BusinessDetail({ currentReviews2 }) {
 
                 return (
                   <Grid item xs={6} spacing={0}>
-                     <Card className={classes.card}>
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            "{currentReview.title}"
+                     <Card >
+                        <CardContent className={classes.card}>
+                        { edit && currentReview.userId === currentUserId ?
+                          <>
+                            <div className={classes.editContainer}>
+                              <TextField
+                                className={classes.title}
+                                value={title}
+                                label="Title"
+                                placeholder={currentReview.title}
+                                variant="outlined"/>
+                              <TextField
+                                className={classes.body}
+                                multiline
+                                value={body}
+                                label="Description"
+                                placeholder={currentReview.body}
+                                variant="outlined"/>
+                              <TextField
+                                placeholder={currentReview.rating}
+                                label="Rating 1-10"
+                                value={rating}
+                                variant="outlined"/>
+                            </div>
+                          </>
+                          :
+                        <>
+                         <Typography gutterBottom variant="h5" component="h2">
+                          "{currentReview.title}"
                           </Typography>
                           <Typography variant="body2" color="textSecondary" component="p">
                            {currentReview.body}
                           </Typography>
+                        </>
+                        }
                         </CardContent>
-                      <CardActions>
+                      <CardActions className={classes.actionFooter}>
                         {currentReview.judgements.userLikes < 1 ?
                           <ThumbUp onClick={()=>postLike(currentReview.id)} className={classes.likeButton} />
                         : <ThumbUp onClick={()=>deleteLike(each.judgements)} className={classes.likeButtonDisabled} />}
@@ -313,8 +369,30 @@ export default function BusinessDetail({ currentReviews2 }) {
                         : <ThumbDown onClick={()=>deleteDislike(each.judgements)} className={classes.dislikeButtonDisabled} />}
                         <div>Disagree ({currentReview.judgements.dislike})</div>
                         {currentReview.userId === currentUserId ?
-                          <Button className={classes.edit}>Edit</Button>
+                          <div className={classes.editContainer}>
+                            {!edit ? <Button
+                              onClick= { () => {
+                                setEdit(!edit)
+                                setTitle(currentReview.title)
+                                setBody(currentReview.body)
+                                setRating(currentReview.rating)
+                              }}
+                              className={classes.edit}>
+                              Edit
+                              </Button>
+                              :
+                              <Button
+                                className={classes.saveButton}
+                                onClick={ () => setEdit(!edit)} >
+                                Save
+                                </Button>
+                            }
+                          </div>
                           : ""}
+                          <div
+                          className={classes.ratingLabel}>
+                          Rating:{currentReview.rating}/10
+                          </div>
                       </CardActions>
                     </Card>
                   </Grid>

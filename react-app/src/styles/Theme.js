@@ -4,6 +4,9 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 const theme = createMuiTheme({
   gradientBackground: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   fontFamily: "Helvetica",
+  outlineForText: {
+    borderColor: "black",
+  },
 
     palette: {
       primary: {
@@ -13,7 +16,8 @@ const theme = createMuiTheme({
       secondary: {
         main: '#1b4332',
       },
-    },
+   },
+
 
   typography: {
     fontFamily: "Helvetica"
