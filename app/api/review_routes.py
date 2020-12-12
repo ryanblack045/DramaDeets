@@ -32,3 +32,14 @@ def judgeReview(review_id):
     db.session.add(judgement)
     db.session.commit()
     return judgement.to_dict()
+
+
+@review_routes.route('/like//<int:id>', methods=['DELETE'])
+def deleteJudgment(id):
+  judgement = Judgement.query.get(id)
+  if judgement:
+    db.session.delete(judgement)
+    db.session.commit()
+    return {'message': 'Judgement was successfully deleted'}
+  else:
+    return{'errors':'Judgement was not found'}

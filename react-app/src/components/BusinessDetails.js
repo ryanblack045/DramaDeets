@@ -1,13 +1,7 @@
 import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
-// import Paper from '@material-ui/core/Paper';
-// import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from "react-redux";
-// import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
 import ReviewForm from './auth/ReviewForm'
 import {
   Modal,
@@ -19,11 +13,9 @@ import {
   Grid,
   Paper
 } from '@material-ui/core';
-// import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
 import { setCurrentBusiness } from '../store/actions/session'
 import Map from './Map'
-import { addingLike } from '../services/reviews'
+import { addingLike, deletingLike } from '../services/reviews'
 import { getBusiness} from "../services/businesses";
 
 
@@ -33,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    marginTop: "1.5px",
+    marginTop: "1px",
+    boxShadow: "none",
+    borderRadius: "0",
     color: theme.palette.text.secondary,
   },
   businessTitle: {
@@ -95,9 +89,14 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer"
 },
   dislikeButton: {
-    color: "red",
+    color: "black",
     cursor: "pointer",
   },
+  dislikeButtonDisabled: {
+    marginLeft: "1em",
+    color: "red",
+    cursor: "pointer"
+},
   edit: {
     marginLeft: "20em",
     background: "black",
@@ -138,33 +137,16 @@ export default function BusinessDetail({ currentReviews2 }) {
 
   function canReview(currentUserId) {
    let reviewChecker= currentReviews.filter(eachReview => {
-      if (eachReview.userId == currentUserId) {
+      if (eachReview.userId === currentUserId) {
         return eachReview
       }
-     return
+      return null
     })
     return reviewChecker
   }
 
   // determines whether the review button displays
   const canReviewArray = canReview(currentUserId)
-
-  // function canLike(currentUserId) {
-  //   let reviewChecker = currentReviews.filter(eachReview => {
-  //     eachReview.judgements.filter(judgement => {
-  //       if (judgement.userId == currentUserId) {
-  //         console.log(judgement, "judgement")
-  //       } else {
-  //         console.log(judgement, "judgment not working")
-  //       }
-  //     })
-  //   }
-  //   )
-
-  //   return reviewChecker
-  // }
-// determines if user can like a review
-  // canLike(currentUserId)
 
 // likes a review
   const postLike = async (currentReviewId) => {
@@ -175,8 +157,51 @@ export default function BusinessDetail({ currentReviews2 }) {
       dispatch(setCurrentBusiness(business))
   }
 
+// deletes a like on a review
   const deleteLike = async (currentJudgmentId) => {
-    console.log(currentJudgmentId)
+    let like= currentJudgmentId.filter(each => {
+     if (each.recommend === true) {
+       if (each.userId === currentUserId) {
+         console.log(each.id,"this")
+           return each.id
+        }
+      }
+      return
+    })
+    let likeToDelete = like[0].id
+    const deletedLike = await deletingLike(likeToDelete)
+    const business = await getBusiness(currentBusiness.id);
+      dispatch(setCurrentBusiness(business))
+      console.log(likeToDelete, "please")
+      return like[0].id
+  }
+
+//adds a dislike to a review
+  const postDislike = async (currentReviewId) => {
+    let recommend = false
+    let avoid = true
+    const like = await addingLike(currentUserId, currentReviewId, currentBusiness.id, recommend, avoid)
+    const business = await getBusiness(currentBusiness.id);
+      dispatch(setCurrentBusiness(business))
+  }
+
+// deletes dislike
+  const deleteDislike = async (currentJudgmentId) => {
+    let like= currentJudgmentId.filter(each => {
+     if (each.avoid === true) {
+       if (each.userId === currentUserId) {
+         console.log(each.id,"this")
+           return each.id
+        }
+      }
+      return
+    })
+    let likeToDelete = like[0].id
+    const deletedLike = await deletingLike(likeToDelete)
+    const business = await getBusiness(currentBusiness.id);
+      dispatch(setCurrentBusiness(business))
+      console.log(likeToDelete, "please")
+      return like[0].id
   }
 
 // handles opening review modal
@@ -200,11 +225,12 @@ export default function BusinessDetail({ currentReviews2 }) {
   const counter = (obj) => {
     const newObject = Object.assign({}, obj)
     const filteredObject = newObject.judgements
-    const newJudgement = new Object()
+    const newJudgement = {}
     // {}
     newJudgement["like"] = 0
     newJudgement["dislike"] = 0
-    newJudgement["userLikes"]=0
+    newJudgement["userLikes"] = 0
+    newJudgement["userDislikes"] = 0
     //  newJudgement = {like:0, dislike:0}
     filteredObject.forEach(each=>{
         if (!each.avoid){
@@ -213,9 +239,15 @@ export default function BusinessDetail({ currentReviews2 }) {
             newJudgement.dislike ++
         }
     })
-    filteredObject.forEach(each=>{
-      if (each.userId == currentUserId){
-          newJudgement.userLikes ++
+    filteredObject.forEach(each => {
+       console.log(each, "one")
+      if (each.userId === currentUserId && each.recommend === true) {
+        console.log("like")
+        newJudgement.userLikes++
+      }
+
+      if (each.userId === currentUserId && each.avoid === true) {
+        newJudgement.userDislikes++
       }
   })
     newObject.judgements = newJudgement
@@ -227,7 +259,7 @@ export default function BusinessDetail({ currentReviews2 }) {
       <Grid container spacing={3}>
         <Grid item className={classes.buinessContainer} spacing={0} xs={12}>
           <Paper className={classes.paper}>
-            <img className={classes.businessImg} src={currentBusiness.imgURL} />
+            <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
             <div className={classes.businessTitle}>{currentBusiness.name}</div>
             <div className={classes.businessCSZ}>{currentBusiness.address}</div>
             <div className={classes.businessCSZ}>
@@ -261,7 +293,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                 let currentReview = counter(each)
 
                 return (
-                  <Grid item xs={6}>
+                  <Grid item xs={6} spacing={0}>
                      <Card className={classes.card}>
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">
@@ -275,10 +307,12 @@ export default function BusinessDetail({ currentReviews2 }) {
                         {currentReview.judgements.userLikes < 1 ?
                           <ThumbUp onClick={()=>postLike(currentReview.id)} className={classes.likeButton} />
                         : <ThumbUp onClick={()=>deleteLike(each.judgements)} className={classes.likeButtonDisabled} />}
-                        <div>{currentReview.judgements.like}</div>
-                        <ThumbDown className={classes.dislikeButton} />
-                        <div>{currentReview.judgements.dislike}</div>
-                        {currentReview.userId == currentUserId ?
+                        <div>Agree ({currentReview.judgements.like})</div>
+                        {currentReview.judgements.userDislikes < 1 ?
+                          <ThumbDown onClick={()=>postDislike(currentReview.id)} className={classes.dislikeButton} />
+                        : <ThumbDown onClick={()=>deleteDislike(each.judgements)} className={classes.dislikeButtonDisabled} />}
+                        <div>Disagree ({currentReview.judgements.dislike})</div>
+                        {currentReview.userId === currentUserId ?
                           <Button className={classes.edit}>Edit</Button>
                           : ""}
                       </CardActions>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { authenticate } from '../services/auth';
 import LogoutButton from './auth/LogoutButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -113,7 +112,7 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             {authenticated ?
-              <img className={classes.logo} src="/DramaDeetsLogo.png" />
+              <img className={classes.logo} src="/DramaDeetsLogo.png" alt="Logo" />
               : false}
           </Typography>
           {!authenticated ?

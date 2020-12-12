@@ -17,10 +17,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '1.5px',
+    marginTop: '.5px',
     width: '100%',
     height: '100%',
-    maxHeight: '100vh',
+    maxHeight: '1000vh',
     maxWidth: 360,
     minWidth:260,
     backgroundColor: theme.palette.background.paper,
@@ -47,15 +47,17 @@ export default function ListSideBar() {
   function typeFinder(id) {
      return Object.values(businessTypes).filter(data => {
       let typeArray = data.types.filter(eachType => {
-        if (eachType.type_id == id) {
+        if (eachType.type_id === id) {
           return eachType
         }
+        return null
       })
        if (typeArray.length > 0) {
          console.log(data, "data")
          return data
-      }
-    })
+       }
+       return null
+     })
   }
 
   //This will handle the click of a business and set it to

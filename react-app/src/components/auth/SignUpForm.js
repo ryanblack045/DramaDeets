@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../services/auth';
 import { fetchBusinesses } from "../../services/businesses";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 

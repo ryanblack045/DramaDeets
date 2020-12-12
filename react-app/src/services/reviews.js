@@ -32,3 +32,15 @@ export const addingLike = async (user_id, review_id, business_id, recommend, avo
   });
   return await response.json();
 }
+
+
+
+export const deletingLike = async (likeId) => {
+  const response = await fetch(`/api/reviews/like/${likeId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await response.json();
+}
