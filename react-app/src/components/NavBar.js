@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { setLandingPage } from '../store/actions/ui'
 import LogoutButton from './auth/LogoutButton';
 // import { theme } from '../styles/Theme';
 import {
@@ -21,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
   navbar: {
   background: "transparent"
   },
+  headerBody: {
+    marginTop: "2em"
+  },
+  loginTitle: {
+    fontSize: "3em",
+    lineHeight: "1.25em",
+    fontFamily: "brandon-grotesque, sans-serif",
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -41,11 +50,21 @@ const useStyles = makeStyles((theme) => ({
   },
   login: {
     background: "white",
-    color: "blue"
+    color: "blue",
+    marginRight: "2em",
+    "&:hover": {
+      backgroundColor: "black",
+      color: "white"
+    },
   },
   signup: {
     background: "white",
-    color: "blue"
+    marginRight: "2em",
+    color: "blue",
+    "&:hover": {
+      backgroundColor: "black",
+      color: "white"
+    },
   },
   signupHeader: {
     backgroundColor: theme.palette.background.paper,
@@ -66,11 +85,19 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: ".25em",
   },
   logo: {
-    height: "4em",
-    width: "4em",
-    marginTop: ".5em"
+    textAlign:"center",
+    cursor: "pointer",
+    marginTop: "-3.25em",
+    marginBottom: "-3.5em"
+  },
+  textButton: {
+    textDecoration: "underline",
+    fontWeight: "bold",
+    cursor:"pointer",
   }
 }));
+
+
 
 
 function getModalStyle() {
@@ -90,6 +117,12 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false)
+
+
+  const dispatch = useDispatch()
+  const iconClick = () => {
+    dispatch(setLandingPage(true))
+  }
 
   const handleOpen = () => {
     setOpen(true);
@@ -130,18 +163,45 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
       <SignUpForm className={classes.signUp} setAuthenticated={setAuthenticated}
         authenticated={authenticated}
         open={open}
-        setOpen={setOpen}/>
+          setOpen={setOpen} />
+        <span>Already have an account?</span>
+        <span className={classes.textButton}
+          onClick={() => {
+            handleClose()
+            handleOpen2()
+          }}> Login</span>
         </Paper>
     </div>
   );
 
   const loginModal = (
     <div style={modalStyle} border="none" className={classes.paper}>
-      <LoginForm setAuthenticated={setAuthenticated}
-        authenticated={authenticated}
-        open2={open2}
-        setOpen2={setOpen2}
-        />
+       <Paper className={classes.signupHeader}>
+        <div>
+          <div className={classes.loginTitle}>
+            <br></br>
+            Welcome back.
+          </div>
+        <div className={classes.headerBody}>
+          <span className={classes.signupSubheader}>This is not a hate forum, please be </span>
+          <span className={classes.signupSubheaderBold}>respectful</span>
+          <span className={classes.signupSubheader}> with all reviews. This is was built to </span>
+          <span className={classes.signupSubheaderBold}>empower</span>
+          <span className={classes.signupSubheader}> our community, please don't use it to tear it down. </span>
+        </div>
+      </div>
+        <LoginForm setAuthenticated={setAuthenticated}
+          authenticated={authenticated}
+          open2={open2}
+          setOpen2={setOpen2}
+          />
+        <span>Don't have an account?</span>
+        <span className={classes.textButton}
+          onClick={() => {
+            handleClose2()
+            handleOpen()
+          }}> Signup</span>
+        </Paper>
     </div>
   );
 
@@ -151,7 +211,11 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             {authenticated ?
-              <img className={classes.logo} src="/DramaDeetsLogo.png" alt="Logo" />
+              <img
+                className={classes.logo}
+                onClick={()=> iconClick()}
+                src="/DramaDeetsLogo.png"
+                alt="Logo" />
               : false}
           </Typography>
           {!authenticated ?
@@ -199,36 +263,5 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   );
 }
 
-
-//   return (
-//     <nav>
-//       <ul>
-//         <li>
-//           <NavLink to="/" exact={true} activeClassName="active">
-//             Home
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/login" exact={true} activeClassName="active">
-//             Login
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/sign-up" exact={true} activeClassName="active">
-//             Sign Up
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/users" exact={true} activeClassName="active">
-//             Users
-//           </NavLink>
-//         </li>
-//         {authenticated ?
-//             <LogoutButton authenticated={authenticated} setAuthenticated={setAuthenticated} />
-//           : null}
-//       </ul>
-//     </nav>
-//   );
-// }
 
 export default NavBar;

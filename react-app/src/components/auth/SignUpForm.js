@@ -21,7 +21,11 @@ const SignUpForm = ({authenticated, setAuthenticated, open, setOpen}) => {
     button: {
       background: "black",
       color: "white",
-      marginTop: "1em"
+      marginTop: ".5em",
+      marginBottom: ".5em",
+      "&:hover": {
+        backgroundColor: "#1b4332"
+      },
     },
     input: {
       borderRadius: "1em",

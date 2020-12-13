@@ -12,6 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { getBusiness } from "../services/businesses";
 import { setCurrentBusiness } from '../store/actions/session'
+import { setLandingPage } from '../store/actions/ui'
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -63,6 +64,7 @@ export default function ListSideBar() {
   //This will handle the click of a business and set it to
   //the current business so that it may be rendered in another component
   const businessClick = async (id) => {
+    dispatch(setLandingPage(false));
     const business = await getBusiness(id);
     dispatch(setCurrentBusiness(business))
   }

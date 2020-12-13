@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './reducers/session'
 import entities from './reducers/entities'
+import ui from './reducers/ui'
 
 const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -32,7 +33,8 @@ export const saveState = (state) => {
 
 const reducer = combineReducers({
   session,
-  entities
+  entities,
+  ui
 });
 
 
@@ -47,16 +49,9 @@ const store = createStore(
 
 store.subscribe(() => {
   saveState({
-    // entities: ,
     entities: store.getState().entities,
     session: store.getState().session,
-    // ui: ,
-    // errors ,
-    // directionsRedux: store.getState().directionsRedux,
-    // trips: store.getState().trips,
-    // stops: store.getState().stops,
-    // cars: store.getState().cars,
-    // setDuration: store.getState().setDuration,
+    ui: store.getState().ui
   });
 });
 
