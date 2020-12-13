@@ -36,6 +36,19 @@ def updateReview(review_id):
     return review.to_dict()
 
 
+@review_routes.route('/<int:review_id>', methods=['DELETE'])
+def deleteReview(review_id):
+
+    review = Review.query.get(review_id)
+    if review:
+      db.session.delete(review)
+      db.session.commit()
+      return {'message': 'Review was successfully deleted'}
+    else:
+      return{'errors':'Review was not found'}
+
+
+
 @review_routes.route('/<int:review_id>/like', methods=['POST'])
 def judgeReview(review_id):
     data = request.json

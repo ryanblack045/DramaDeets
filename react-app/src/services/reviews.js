@@ -61,3 +61,13 @@ export const sendUpdatedReviw = async (review_id, title, body, rating) => {
   })
     return await response.json();
 }
+
+export const deleteReview = async (review_id) => {
+  const response = await fetch(`api/reviews/${review_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    return await response.json();
+}

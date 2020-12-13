@@ -12,11 +12,12 @@ import {
   CardActions,
   CardContent,
   Grid,
-  Paper
+  Paper,
+  Snackbar
 } from '@material-ui/core';
 import { setCurrentBusiness } from '../store/actions/session'
 import Map from './Map'
-import { addingLike, deletingLike, sendUpdatedReviw } from '../services/reviews'
+import { addingLike, deletingLike, sendUpdatedReviw, deleteReview } from '../services/reviews'
 import { getBusiness} from "../services/businesses";
 
 
@@ -43,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto"
   },
+  businessRating: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: "1.25em"
+  },
   businessTitle: {
     fontSize: "3em",
     textAlign: "center"
@@ -50,16 +56,29 @@ const useStyles = makeStyles((theme) => ({
   card: {
     textAlign:"center"
   },
+  deleteReview: {
+    cursor: "pointer",
+    marginLeft: "21em",
+    marginTop: "-1em",
+    marginBottom: "-1em",
+    fontWeight: "bold",
+  },
+  deleteReviewButton: {
+    color: "white",
+    backgroundColor: "red",
+    "&:hover": {
+      backgroundColor: "#780202"
+    },
+  },
   dislikeButton: {
     color: "black",
     cursor: "pointer",
-    marginLeft: "2em",
+    // marginLeft: "2em",
   },
   dislikeButtonDisabled: {
-    marginLeft: "1em",
+    // marginLeft: "1em",
     color: "red",
     cursor: "pointer",
-    marginLeft: "1em",
   },
   edit: {
     background: "black",
@@ -75,12 +94,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column"
   },
   likeButton: {
-    marginLeft: "1em",
     color: "black",
     cursor: "pointer"
   },
   likeButtonDisabled: {
-    marginLeft: "1em",
     color: "#74c69d",
     cursor: "pointer"
   },
@@ -118,14 +135,36 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: 400,
     height: 600,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#1b4332",
     outline: "none",
     borderRadius: 16,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
+    textAlign: "center",
+  },
+  reviewModalHeader: {
+    backgroundColor: theme.palette.background.paper,
+    height: "100%",
+  },
+  reviewTitle: {
+    fontSize: "3em",
+    lineHeight: ".75em",
+    fontFamily: "brandon-grotesque, sans-serif",
+    marginBottom: "1em",
   },
   root: {
     flexGrow: 1,
+  },
+  reviewBody: {
+    wordWrap:"break-word"
+  },
+  reviewSubheader: {
+    fontSize: "1.1em"
+   },
+  reviewSubheaderBold: {
+    fontSize: "1.1em",
+    fontWeight: "bold",
+    textDecoration: "underline"
   },
   saveButton: {
     background: "red",
@@ -152,6 +191,7 @@ function getModalStyle() {
 
 export default function BusinessDetail({ currentReviews2 }) {
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const [edit, setEdit] = React.useState(false);
   const [title, setTitle] = React.useState("")
@@ -167,7 +207,7 @@ export default function BusinessDetail({ currentReviews2 }) {
   useEffect(() => {
     console.log("did it")
     dispatch(setCurrentBusiness(currentBusiness))
-  }, [businesses,dispatch])
+  }, [businesses])
 
   function canReview(currentUserId) {
    let reviewChecker= currentReviews.filter(eachReview => {
@@ -191,12 +231,21 @@ export default function BusinessDetail({ currentReviews2 }) {
       dispatch(setCurrentBusiness(business))
   }
 
+  // gives avg rating of business
+  const ratingCalculator = (currentBusiness) => {
+    let ratingSum = 0
+    const numOfReviews = currentBusiness.reviews.length
+    currentBusiness.reviews.forEach(review => {
+      ratingSum += review.rating
+    })
+    return(ratingSum/numOfReviews.toFixed(1))
+  }
+
 // deletes a like on a review
   const deleteLike = async (currentJudgmentId) => {
     let like= currentJudgmentId.filter(each => {
      if (each.recommend === true) {
        if (each.userId === currentUserId) {
-         console.log(each.id,"this")
            return each.id
         }
       }
@@ -238,6 +287,14 @@ export default function BusinessDetail({ currentReviews2 }) {
       return like[0].id
   }
 
+// deletes review
+   const sendDeleteReview = async (currentReviewId) =>{
+      await deleteReview(currentReviewId)
+      const business = await getBusiness(currentBusiness.id);
+      dispatch(setCurrentBusiness(business))
+      return
+  }
+
 // handles opening review modal
   const handleOpen = () => {
     setOpen(true);
@@ -245,6 +302,14 @@ export default function BusinessDetail({ currentReviews2 }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
   };
 
   const updateTitle = e => {
@@ -268,11 +333,28 @@ export default function BusinessDetail({ currentReviews2 }) {
 
 
   const submitReviewModal = (
+    <>
     <div style={modalStyle} border="none" className={classes.reviewModal}>
-      <ReviewForm className={classes.reviewForm}
-        open={open}
-        setOpen={setOpen}/>
+      <Paper className={classes.reviewModalHeader}>
+        <div>
+          <div className={classes.reviewTitle}>
+            <br></br>
+            Review Form.
+          </div>
+          <span className={classes.signupSubheader}>Be </span>
+          <span className={classes.reviewSubheaderBold}>fair</span>
+          <span className={classes.reviewSubheader}>, be </span>
+          <span className={classes.reviewSubheaderBold}>respectful.<br></br></span>
+          <span className={classes.reviewSubheader}> Toxic posts will be </span>
+          <span className={classes.reviewSubheaderBold}>deleted</span>
+        </div>
+        <ReviewForm className={classes.reviewForm}
+          open={open}
+          setOpen={setOpen}
+        />
+      </Paper>
     </div>
+    </>
   );
 
   const counter = (obj) => {
@@ -321,6 +403,7 @@ export default function BusinessDetail({ currentReviews2 }) {
               <a href={currentBusiness.website}>{currentBusiness.website}</a>
             </div>
             <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
+            <div className={classes.businessRating}>Rating: {ratingCalculator(currentBusiness)}/10</div>
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>
@@ -356,30 +439,67 @@ export default function BusinessDetail({ currentReviews2 }) {
                                 value={title}
                                 onChange={updateTitle}
                                 label="Title"
-                                placeholder={currentReview.title}
-                                variant="outlined"/>
+                                placeholder={title}
+                                variant="outlined">
+                                {currentReview.title}
+                              </TextField>
                               <TextField
                                 className={classes.body}
                                 multiline
+                                rows={4}
                                 onChange={updateBody}
                                 value={body}
                                 label="Description"
-                                placeholder={currentReview.body}
-                                variant="outlined"/>
+                                placeholder={body}
+                                variant="outlined">
+                                {currentReview.body}
+                              </TextField>
                               <TextField
-                                placeholder={currentReview.rating}
+                                placeholder={rating}
                                 label="Rating 1-10"
                                 onChange={updateRating}
                                 value={rating}
-                                variant="outlined"/>
+                                variant="outlined">
+                                {currentReview.rating}
+                              </TextField>
                             </div>
                           </>
                           :
-                        <>
+                          <>
+                            {currentReview.userId === currentUserId ?
+                            <>
+                              <span
+                                onClick={() => handleOpen2()}
+                                className={classes.deleteReview}>
+                                x
+                              </span>
+                              <Snackbar
+                                anchorOrigin={{
+                                  vertical: 'bottom',
+                                  horizontal: 'center',
+                                }}
+                                open={open2}
+                                onClose={handleClose2}
+                                autoHideDuration={10000}
+                                message= "Are you sure you want to delete"
+                                action=
+                                {
+                                  <Button
+                                    className={classes.deleteReviewButton}
+                                    onClick={()=> sendDeleteReview(currentReview.id)}
+                                    >
+                                    Delete
+                                  </Button>
+                                }
+                                >
+
+                              </Snackbar>
+                            </>
+                            : ""}
                          <Typography gutterBottom variant="h5" component="h2">
                           "{currentReview.title}"
                           </Typography>
-                          <Typography variant="body2" color="textSecondary" component="p">
+                          <Typography className={classes.reviewBody} variant="body2" color="textSecondary" component="p">
                            {currentReview.body}
                           </Typography>
                         </>
@@ -389,11 +509,11 @@ export default function BusinessDetail({ currentReviews2 }) {
                         {currentReview.judgements.userLikes < 1 ?
                           <ThumbUp onClick={()=>postLike(currentReview.id)} className={classes.likeButton} />
                         : <ThumbUp onClick={()=>deleteLike(each.judgements)} className={classes.likeButtonDisabled} />}
-                        <div>Agree ({currentReview.judgements.like})</div>
+                        <div>Agree({currentReview.judgements.like})</div>
                         {currentReview.judgements.userDislikes < 1 ?
                           <ThumbDown onClick={()=>postDislike(currentReview.id)} className={classes.dislikeButton} />
                         : <ThumbDown onClick={()=>deleteDislike(each.judgements)} className={classes.dislikeButtonDisabled} />}
-                        <div>Disagree ({currentReview.judgements.dislike})</div>
+                        <div>Disagree({currentReview.judgements.dislike})</div>
                         {currentReview.userId === currentUserId ?
                           <div className={classes.editContainer}>
                             {!edit ? <Button

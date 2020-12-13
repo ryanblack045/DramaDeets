@@ -45,7 +45,6 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
     e.preventDefault();
     const user = await login(email, password);
     if (!user.errors) {
-      setAuthenticated(true);
       dispatch(setCurrentUser(user))
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
@@ -53,6 +52,7 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
       dispatch(setCurrentBusiness(business))
       dispatch(setLandingPage(true))
       setOpen2(false)
+      setAuthenticated(true);
       history.push("/")
     } else {
       setErrors(user.errors);

@@ -45,5 +45,6 @@ export const signUp = async (username, email, password) => {
       password,
     }),
   });
-  return await response.json();
+  const user = await response.json()
+  return user;
 }

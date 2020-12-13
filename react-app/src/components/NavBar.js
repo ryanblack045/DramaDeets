@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
       textAlign: "center"
-
   },
   title: {
     flexGrow: 1,
@@ -157,8 +156,6 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
           <span className={classes.signupSubheaderBold}>reliable</span>
           <span className={classes.signupSubheader}> experience for </span>
           <span className={classes.signupSubheaderBold}>everyone.</span>
-
-
         </div>
       <SignUpForm className={classes.signUp} setAuthenticated={setAuthenticated}
         authenticated={authenticated}
@@ -185,7 +182,7 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
         <div className={classes.headerBody}>
           <span className={classes.signupSubheader}>This is not a hate forum, please be </span>
           <span className={classes.signupSubheaderBold}>respectful</span>
-          <span className={classes.signupSubheader}> with all reviews. This is was built to </span>
+          <span className={classes.signupSubheader}> with all reviews. This was built to </span>
           <span className={classes.signupSubheaderBold}>empower</span>
           <span className={classes.signupSubheader}> our community, please don't use it to tear it down. </span>
         </div>

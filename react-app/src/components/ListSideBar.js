@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
   primeIcons: {
     color: "blue"
+  },
+  sidebarHeader: {
+    fontWeight: "bold"
   }
 }));
 
@@ -107,7 +110,11 @@ export default function ListSideBar() {
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
+        <ListSubheader
+          component="div"
+          id="nested-list-subheader"
+          className={classes.sidebarHeader}
+        >
           Types of Businesses
         </ListSubheader>
       }

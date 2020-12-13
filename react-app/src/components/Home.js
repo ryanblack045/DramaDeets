@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 export default function Home() {
   const landingPage = useSelector((state) => (state.ui.landingPage));
-  console.log(landingPage)
   return (
     <>
        <Grid container  spacing={0}>
