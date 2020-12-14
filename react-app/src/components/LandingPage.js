@@ -19,15 +19,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function LandingPage() {
-  AOS.init()
+  // AOS.init()
   const classes = useStyles();
 
   return (
     <>
       <div
-        data-aos="fade-up"
-        data-aos-delay="50"
-        data-aos-duration="1000"
+        // data-aos="fade-up"
+        // data-aos-delay="50"
+        // data-aos-duration="1000"
         className={classes.img1}
       />
     {/* <img
