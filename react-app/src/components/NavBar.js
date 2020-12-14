@@ -14,7 +14,9 @@ import {
 } from '@material-ui/core';
 import SignUpForm from './auth/SignUpForm'
 import LoginForm from './auth/LoginForm'
+import Background from '../assets/DramaDeetsLogo.png'
 
+// const Background = "../assets/DramaDeetsLogo.png"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   background: "transparent"
   },
   headerBody: {
-    marginTop: "2em"
+    marginTop: "2em",
   },
   loginTitle: {
     fontSize: "3em",
@@ -54,6 +56,13 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "black",
       color: "white"
+    },
+    newLogo: {
+      background:"blue",
+       backgroundImage: `url(${Background})`,
+      height: "10em",
+      width: "10em",
+      cursor:"pointer"
     },
   },
   signup: {
@@ -211,8 +220,13 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
               <img
                 className={classes.logo}
                 onClick={()=> iconClick()}
-                src="/DramaDeetsLogo.png"
+                src="https://drama-deets.s3.amazonaws.com/DramaDeetsLogo.png"
                 alt="Logo" />
+              // <div
+              //   className={classes.newLogo}
+              //   style={{   backgroundImage: `url(${Background})`, minHeight:"3em", minWidth:"3em", cursor:"pointer"}}
+              // >
+              // </div>
               : false}
           </Typography>
           {!authenticated ?

@@ -7,7 +7,7 @@ const background = "/landingPage1.png"
 
 const useStyles = makeStyles((theme) => ({
   img1: {
-    backgroundImage: `url(${background})`,
+    backgroundImage: 'url("https://drama-deets.s3.amazonaws.com/landingPage1.png")',
     height: "100vh",
     marginLeft: "5%",
     // marginRight: "5%",
