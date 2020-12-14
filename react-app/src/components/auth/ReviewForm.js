@@ -42,7 +42,7 @@ const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
       minWidth: "15em",
     },
     reviewForm: {
-      marginTop: "2.5em",
+      marginTop: "1.5em",
       marginBottom: "1em"
     }
   }));

@@ -56,9 +56,12 @@ const useStyles = makeStyles((theme) => ({
   card: {
     textAlign:"center"
   },
+  cardContainer: {
+    boxShadow: " 5px 10px 8px #888888",
+  },
   deleteReview: {
     cursor: "pointer",
-    marginLeft: "21em",
+    marginLeft: "90%",
     marginTop: "-1em",
     marginBottom: "-1em",
     fontWeight: "bold",
@@ -150,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3em",
     lineHeight: ".75em",
     fontFamily: "brandon-grotesque, sans-serif",
-    marginBottom: "1em",
+    marginBottom: ".5em",
   },
   root: {
     flexGrow: 1,
@@ -159,10 +162,10 @@ const useStyles = makeStyles((theme) => ({
     wordWrap:"break-word"
   },
   reviewSubheader: {
-    fontSize: "1.1em"
+    fontSize: "1.3em"
    },
   reviewSubheaderBold: {
-    fontSize: "1.1em",
+    fontSize: "1.3em",
     fontWeight: "bold",
     textDecoration: "underline"
   },
@@ -339,9 +342,9 @@ export default function BusinessDetail({ currentReviews2 }) {
         <div>
           <div className={classes.reviewTitle}>
             <br></br>
-            Review Form.
+            Review form.
           </div>
-          <span className={classes.signupSubheader}>Be </span>
+          <span className={classes.reviewSubheader}>Be </span>
           <span className={classes.reviewSubheaderBold}>fair</span>
           <span className={classes.reviewSubheader}>, be </span>
           <span className={classes.reviewSubheaderBold}>respectful.<br></br></span>
@@ -390,7 +393,7 @@ export default function BusinessDetail({ currentReviews2 }) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid container spacing={0}>
         <Grid item className={classes.buinessContainer} spacing={0} xs={12}>
           <Paper className={classes.paper}>
             <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
@@ -429,7 +432,7 @@ export default function BusinessDetail({ currentReviews2 }) {
 
                 return (
                   <Grid item xs={6} spacing={0}>
-                     <Card >
+                     <Card className={classes.cardContainer} >
                         <CardContent className={classes.card}>
                         { edit && currentReview.userId === currentUserId ?
                           <>

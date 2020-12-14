@@ -3,6 +3,7 @@ import ListSideBar from './ListSideBar'
 import BusinessDetail from './BusinessDetails'
 import Grid from '@material-ui/core/Grid';
 import { useSelector } from "react-redux";
+import LandingPage from './LandingPage';
 
 
 
@@ -17,7 +18,7 @@ export default function Home() {
         <Grid item xs={9}>
           {!landingPage ?
             <BusinessDetail />
-            : <h1>Testing</h1>
+            : <LandingPage/>
           }
         </Grid>
       </Grid>

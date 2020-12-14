@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     maxHeight: '1000vh',
+    minHeight: '100vh',
     maxWidth: 360,
     minWidth:260,
     backgroundColor: theme.palette.background.paper,
@@ -33,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
     color: "blue"
   },
   sidebarHeader: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: "1.25em",
+    textAlign: "center"
   }
 }));
 

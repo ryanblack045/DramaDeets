@@ -87,7 +87,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign:"center",
     cursor: "pointer",
     marginTop: "-3.25em",
-    marginBottom: "-3.5em"
+    marginBottom: "-3.5em",
+    marginLeft:"1em"
   },
   textButton: {
     textDecoration: "underline",
@@ -112,13 +113,12 @@ function getModalStyle() {
 }
 
 const NavBar = ({ setAuthenticated, authenticated }) => {
-  const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false)
-
-
   const dispatch = useDispatch()
+  const classes = useStyles();
+
   const iconClick = () => {
     dispatch(setLandingPage(true))
   }
