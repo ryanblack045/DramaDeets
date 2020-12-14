@@ -25,9 +25,9 @@ export default function LandingPage() {
   return (
     <>
       <div
-        // data-aos="fade-up"
-        // data-aos-delay="50"
-        // data-aos-duration="1000"
+        data-aos="fade-up"
+        data-aos-delay="50"
+        data-aos-duration="1000"
         className={classes.img1}
       />
     {/* <img
