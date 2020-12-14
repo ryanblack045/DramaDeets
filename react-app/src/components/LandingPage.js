@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function LandingPage() {
-  // AOS.init()
+  AOS.init()
   const classes = useStyles();
 
   return (

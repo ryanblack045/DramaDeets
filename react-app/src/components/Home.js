@@ -10,7 +10,6 @@ import AOS from 'aos';
 
 export default function Home() {
   const landingPage = useSelector((state) => (state.ui.landingPage));
-
   return (
     <>
        <Grid container  spacing={0}>
