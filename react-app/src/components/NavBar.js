@@ -211,13 +211,13 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
               <img
                 className={classes.logo}
                 onClick={()=> iconClick()}
-                src="../assets/DramaDeetsLogo.png"
+                src="/DramaDeetsLogo.png"
                 alt="Logo" />
               : false}
           </Typography>
           {!authenticated ?
             <Button background="blue" color="secondary" className={classes.signup} onClick={handleOpen}>
-              Sign Uppp
+              Sign Up
             </Button>
             : true}
             <Modal
