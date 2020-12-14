@@ -155,8 +155,6 @@ Project Link: [https://github.com/ryanblack045/DramaDeets](https://github.com/ry
 
     * User registration with validations
     * Guest User for demonstration
-    * Create/Edit/Delete user info
-    * Create/Edit Business
     * Create/Edit/Delete Review of a business (limited to one review per user)
 
 2. Businesses
