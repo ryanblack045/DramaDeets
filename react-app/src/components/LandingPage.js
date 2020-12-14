@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 const background = "/landingPage1.png"
-window.addEventListener('load', AOS.refresh)
+
 
 const useStyles = makeStyles((theme) => ({
   img1: {
