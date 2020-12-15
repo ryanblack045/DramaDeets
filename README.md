@@ -20,7 +20,7 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
   <h3 align="center">Thank you for exploring Drama Deets!</h3>
 
   <p align="center">
-    <a href=>View Demo</a>
+    <a href="https://drama-deets.herokuapp.com/">View Demo</a>
   </p>
 </p>
 
