@@ -434,7 +434,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                   <Grid item xs={6} spacing={0}>
                      <Card className={classes.cardContainer} >
                         <CardContent className={classes.card}>
-                        { edit && currentReview.userId === currentUserId ?
+                        {edit && currentReview.userId === currentUserId || edit && currentUserId === 1 ?
                           <>
                             <div className={classes.editContainer}>
                               <TextField
@@ -469,7 +469,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                           </>
                           :
                           <>
-                            {currentReview.userId === currentUserId ?
+                            {currentReview.userId === currentUserId || currentUserId === 1 ?
                             <>
                               <span
                                 onClick={() => handleOpen2()}
@@ -517,7 +517,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                           <ThumbDown onClick={()=>postDislike(currentReview.id)} className={classes.dislikeButton} />
                         : <ThumbDown onClick={()=>deleteDislike(each.judgements)} className={classes.dislikeButtonDisabled} />}
                         <div>Disagree({currentReview.judgements.dislike})</div>
-                        {currentReview.userId === currentUserId ?
+                        {currentReview.userId === currentUserId || currentUserId === 1  ?
                           <div className={classes.editContainer}>
                             {!edit ? <Button
                               onClick= { () => {
