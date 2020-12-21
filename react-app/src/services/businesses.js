@@ -5,7 +5,6 @@ export const fetchBusinesses = async () => {
     },
   });
   const business = await response.json();
-  console.log(business)
   return business.businesses
 }
 
@@ -16,6 +15,30 @@ export const getBusiness = async (id) => {
     },
   });
   const business = await response.json();
-  console.log(business)
   return business
+}
+
+export const newBusiness = async (user_id, name, description,
+  lat, lng, address, city, state, zipcode, website, contact, imgURL) => {
+  const response = await fetch(`/api/business/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id,
+      name,
+      description,
+      lat,
+      lng,
+      address,
+      city,
+      state,
+      zipcode,
+      website,
+      contact,
+      imgURL
+    }),
+  });
+  return await response.json();
 }

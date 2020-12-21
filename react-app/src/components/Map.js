@@ -21,11 +21,8 @@ const InitMap = () => {
 
 
   useEffect(() => {
-     setCurrentLat(currentBusinessLat)
+    setCurrentLat(currentBusinessLat)
     setCurrentLng(currentBusinessLng)
-    console.log(currentLat)
-    console.log(currentLng)
-    console.log(Number((currentLat)))
     // currentBusinessLng
     // currentBusinessLat
 

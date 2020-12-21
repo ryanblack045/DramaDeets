@@ -52,18 +52,16 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
       dispatch(setCurrentBusiness(business))
       dispatch(setLandingPage(true))
       setOpen2(false)
-      setAuthenticated(true);
+      setAuthenticated(true)
       history.push("/")
     } else {
       setErrors(user.errors);
     }
     if (authenticated) {
-      console.log("inhere")
       return <Redirect to="/" />;
     }
 
     if (!authenticated) {
-      console.log("nope")
     }
 };
 

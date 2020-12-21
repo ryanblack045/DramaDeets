@@ -23,11 +23,13 @@ def fetchBusinesses():
     businesses = Business.query.order_by(Business.name).all()
     return{"businesses": [business.to_dict() for business in businesses]}
 
+
 @business_routes.route('/<int:id>')
 @login_required
 def business(id):
     business = Business.query.get(id)
     return business.to_dict()
+
 
 @business_routes.route('/<int:business_id>/reviews', methods=['POST'])
 @login_required
@@ -35,19 +37,40 @@ def submitReview(business_id):
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-      data = request.json
-      print(data, "heeeeeeerrree")
-      review = Review(
-          user_id=data['user_id'],
-          business_id=data['business_id'],
-          title=form.data['title'],
-          body=form.data['body'],
-          rating=form.data['rating']
-      )
-      print(review.to_dict())
-      db.session.add(review)
-      db.session.commit()
-      return review.to_dict()
+        data = request.json
+        print(data, "heeeeeeerrree")
+        review = Review(
+            user_id=data['user_id'],
+            business_id=data['business_id'],
+            title=form.data['title'],
+            body=form.data['body'],
+            rating=form.data['rating']
+        )
+        print(review.to_dict())
+        db.session.add(review)
+        db.session.commit()
+        return review.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
-
+@business_routes.route('/', methods=['POST'])
+@login_required
+def createBusiness():
+        data = request.json
+        business = Business(
+            user_id=data['user_id'],
+            name=data['name'],
+            description=data['description'],
+            lat=data['lat'],
+            lng=data['lng'],
+            address=data['address'],
+            city=data['city'],
+            state=data['state'],
+            zipcode=data['zipcode'],
+            website=data['website'],
+            contact=data['contact'],
+            imgURL=data['imgURL'],
+        )
+        db.session.add(business)
+        db.session.commit()
+        return business.to_dict()
+    

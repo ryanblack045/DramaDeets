@@ -10,10 +10,14 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./services/auth";
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from './store/actions/session'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
     (async() => {
@@ -22,6 +26,7 @@ function App() {
         setAuthenticated(true);
       }
       setLoaded(true);
+      // dispatch(setCurrentUser(""))
     })();
   }, []);
 

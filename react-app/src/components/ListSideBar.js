@@ -1,12 +1,16 @@
 
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
+import {
+  ListItemText,
+  ListItemIcon,
+  ListItem,
+  ListSubheader,
+  Paper,
+  makeStyles,
+  Collapse,
+  List,
+  Modal
+} from '@material-ui/core';
 import { PhotoCamera, Face, LocationCity, MovieFilter } from '@material-ui/icons';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -14,9 +18,37 @@ import { getBusiness } from "../services/businesses";
 import { setCurrentBusiness } from '../store/actions/session'
 import { setLandingPage } from '../store/actions/ui'
 import { useSelector, useDispatch } from "react-redux";
+import BusinessForm from './auth/BusinessForm'
 
 
 const useStyles = makeStyles((theme) => ({
+  businessButton: {
+    backgroundColor: "#52b788",
+    color: "white",
+    justifyContent: "center",
+    fontWeight: "bold",
+    "&:hover": {
+      backgroundColor: "#2d6a4f",
+      color: "white"
+    },
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    height: 600,
+    backgroundColor: "#1b4332",
+    outline: "none",
+    borderRadius: 16,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    textAlign: "center"
+  },
+  primeIcons: {
+    color: "blue"
+  },
   root: {
     marginTop: '.5px',
     width: '100%',
@@ -27,29 +59,40 @@ const useStyles = makeStyles((theme) => ({
     minWidth:260,
     backgroundColor: theme.palette.background.paper,
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-  primeIcons: {
-    color: "blue"
-  },
   sidebarHeader: {
     fontWeight: "bold",
     fontSize: "1.25em",
     textAlign: "center"
-  }
+  },
+  signupHeader: {
+    backgroundColor: theme.palette.background.paper,
+    height: "100%",
+  },
 }));
 
-export default function ListSideBar() {
+export default function ListSideBar( setAuthenticated, authenticated) {
   const classes = useStyles();
+  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
+  const [open5, setOpen5] = React.useState(false);
   const dispatch = useDispatch();
-
-
   const businessTypes = useSelector((state) => (state.entities.businesses.byId))
+  const currentUserId = useSelector((state) => (state.session.currentUser.id));
+
+  function getModalStyle() {
+    const top =  50
+    const left = 50
+
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      border: "none",
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
 // a function built to grab businesses out of redux by a certain type id, logic should be reused
   function typeFinder(id) {
      return Object.values(businessTypes).filter(data => {
@@ -60,7 +103,6 @@ export default function ListSideBar() {
         return null
       })
        if (typeArray.length > 0) {
-         console.log(data, "data")
          return data
        }
        return null
@@ -75,7 +117,7 @@ export default function ListSideBar() {
     dispatch(setCurrentBusiness(business))
   }
 
-// These are grabbing all businesses by certain types out of the redux store
+// These are grabbing all businesses by certain types out of the redux store and sorting them in alphabetical order
   const photographers = typeFinder(1).sort(function (a, b) {
     return a.name.localeCompare(b.name);
   })
@@ -107,6 +149,23 @@ export default function ListSideBar() {
     setOpen4(!open4);
   };
 
+  const handleClick5 = () => {
+    setOpen5(!open5);
+  };
+
+
+  const BusinessModal = (
+    <div style={modalStyle} border="none" className={classes.paper}>
+      <Paper className={classes.signupHeader}>
+        <div>Add a new business</div>
+        <BusinessForm
+          open5={open5}
+          setOpen5={setOpen5}
+        />
+      </Paper>
+      </div>
+  );
+
 
   return (
     <List
@@ -123,6 +182,25 @@ export default function ListSideBar() {
       }
       className={classes.root}
     >
+       {authenticated && currentUserId === 1 ?
+            <>
+              <ListItem
+                button onClick={handleClick5}
+                className={classes.businessButton}>
+                Add Business
+              </ListItem>
+              <Modal
+                open={open5}
+                onClose={handleClick5}
+                aria-labelledby="Create Business"
+                aria-describedby="Create businesss form"
+              >
+                {BusinessModal}
+              </Modal>
+              </>
+            :
+             null
+          }
       <ListItem button onClick={handleClick2}>
         <ListItemIcon>
           <MovieFilter className={classes.primeIcons}/>

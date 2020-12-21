@@ -40,10 +40,8 @@ const SignUpForm = ({ authenticated, setAuthenticated, setOpen }) => {
   const classes = useStyles();
 
   const onSignUp = async (e) => {
-    console.log(username,email,password,repeatPassword)
     e.preventDefault();
     if (password === repeatPassword) {
-      console.log("working on it")
       const user = await signUp(username, email, password);
       if (!user.errors) {
         dispatch(setCurrentUser(user))
@@ -59,11 +57,10 @@ const SignUpForm = ({ authenticated, setAuthenticated, setOpen }) => {
         setErrors(user.errors);
       }
       if (authenticated) {
-        console.log("inhere")
         return <Redirect to="/" />;
       }
       if (!authenticated) {
-        console.log("nope")
+
       }
     }
   };
