@@ -42,3 +42,17 @@ export const newBusiness = async (user_id, name, description,
   });
   return await response.json();
 }
+
+export const addBusinessType = async (business_id, typeId) => {
+  const response = await fetch(`/api/business/${business_id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      business_id,
+      typeId
+    }),
+  });
+  return await response.json();
+}

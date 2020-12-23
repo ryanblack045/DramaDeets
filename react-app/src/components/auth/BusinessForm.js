@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 import { newBusiness } from '../../services/businesses';
-import { fetchBusinesses, getBusiness } from "../../services/businesses";
+import { fetchBusinesses, getBusiness, addBusinessType } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser, setCurrentBusiness } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
@@ -26,7 +26,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const [website, setWebsite] = useState("");
   const [contact, setContact] = useState("");
   const [imgURL, setImgURL] = useState("");
-  const [typeId, setTypeId] = useState([]);
+  const [typeId, setTypeId] = useState("");
   const [businessId, setBusinessId] = useState("")
   const dispatch = useDispatch();
   const history = useHistory()
@@ -69,6 +69,18 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
       setErrors(createdBusiness.errors);
     }
   };
+
+  const addTypeToBusiness = async (e) => {
+    console.log("adding type")
+    console.log(typeId)
+    const typeAdded = await addBusinessType(newBusinessId, typeId);
+    if (!typeAdded.errors) {
+      const businesses = await fetchBusinesses()
+      dispatch(getAllBusinesses(businesses))
+    } else {
+      setErrors(typeAdded.errors)
+    }
+  }
 
   const updateName = (e) => {
     setName(e.target.value);
@@ -115,7 +127,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   };
 
   const updateTypeId = (e) => {
-    setTypeId([e.target.value]);
+    setTypeId(e.target.value);
   };
 
   const updateBusinessId = (e) => {
@@ -243,7 +255,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
         />
       </div>
       <Button className={classes.button} variant="contained" type="submit ">Create Business</Button>
-      <Button className={classes.button} variant="contained" >Set Type</Button>
+      <Button className={classes.button} variant="contained" onClick={()=> addTypeToBusiness()} >Set Type</Button>
     </form>
   );
 };

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import Business, Review, db
+from app.models import Business, Review, BusinessType, db
 from app.forms import ReviewForm
 from flask_login import login_required
 
@@ -24,6 +24,19 @@ def fetchBusinesses():
     return{"businesses": [business.to_dict() for business in businesses]}
 
 
+@business_routes.route('/<int:business_id>', methods=['POST'])
+@login_required
+def businessTypeAdd(business_id):
+    data = request.json
+    businessType = BusinessType(
+      type_id=data['typeId'],
+      business_id=data['business_id'],
+    )
+    db.session.add(businessType)
+    db.session.commit()
+    return businessType.to_dict()
+
+
 @business_routes.route('/<int:id>')
 @login_required
 def business(id):
@@ -38,7 +51,6 @@ def submitReview(business_id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         data = request.json
-        print(data, "heeeeeeerrree")
         review = Review(
             user_id=data['user_id'],
             business_id=data['business_id'],
@@ -46,7 +58,6 @@ def submitReview(business_id):
             body=form.data['body'],
             rating=form.data['rating']
         )
-        print(review.to_dict())
         db.session.add(review)
         db.session.commit()
         return review.to_dict()
