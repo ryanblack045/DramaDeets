@@ -32,8 +32,8 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const history = useHistory()
   const userId = 1
   const allBusinessesArrayLength = useSelector((state) => (state.entities.businesses.allId).length)
-  const newBusinessId = useSelector((state) => (state.entities.businesses.allId[allBusinessesArrayLength -1]));
-  console.log(newBusinessId)
+  const newBusinessId = useSelector((state) => (state.entities.businesses.byId[allBusinessesArrayLength].id));
+  console.log(newBusinessId, "current business id")
 
   const useStyles = makeStyles((theme) => ({
     businessFormHolder: {
@@ -58,22 +58,8 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   }));
   const classes = useStyles();
 
-  const createBusiness = async (e) => {
-    e.preventDefault();
-    const createdBusiness = await newBusiness(userId, name, description,
-      lat, lng, address, city, state, zipcode, website, contact, imgURL, typeId);
-    if (!createdBusiness.errors) {
-      const businesses = await fetchBusinesses()
-      dispatch(getAllBusinesses(businesses))
-    } else {
-      setErrors(createdBusiness.errors);
-    }
-  };
-
   const addTypeToBusiness = async (e) => {
-    console.log("adding type")
-    console.log(typeId)
-    const typeAdded = await addBusinessType(newBusinessId, typeId);
+    const typeAdded = await addBusinessType((newBusinessId + 1), typeId);
     if (!typeAdded.errors) {
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
@@ -81,6 +67,25 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
       setErrors(typeAdded.errors)
     }
   }
+
+  const createBusiness = async (e) => {
+    e.preventDefault();
+    const createdBusiness = await newBusiness(userId, name, description,
+      lat, lng, address, city, state, zipcode, website, contact, imgURL);
+    if (!createdBusiness.errors) {
+      const businesses = await fetchBusinesses()
+      dispatch(getAllBusinesses(businesses))
+      console.log(businesses, "these businesses")
+      if (businesses) {
+        await addTypeToBusiness(newBusinessId, typeId)
+      } else {
+        return
+      }
+    } else {
+      setErrors(createdBusiness.errors);
+    }
+  };
+
 
   const updateName = (e) => {
     setName(e.target.value);
@@ -141,7 +146,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           variant="outlined"
           label="Name of business"
           className={classes.input}
-          name="username"
+          name="name"
           onChange={updateName}
           value={name}
         />
