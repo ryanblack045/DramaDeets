@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 import { newBusiness } from '../../services/businesses';
 import { fetchBusinesses, getBusiness } from "../../services/businesses";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser, setCurrentBusiness } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 import {businessTypes} from '../ListSideBar'
@@ -26,11 +26,14 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const [website, setWebsite] = useState("");
   const [contact, setContact] = useState("");
   const [imgURL, setImgURL] = useState("");
-  const [typeId, setTypeId] = useState("");
+  const [typeId, setTypeId] = useState([]);
   const [businessId, setBusinessId] = useState("")
   const dispatch = useDispatch();
   const history = useHistory()
   const userId = 1
+  const allBusinessesArrayLength = useSelector((state) => (state.entities.businesses.allId).length)
+  const newBusinessId = useSelector((state) => (state.entities.businesses.allId[allBusinessesArrayLength -1]));
+  console.log(newBusinessId)
 
   const useStyles = makeStyles((theme) => ({
     businessFormHolder: {
@@ -58,7 +61,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const createBusiness = async (e) => {
     e.preventDefault();
     const createdBusiness = await newBusiness(userId, name, description,
-      lat, lng, address, city, state, zipcode, website, contact, imgURL);
+      lat, lng, address, city, state, zipcode, website, contact, imgURL, typeId);
     if (!createdBusiness.errors) {
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
@@ -112,7 +115,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   };
 
   const updateTypeId = (e) => {
-    setTypeId(e.target.value);
+    setTypeId([e.target.value]);
   };
 
   const updateBusinessId = (e) => {

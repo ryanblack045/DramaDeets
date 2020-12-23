@@ -37,7 +37,7 @@ export const newBusiness = async (user_id, name, description,
       zipcode,
       website,
       contact,
-      imgURL
+      imgURL,
     }),
   });
   return await response.json();

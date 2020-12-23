@@ -73,4 +73,3 @@ def createBusiness():
         db.session.add(business)
         db.session.commit()
         return business.to_dict()
-    
