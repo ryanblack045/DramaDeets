@@ -96,15 +96,6 @@ const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
           onChange={updateBody}
           value={body}
         />
-        {/* <TextField
-          className={classes.input}
-          variant="outlined"
-          label="Rating(1-10)"
-          type="text"
-          name="rating"
-          onChange={updateRating}
-          value={rating}
-        /> */}
         <br></br>
         <FormControl
           className={classes.formControl}

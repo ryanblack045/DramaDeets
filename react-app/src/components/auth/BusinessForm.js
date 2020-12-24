@@ -6,9 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser, setCurrentBusiness } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 import {businessTypes} from '../ListSideBar'
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  TextField,
+  makeStyles,
+  Select,
+  InputLabel,
+  FormControl,
+  MenuItem,
+  Button,
+
+} from '@material-ui/core';
 import { setLandingPage } from '../../store/actions/ui'
 import { ImageOutlined } from "@material-ui/icons";
 
@@ -27,13 +34,12 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const [contact, setContact] = useState("");
   const [imgURL, setImgURL] = useState("");
   const [typeId, setTypeId] = useState("");
-  const [businessId, setBusinessId] = useState("")
   const dispatch = useDispatch();
   const history = useHistory()
   const userId = 1
   const allBusinessesArrayLength = useSelector((state) => (state.entities.businesses.allId).length)
   const newBusinessId = useSelector((state) => (state.entities.businesses.byId[allBusinessesArrayLength].id));
-  console.log(newBusinessId, "current business id")
+  const businessTypes = useSelector((state) => (state.entities.businesses.byId))
 
   const useStyles = makeStyles((theme) => ({
     businessFormHolder: {
@@ -134,10 +140,6 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const updateTypeId = (e) => {
     setTypeId(e.target.value);
   };
-
-  const updateBusinessId = (e) => {
-    setBusinessId(e.targe.value);
-  }
 
   return (
     <form className={classes.signupForm} onSubmit={createBusiness} >
@@ -240,7 +242,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           onChange={updateImgURL}
           value={imgURL}
         />
-        <TextField
+        {/* <TextField
           variant="outlined"
           className={classes.input}
           label="Business Type Id"
@@ -248,16 +250,31 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="typeId"
           onChange={updateTypeId}
           value={typeId}
-        />
-        <TextField
+        /> */}
+            <FormControl
+          className={classes.formControl}
           variant="outlined"
-          className={classes.input}
-          label="Business Id"
-          type="text"
-          name="businessId"
-          onChange={updateBusinessId}
-          value={businessId}
-        />
+        >
+        <InputLabel id="demo-simple-select-outlined-label">Type of Business</InputLabel>
+        <Select
+          labelId="type"
+          id="type-selector"
+          value={typeId}
+          onChange={updateTypeId}
+          label="Type"
+        >
+          <MenuItem value={1}></MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={7}>7</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
+          <MenuItem value={9}>9</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+        </Select>
+      </FormControl>
       </div>
       <Button className={classes.button} variant="contained" type="submit ">Create Business</Button>
       <Button className={classes.button} variant="contained" onClick={()=> addTypeToBusiness()} >Set Type</Button>

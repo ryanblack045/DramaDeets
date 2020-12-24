@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from "../../services/auth";
-import { fetchBusinesses, getBusiness } from "../../services/businesses";
+import { fetchBusinesses, getBusiness, fetchTypes } from "../../services/businesses";
 import { useDispatch } from 'react-redux';
 import { setCurrentUser , setCurrentBusiness} from '../../store/actions/session'
-import { getAllBusinesses } from '../../store/actions/entities'
+import { getAllBusinesses, getAllTypes } from '../../store/actions/entities'
 import { setLandingPage } from '../../store/actions/ui'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -51,6 +51,9 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
       const business = await getBusiness(1)
       dispatch(setCurrentBusiness(business))
       dispatch(setLandingPage(true))
+      const types = await fetchTypes()
+      console.log(types, "types---")
+      dispatch(getAllTypes(types))
       setOpen2(false)
       setAuthenticated(true)
       history.push("/")

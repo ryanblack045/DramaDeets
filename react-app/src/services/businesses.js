@@ -56,3 +56,13 @@ export const newBusiness = async (user_id, name, description,
   });
   return await response.json();
 }
+
+export const fetchTypes = async () => {
+  const response = await fetch('/api/business/types', {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+  const type = await response.json();
+  return type.types
+}

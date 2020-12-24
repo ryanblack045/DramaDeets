@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import Business, Review, BusinessType, db
+from app.models import Business, Review, BusinessType, Type, db
 from app.forms import ReviewForm
 from flask_login import login_required
 
@@ -84,3 +84,9 @@ def createBusiness():
         db.session.add(business)
         db.session.commit()
         return business.to_dict()
+
+
+@business_routes.route('/types')
+def fetchTypes():
+    types = Type.query.order_by(Type.id).all()
+    return{"types": [type.to_dict() for type in types]}
