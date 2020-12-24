@@ -26,6 +26,7 @@ const LogoutButton = ({ setAuthenticated }) => {
     dispatch(setCurrentUser(""))
     dispatch(setCurrentBusiness(""))
     dispatch(setLandingPage(""))
+    
   };
 
   return <Button className={classes.button} onClick={onLogout}>Logout</Button>;

@@ -39,12 +39,12 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
   const userId = 1
   const allBusinessesArrayLength = useSelector((state) => (state.entities.businesses.allId).length)
   const newBusinessId = useSelector((state) => (state.entities.businesses.byId[allBusinessesArrayLength].id));
-  const businessTypes = useSelector((state) => (state.entities.businesses.byId))
-
+  const businessTypes = useSelector((state) => (state.entities.businessTypes.byId))
+  console.log(businessTypes, "business Types")
   const useStyles = makeStyles((theme) => ({
     businessFormHolder: {
       overflow: "scroll",
-      height: "30em"
+      height: "35em"
     },
     button: {
       background: "black",
@@ -60,7 +60,11 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
       backgroundColor: "white",
       marginTop: ".5em",
       marginBottom: ".5em"
-  }
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: "15em",
+    },
   }));
   const classes = useStyles();
 
@@ -81,9 +85,9 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
     if (!createdBusiness.errors) {
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
-      console.log(businesses, "these businesses")
       if (businesses) {
         await addTypeToBusiness(newBusinessId, typeId)
+        setOpen3 = false
       } else {
         return
       }
@@ -242,16 +246,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           onChange={updateImgURL}
           value={imgURL}
         />
-        {/* <TextField
-          variant="outlined"
-          className={classes.input}
-          label="Business Type Id"
-          type="text"
-          name="typeId"
-          onChange={updateTypeId}
-          value={typeId}
-        /> */}
-            <FormControl
+        <FormControl
           className={classes.formControl}
           variant="outlined"
         >
@@ -262,22 +257,14 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           value={typeId}
           onChange={updateTypeId}
           label="Type"
-        >
-          <MenuItem value={1}></MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={9}>9</MenuItem>
-          <MenuItem value={10}>10</MenuItem>
+          >
+            {businessTypes.map((type) => {
+              return <MenuItem value={type.id}>{type.title}</MenuItem>
+          })}
         </Select>
       </FormControl>
-      </div>
       <Button className={classes.button} variant="contained" type="submit ">Create Business</Button>
-      <Button className={classes.button} variant="contained" onClick={()=> addTypeToBusiness()} >Set Type</Button>
+      </div>
     </form>
   );
 };
