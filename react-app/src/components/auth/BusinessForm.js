@@ -20,7 +20,7 @@ import { setLandingPage } from '../../store/actions/ui'
 import { ImageOutlined } from "@material-ui/icons";
 
 
-const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
+const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -86,8 +86,10 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
       if (businesses) {
+        console.log(open5, "working on open")
         await addTypeToBusiness(newBusinessId, typeId)
-        setOpen3 = false
+        setOpen5(!open5)
+        console.log(open5, "open5 status")
       } else {
         return
       }
@@ -155,6 +157,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="name"
           onChange={updateName}
           value={name}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -164,6 +167,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="description"
           onChange={updateDescription}
           value={description}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -173,6 +177,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="lat"
           onChange={updateLat}
           value={lat}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -182,6 +187,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="lng"
           onChange={updateLng}
           value={lng}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -191,6 +197,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="address"
           onChange={updateAddress}
           value={address}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -200,6 +207,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="city"
           onChange={updateCity}
           value={city}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -209,6 +217,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="state"
           onChange={updateState}
           value={state}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -218,6 +227,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="zipcode"
           onChange={updateZipcode}
           value={zipcode}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -227,6 +237,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="website"
           onChange={updateWebsite}
           value={website}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -236,6 +247,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           name="contact"
           onChange={updateContact}
           value={contact}
+          required={true}
         />
         <TextField
           variant="outlined"
@@ -257,6 +269,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen3 }) => {
           value={typeId}
           onChange={updateTypeId}
           label="Type"
+          required={true}
           >
             {businessTypes.map((type) => {
               return <MenuItem value={type.id}>{type.title}</MenuItem>
