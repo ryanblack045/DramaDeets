@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center"
   },
   primeIcons: {
-    color: "blue"
+    color: "blue",
+    marginLeft: "1em"
   },
   root: {
     marginTop: '.5px',
@@ -202,7 +203,7 @@ export default function ListSideBar( setAuthenticated, authenticated) {
              null
           }
       <ListItem button onClick={handleClick2}>
-        <ListItemIcon>
+        <ListItemIcon >
           <MovieFilter className={classes.primeIcons}/>
         </ListItemIcon>
         <ListItemText primary="On Camera Classes" />
