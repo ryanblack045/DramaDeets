@@ -406,7 +406,7 @@ export default function BusinessDetail({ currentReviews2 }) {
               <a href={currentBusiness.website}>{currentBusiness.website}</a>
             </div>
             <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
-            <div className={classes.businessRating}>Rating: {ratingCalculator(currentBusiness)}/10</div>
+            <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness)+`/10`}</div>
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>

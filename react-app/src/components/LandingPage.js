@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-const background = "/landingPage1.png"
 
 
 const useStyles = makeStyles((theme) => ({

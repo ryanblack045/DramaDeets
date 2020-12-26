@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     marginTop: "-3.25em",
     marginBottom: "-3.5em",
-    marginLeft:"1em"
+    marginLeft:"2.71em"
   },
   loginTitle: {
     fontSize: "3em",
