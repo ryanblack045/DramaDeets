@@ -241,7 +241,7 @@ export default function BusinessDetail({ currentReviews2 }) {
     currentBusiness.reviews.forEach(review => {
       ratingSum += review.rating
     })
-    return(ratingSum/numOfReviews.toFixed(1))
+    return (ratingSum/numOfReviews.toFixed(1))
   }
 
 // deletes a like on a review
@@ -406,7 +406,7 @@ export default function BusinessDetail({ currentReviews2 }) {
               <a href={currentBusiness.website}>{currentBusiness.website}</a>
             </div>
             <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
-            <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness)+`/10`}</div>
+            <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness).toFixed(1)+`/10.0`}</div>
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>

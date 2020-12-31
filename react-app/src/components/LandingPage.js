@@ -29,10 +29,6 @@ export default function LandingPage() {
         data-aos-duration="1000"
         className={classes.img1}
       />
-    {/* <img
-      src="/landingPage1.png"
-      className={classes.img1}
-      /> */}
     </>
   )
 
