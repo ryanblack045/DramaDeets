@@ -59,6 +59,17 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto"
   },
+  businessInfo: {
+    width: "30em",
+    margin: ".5em"
+  },
+  businessInfoHolder: {
+    flexDirection: "column",
+    display: "flex",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   businessRating: {
     textAlign: "center",
     fontWeight: "bold",
@@ -349,6 +360,34 @@ export default function BusinessDetail({ currentReviews2 }) {
     setRating(e.target.value)
   }
 
+  const updateName = e => {
+    setName(e.target.value)
+  }
+
+  const updateAddress = e => {
+    setAddress(e.target.value)
+  }
+
+  const updateCity = e => {
+    setCity(e.target.value)
+  }
+
+  const updateStateLocation = e => {
+    setStateLocation(e.target.value)
+  }
+
+  const updateZipcode = e => {
+    setZipcode(e.target.value)
+  }
+
+  const updateWebsite = e => {
+    setWebsite(e.target.value)
+  }
+
+  const updateContact = e => {
+    setContact(e.target.value)
+  }
+
   const updateReview = async (currentReviewId) => {
     await sendUpdatedReviw(currentReviewId, title, body, rating)
     const business = await getBusiness(currentBusiness.id);
@@ -421,6 +460,71 @@ export default function BusinessDetail({ currentReviews2 }) {
             <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
             {editBusiness && currentUserId === 1 ?
               <>
+                <div className={classes.businessInfoHolder}>
+                  <TextField
+                    className={classes.businessInfo}
+                    value={name}
+                    onChange={updateName}
+                    label="Name"
+                    placeholder={name}
+                    variant="outlined">
+                    {currentBusiness.name}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    onChange={updateAddress}
+                    value={address}
+                    label="Address"
+                    placeholder={address}
+                    variant="outlined">
+                    {currentBusiness.address}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    onChange={updateCity}
+                    value={city}
+                    label="City"
+                    placeholder={city}
+                    variant="outlined">
+                    {currentBusiness.city}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    onChange={updateStateLocation}
+                    value={stateLocation}
+                    label="State"
+                    placeholder={stateLocation}
+                    variant="outlined">
+                    {currentBusiness.state}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    onChange={updateZipcode}
+                    value={zipcode}
+                    label="Zipcode"
+                    placeholder={zipcode}
+                    variant="outlined">
+                    {currentBusiness.zipcode}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    onChange={updateWebsite}
+                    value={website}
+                    label="Website"
+                    placeholder={website}
+                    variant="outlined">
+                    {currentBusiness.website}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    onChange={updateContact}
+                    value={contact}
+                    label="Contact info"
+                    placeholder={contact}
+                    variant="outlined">
+                    {currentBusiness.contact}
+                  </TextField>
+                </div>
               </>
                 :
             <>
