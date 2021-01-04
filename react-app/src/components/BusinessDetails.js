@@ -13,7 +13,11 @@ import {
   CardContent,
   Grid,
   Paper,
-  Snackbar
+  Snackbar,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem
 } from '@material-ui/core';
 import { setCurrentBusiness } from '../store/actions/session'
 import Map from './Map'
@@ -24,6 +28,17 @@ import { getBusiness} from "../services/businesses";
 const useStyles = makeStyles((theme) => ({
   actionFooter: {
       justifyContent:"center"
+  },
+  bigSaveButton: {
+    display: "block",
+    width: "50%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    color: "white",
+    background: "red",
+    "&:hover": {
+      backgroundColor: "#890909"
+    },
   },
   body: {
     color: "black",
@@ -174,7 +189,6 @@ const useStyles = makeStyles((theme) => ({
     height: "1.5em",
     color: "white",
     "&:hover": {
-      //you want this to be the same as the backgroundColor above
       backgroundColor: "#890909"
     },
   }
@@ -197,6 +211,14 @@ export default function BusinessDetail({ currentReviews2 }) {
   const [open2, setOpen2] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const [edit, setEdit] = React.useState(false);
+  const [editBusiness, setEditBusiness] = React.useState(false)
+  const [name, setName] = React.useState("")
+  const [address, setAddress] = React.useState("")
+  const [city, setCity] = React.useState("")
+  const [stateLocation, setStateLocation] = React.useState("")
+  const [zipcode, setZipcode] = React.useState("")
+  const [website, setWebsite] = React.useState("")
+  const [contact, setContact] = React.useState("")
   const [title, setTitle] = React.useState("")
   const [body, setBody] = React.useState("")
   const [rating, setRating]= React.useState("")
@@ -397,6 +419,11 @@ export default function BusinessDetail({ currentReviews2 }) {
         <Grid item className={classes.buinessContainer} spacing={0} xs={12}>
           <Paper className={classes.paper}>
             <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
+            {editBusiness && currentUserId === 1 ?
+              <>
+              </>
+                :
+            <>
             <div className={classes.businessTitle}>{currentBusiness.name}</div>
             <div className={classes.businessCSZ}>{currentBusiness.address}</div>
             <div className={classes.businessCSZ}>
@@ -406,7 +433,34 @@ export default function BusinessDetail({ currentReviews2 }) {
               <a href={currentBusiness.website}>{currentBusiness.website}</a>
             </div>
             <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
-            <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness).toFixed(1)+`/10.0`}</div>
+            <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness).toFixed(1) + `/10.0`}</div>
+            </>
+            }
+                {currentUserId === 1 ?
+                  <>
+                    {!editBusiness ?
+                      <Button
+                        onClick= { () => {
+                          setEditBusiness(!editBusiness)
+                          setName(currentBusiness.name)
+                          setAddress(currentBusiness.address)
+                          setCity(currentBusiness.city)
+                          setStateLocation(currentBusiness.state)
+                          setZipcode(currentBusiness.zipcode)
+                          setWebsite(currentBusiness.website)
+                          setContact(currentBusiness.contact)
+                        }}
+                        className={classes.reviewButton}>
+                      Edit Business
+                      </Button>
+                      :
+                      <Button
+                        className={classes.bigSaveButton}>
+                        Save
+                      </Button>}
+                  </>
+                : null}
+
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>
@@ -457,14 +511,33 @@ export default function BusinessDetail({ currentReviews2 }) {
                                 variant="outlined">
                                 {currentReview.body}
                               </TextField>
-                              <TextField
-                                placeholder={rating}
-                                label="Rating 1-10"
-                                onChange={updateRating}
+                              <FormControl
+                                className={classes.formControl}
+                                variant="outlined"
+                              >
+                              <InputLabel id="demo-simple-select-outlined-label">Rating</InputLabel>
+                              <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
                                 value={rating}
-                                variant="outlined">
-                                {currentReview.rating}
-                              </TextField>
+                                onChange={updateRating}
+                                label="Rating"
+                              >
+                                <MenuItem value="">
+                                  <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                                <MenuItem value={4}>4</MenuItem>
+                                <MenuItem value={5}>5</MenuItem>
+                                <MenuItem value={6}>6</MenuItem>
+                                <MenuItem value={7}>7</MenuItem>
+                                <MenuItem value={8}>8</MenuItem>
+                                <MenuItem value={9}>9</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                              </Select>
+                            </FormControl>
                             </div>
                           </>
                           :
