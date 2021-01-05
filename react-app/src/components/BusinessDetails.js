@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     color: "white",
-    background: "red",
+    background: "black",
     "&:hover": {
       backgroundColor: "#890909"
     },
@@ -51,24 +51,35 @@ const useStyles = makeStyles((theme) => ({
     width: "90"
   },
   businessCSZ: {
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: "1.25em"
+    // display: "inline",
+    // float: "right"
   },
   businessImg: {
-    display: "block",
-    textAlign: "center",
-    height: "50%",
-    width: "50%",
-    marginLeft: "auto",
-    marginRight: "auto"
+    display: "inline-block",
+    height: "20%",
+    width: "20%",
+    float: "middle",
+    marginRight: "2em"
   },
   businessInfo: {
     width: "30em",
     margin: ".5em"
   },
+  businessInfoContainer: {
+    display: "inline-block",
+    float: "middle",
+  },
   businessInfoHolder: {
     flexDirection: "column",
     display: "flex",
     textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  businessParentContainer: {
+    display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -79,7 +90,6 @@ const useStyles = makeStyles((theme) => ({
   },
   businessTitle: {
     fontSize: "3em",
-    textAlign: "center"
   },
   card: {
     textAlign:"center"
@@ -496,7 +506,7 @@ export default function BusinessDetail({ currentReviews2 }) {
       <Grid container spacing={0}>
         <Grid item className={classes.buinessContainer} spacing={0} xs={12}>
           <Paper className={classes.paper}>
-            <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
+            {/* <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" /> */}
             {editBusiness && currentUserId === 1 ?
               <>
                 <div className={classes.businessInfoHolder}>
@@ -584,7 +594,10 @@ export default function BusinessDetail({ currentReviews2 }) {
                 </div>
               </>
                 :
-            <>
+              <>
+            <div className={classes.businessParentContainer}>
+              <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
+            <div className={classes.businessInfoContainer}>
             <div className={classes.businessTitle}>{currentBusiness.name}</div>
             <div className={classes.businessCSZ}>{currentBusiness.address}</div>
             <div className={classes.businessCSZ}>
@@ -594,7 +607,9 @@ export default function BusinessDetail({ currentReviews2 }) {
               <a href={currentBusiness.website}>{currentBusiness.website}</a>
             </div>
             <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
-            <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness).toFixed(1) + `/10.0`}</div>
+                  <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness).toFixed(1) + `/10.0`}</div>
+                  </div>
+            </div>
             </>
             }
                 {currentUserId === 1 ?
