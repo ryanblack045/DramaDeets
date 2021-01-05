@@ -20,9 +20,11 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { setCurrentBusiness } from '../store/actions/session'
+import { setLandingPage } from '../store/actions/ui'
+import { getAllBusinesses } from '../store/actions/entities'
 import Map from './Map'
 import { addingLike, deletingLike, sendUpdatedReviw, deleteReview } from '../services/reviews'
-import { getBusiness} from "../services/businesses";
+import { getBusiness, sendUpdatedBusiness, deleteBusiness, fetchBusinesses} from "../services/businesses";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -220,10 +222,13 @@ function getModalStyle() {
 export default function BusinessDetail({ currentReviews2 }) {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const [edit, setEdit] = React.useState(false);
   const [editBusiness, setEditBusiness] = React.useState(false)
   const [name, setName] = React.useState("")
+  const [lat, setLat] = React.useState("")
+  const [lng, setLng] = React.useState("")
   const [address, setAddress] = React.useState("")
   const [city, setCity] = React.useState("")
   const [stateLocation, setStateLocation] = React.useState("")
@@ -236,12 +241,12 @@ export default function BusinessDetail({ currentReviews2 }) {
   const classes = useStyles();
   const businesses = useSelector((state)=>(state.entities.businesses))
   const currentBusiness = useSelector((state) => (state.session.currentBusiness));
+  const currentBusinessId = useSelector((state) => (state.session.currentBusiness.id));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
   const currentReviews = currentBusiness.reviews;
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("did it")
     dispatch(setCurrentBusiness(currentBusiness))
   }, [businesses])
 
@@ -329,7 +334,16 @@ export default function BusinessDetail({ currentReviews2 }) {
       const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
       return
-  }
+   }
+
+//delets business
+   const sendDeleteBusiness = async (businessId) =>{
+     await deleteBusiness(businessId)
+     const businesses = await fetchBusinesses()
+     dispatch(getAllBusinesses(businesses))
+     dispatch(setLandingPage(true))
+    return
+}
 
 // handles opening review modal
   const handleOpen = () => {
@@ -346,6 +360,14 @@ export default function BusinessDetail({ currentReviews2 }) {
 
   const handleClose2 = () => {
     setOpen2(false);
+  };
+
+  const handleOpen3 = () => {
+    setOpen3(true);
+  };
+
+  const handleClose3 = () => {
+    setOpen3(false);
   };
 
   const updateTitle = e => {
@@ -388,12 +410,29 @@ export default function BusinessDetail({ currentReviews2 }) {
     setContact(e.target.value)
   }
 
+  const updateLat = e => {
+    setLat(e.target.value)
+  }
+
+  const updateLng = e => {
+    setLng(e.target.value)
+  }
+
   const updateReview = async (currentReviewId) => {
     await sendUpdatedReviw(currentReviewId, title, body, rating)
     const business = await getBusiness(currentBusiness.id);
     setEdit(!edit)
     dispatch(setCurrentBusiness(business))
   }
+
+  const updateBusiness = async (currentBusinessId) => {
+    await sendUpdatedBusiness(currentBusinessId, name, lat, lng, address, city, stateLocation, zipcode, website, contact)
+    const business = await getBusiness(currentBusinessId);
+    setEditBusiness(!editBusiness)
+    dispatch(setCurrentBusiness(business))
+  }
+
+
 
 
   const submitReviewModal = (
@@ -472,6 +511,24 @@ export default function BusinessDetail({ currentReviews2 }) {
                   </TextField>
                   <TextField
                     className={classes.businessInfo}
+                    value={lat}
+                    onChange={updateLat}
+                    label="Lat"
+                    placeholder={lat}
+                    variant="outlined">
+                    {currentBusiness.lat}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
+                    value={lng}
+                    onChange={updateLng}
+                    label="Lng"
+                    placeholder={lng}
+                    variant="outlined">
+                    {currentBusiness.lng}
+                  </TextField>
+                  <TextField
+                    className={classes.businessInfo}
                     onChange={updateAddress}
                     value={address}
                     label="Address"
@@ -542,7 +599,8 @@ export default function BusinessDetail({ currentReviews2 }) {
             }
                 {currentUserId === 1 ?
                   <>
-                    {!editBusiness ?
+                {!editBusiness ?
+                  <>
                       <Button
                         onClick= { () => {
                           setEditBusiness(!editBusiness)
@@ -553,13 +611,41 @@ export default function BusinessDetail({ currentReviews2 }) {
                           setZipcode(currentBusiness.zipcode)
                           setWebsite(currentBusiness.website)
                           setContact(currentBusiness.contact)
+                          setLat(currentBusiness.lat)
+                          setLng(currentBusiness.lng)
                         }}
                         className={classes.reviewButton}>
                       Edit Business
                       </Button>
+                      <Button
+                      onClick={() => handleOpen3()}
+                      className={classes.bigSaveButton}>
+                      Delete Business
+                      </Button>
+                      <Snackbar
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'center',
+                        }}
+                        open={open3}
+                        onClose={handleClose3}
+                        autoHideDuration={10000}
+                        message= "Are you sure you want to delete"
+                        action=
+                        {
+                          <Button
+                            className={classes.deleteReviewButton}
+                            onClick={()=> sendDeleteBusiness(currentBusiness.id)}
+                            >
+                            Delete
+                          </Button>
+                        }
+                        />
+                  </>
                       :
                       <Button
-                        className={classes.bigSaveButton}>
+                        className={classes.bigSaveButton}
+                        onClick={() => updateBusiness(currentBusiness.id)}>
                         Save
                       </Button>}
                   </>
@@ -671,9 +757,7 @@ export default function BusinessDetail({ currentReviews2 }) {
                                     Delete
                                   </Button>
                                 }
-                                >
-
-                              </Snackbar>
+                                />
                             </>
                             : ""}
                          <Typography gutterBottom variant="h5" component="h2">

@@ -66,3 +66,35 @@ export const fetchTypes = async () => {
   const type = await response.json();
   return type.types
 }
+
+export const sendUpdatedBusiness = async (id, name, lat, lng, address, city, state, zipcode, website, contact) => {
+  const response = await fetch(`api/business/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id,
+      name,
+      lat,
+      lng,
+      address,
+      city,
+      state,
+      zipcode,
+      website,
+      contact
+    })
+  })
+    return await response.json();
+}
+
+export const deleteBusiness = async (id) => {
+  const response = await fetch(`api/business/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    return await response.json();
+}

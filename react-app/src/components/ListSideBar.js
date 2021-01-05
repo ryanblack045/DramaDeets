@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   ListItemText,
   ListItemIcon,
@@ -80,8 +80,11 @@ export default function ListSideBar( setAuthenticated, authenticated) {
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
   const dispatch = useDispatch();
-  const businessTypes = useSelector((state) => (state.entities.businesses.byId))
+  const businesses = useSelector((state) => (state.entities.businesses));
+  const businessTypes = useSelector((state) => (state.entities.businesses.byId));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
+
+
 
   function getModalStyle() {
     const top =  50
@@ -166,7 +169,6 @@ export default function ListSideBar( setAuthenticated, authenticated) {
       </Paper>
       </div>
   );
-
 
   return (
     <List

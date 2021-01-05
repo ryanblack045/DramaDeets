@@ -37,10 +37,8 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
   const dispatch = useDispatch();
   const history = useHistory()
   const userId = 1
-  const allBusinessesArrayLength = useSelector((state) => (state.entities.businesses.allId).length)
-  const newBusinessId = useSelector((state) => (state.entities.businesses.byId[allBusinessesArrayLength].id));
+
   const businessTypes = useSelector((state) => (state.entities.businessTypes.byId))
-  console.log(businessTypes, "business Types")
   const useStyles = makeStyles((theme) => ({
     businessFormHolder: {
       overflow: "scroll",
@@ -68,15 +66,15 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
   }));
   const classes = useStyles();
 
-  const addTypeToBusiness = async (e) => {
-    const typeAdded = await addBusinessType((newBusinessId + 1), typeId);
-    if (!typeAdded.errors) {
-      const businesses = await fetchBusinesses()
-      dispatch(getAllBusinesses(businesses))
-    } else {
-      setErrors(typeAdded.errors)
-    }
-  }
+  // const addTypeToBusiness = async (e) => {
+  //   const typeAdded = await addBusinessType(newBusinessId, typeId);
+  //   if (!typeAdded.errors) {
+  //     const businesses = await fetchBusinesses()
+  //     dispatch(getAllBusinesses(businesses))
+  //   } else {
+  //     setErrors(typeAdded.errors)
+  //   }
+  // }
 
   const createBusiness = async (e) => {
     e.preventDefault();
@@ -86,10 +84,10 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
       const businesses = await fetchBusinesses()
       dispatch(getAllBusinesses(businesses))
       if (businesses) {
-        console.log(open5, "working on open")
-        await addTypeToBusiness(newBusinessId, typeId)
+        await addBusinessType(createdBusiness.id, typeId)
+        const businesses = await fetchBusinesses()
+        dispatch(getAllBusinesses(businesses))
         setOpen5(!open5)
-        console.log(open5, "open5 status")
       } else {
         return
       }

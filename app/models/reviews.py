@@ -13,7 +13,7 @@ class Review(db.Model):
   imgURL = db.Column(db.String, nullable=True)
 
   user = db.relationship('User', back_populates='reviews',) #lazy='joined')
-  judgements = db.relationship('Judgement', back_populates='review',)# lazy='joined')
+  judgements = db.relationship('Judgement', back_populates='review', cascade="all, delete-orphan")# lazy='joined')
   business = db.relationship('Business', back_populates='reviews',) # lazy='joined')
 
   def to_dict(self):

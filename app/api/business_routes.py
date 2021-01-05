@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import Business, Review, BusinessType, Type, db
 from app.forms import ReviewForm
 from flask_login import login_required
+from sqlalchemy.sql import func
 
 
 business_routes = Blueprint('business', __name__)
@@ -89,4 +90,46 @@ def createBusiness():
 @business_routes.route('/types')
 def fetchTypes():
     types = Type.query.order_by(Type.id).all()
-    return{"types": [type.to_dict() for type in types]}
+    return {"types": [type.to_dict() for type in types]}
+
+
+@business_routes.route('/<int:id>', methods=['PUT'])
+def updateReview(id):
+    data = request.json
+    name = data['name'],
+    lat = data['lat'],
+    lng = data['lng'],
+    address = data['address'],
+    city = data['name'],
+    state = data['state'],
+    zipcode = data['zipcode'],
+    website = data['website'],
+    contact = data['contact']
+
+    business = Business.query.get(id)
+    business.name = name
+    business.lat = lat
+    business.lng = lng
+    business.address = address
+    business.city = city
+    business.state = state
+    business.zipcode = zipcode
+    business.website = website
+    business.contact = contact
+    business.updated_at = func.now()
+
+    db.session.commit()
+    return business.to_dict()
+
+
+
+@business_routes.route('/<int:id>', methods=['DELETE'])
+def deleteBusiness(id):
+
+    business = Business.query.get(id)
+    if business:
+      db.session.delete(business)
+      db.session.commit()
+      return {'message': 'Review was successfully deleted'}
+    else:
+      return{'errors':'Review was not found'}

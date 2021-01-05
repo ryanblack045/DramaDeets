@@ -18,10 +18,10 @@ class Business(db.Model):
   contact = db.Column(db.String, nullable=False)
   imgURL = db.Column(db.String, nullable=False)
 
-  types = db.relationship('BusinessType', back_populates='business',) # lazy='joined')
-  judgements = db.relationship('Judgement', back_populates='business',) #  lazy='joined')
+  types = db.relationship('BusinessType', back_populates='business', cascade="all, delete-orphan") # lazy='joined')
+  judgements = db.relationship('Judgement', back_populates='business', cascade="all, delete-orphan") #  lazy='joined')
   user = db.relationship('User', back_populates='businesses',) #lazy='joined')
-  reviews = db.relationship('Review', back_populates='business', ) #lazy='joined')
+  reviews = db.relationship('Review', back_populates='business', cascade="all, delete-orphan" ) #lazy='joined')
 
   def to_dict(self):
     return {
