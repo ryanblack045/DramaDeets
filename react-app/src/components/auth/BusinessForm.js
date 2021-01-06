@@ -42,7 +42,7 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
   const useStyles = makeStyles((theme) => ({
     businessFormHolder: {
       overflow: "scroll",
-      height: "35em"
+      height: "36.5em"
     },
     button: {
       background: "black",

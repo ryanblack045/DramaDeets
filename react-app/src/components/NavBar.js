@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     textAlign:"center",
     cursor: "pointer",
-    marginTop: "-3.25em",
+    marginTop: "-3.1em",
     marginBottom: "-3.5em",
     marginLeft:"2.71em"
   },
@@ -109,6 +109,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  toolbar: {
+    height: "3em"
+  }
 }));
 
 
@@ -220,25 +223,26 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   return (
     <div className={classes.root}  >
       <AppBar position="static" className={classes.navbar} >
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <Typography variant="h6" className={classes.title}>
-            {authenticated ?
               <img
                 className={classes.logo}
                 onClick={()=> iconClick()}
                 src="https://drama-deets.s3.amazonaws.com/DramaDeetsLogo.png"
                 alt="Logo" />
-              // <div
-              //   className={classes.newLogo}
-              //   style={{   backgroundImage: `url(${Background})`, minHeight:"3em", minWidth:"3em", cursor:"pointer"}}
-              // >
-              // </div>
-              : false}
           </Typography>
           {!authenticated ?
+            <>
+              {/* <img
+             style={{display:"inline", float:"middle"}}
+             className={classes.logo}
+             onClick={()=> iconClick()}
+             src="https://drama-deets.s3.amazonaws.com/DramaDeetsLogo.png"
+             alt="Logo" /> */}
             <Button background="blue" color="secondary" className={classes.signup} onClick={handleOpen}>
-              Sign Up
+                Sign Up
             </Button>
+            </>
             : true}
             <Modal
               open={open}

@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
   },
   businessTitle: {
     fontSize: "3em",
+    textAlign: "center"
   },
   card: {
     textAlign:"center"

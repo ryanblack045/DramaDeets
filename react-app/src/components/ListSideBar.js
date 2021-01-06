@@ -161,7 +161,10 @@ export default function ListSideBar( setAuthenticated, authenticated) {
   const BusinessModal = (
     <div style={modalStyle} border="none" className={classes.paper}>
       <Paper className={classes.signupHeader}>
-        <div>Add a new business</div>
+        <div
+          style={{ fontSize: "1.5em", padding: ".5em", fontWeight: "bold" }}>
+          Add a new business
+        </div>
         <BusinessForm
           open5={open5}
           setOpen5={setOpen5}
