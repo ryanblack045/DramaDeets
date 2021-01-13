@@ -87,7 +87,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-First you will want to clone this repo and then change directories to the react-app. From there you will run
+First you will want to clone this repo and then change directories to the react-app directory, from there you will run
 * npm
   ```sh
   npm install
