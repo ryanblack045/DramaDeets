@@ -87,7 +87,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-First you will want to clone this repo and then change directories to the react-app directory, from there you will run
+First you will want to clone this repo and then change directories to the react-app directory, from there you will run this from your command line.
 * npm
   ```sh
   npm install
@@ -95,25 +95,56 @@ First you will want to clone this repo and then change directories to the react-
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a free API Key at [https://developers.google.com/maps/documentation/javascript/get-api-key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/ryanblack045/DramaDeets.git
    ```
-3. Install NPM packages
+3. Change directories to the react-app directory, from there you will run this from your command line.
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+4. Create a `.env` inside the react-app directory with this information.
    ```JS
-   const API_KEY = 'ENTER YOUR API';
+   REACT_APP_BASE_URL=http://localhost:5000
+   REACT_APP_GOOGLE_KEY="yourKey"
    ```
+5. Create a postgres database and connect it to the app.
+6. Create a `.env` from the root directory with this information.
+   ```JS
+   FLASK_APP=app
+   FLASK_ENV=development
+   SECRET_KEY=yourSecretKey
+   DATABASE_URL=postgresql://YOURDATABASEUSERNAME:YOURDATABASEPASSWORD@localhost/YOURDATABASENAME
+   ```
+7.Get into your pipenv, migrate your database, seed your database, and run your flask app
+
+   ```bash
+   pipenv shell
+   ```
+
+   ```bash
+   flask db upgrade
+   ```
+
+   ```bash
+   flask seed all
+   ```
+
+   ```bash
+   flask run
+   ```
+7. Run this command from the react-app directory
+   ```JS
+   npm start
+   ```
+
 ---
 
 <!-- ROADMAP -->
-## Roadmap
+<!--## Roadmap-->
 
-See the [open issues](https://github.com/ryanblack045/DramaDeets/issues) for a list of proposed features (and known issues).
+
 
 ---
 
@@ -139,9 +170,6 @@ Project Link: [https://github.com/ryanblack045/DramaDeets](https://github.com/ry
 
 ---
 
-## Acknowledgements
----
-
 ## **MVP**
 
 1. Users
@@ -164,7 +192,7 @@ Project Link: [https://github.com/ryanblack045/DramaDeets](https://github.com/ry
     * Users can like/dislike reviews for businesses
     
 Stretch Goals
-  * Have an admin account that has ability to take down reviews/businesses
+  * Have an admin account that has ability to take down reviews/businesses(complete)
   * Have a report button on reviews so admin can review if "proof" of review is real
   * Users can search for businesses
   * User must send "proof image" that they did business with the business they reviewed 
