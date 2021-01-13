@@ -61,7 +61,7 @@ Drama Deets is a platform for artists to anonymously share their reviews of art 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://drama-deets.s3.amazonaws.com/dramadeets.png)
+<img align="center" alt="Cover Photo" src="https://drama-deets.s3.amazonaws.com/dramadeets.png"/>()
 
 This project was created to provide artists a platform where they can anonymously voice their true opinions on art related businesses without the fear of being black-balled by their industry. It it is still being developed and more features will continue be added. 
 
