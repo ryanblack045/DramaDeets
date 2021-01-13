@@ -117,7 +117,7 @@ First you will want to clone this repo and then change directories to the react-
    SECRET_KEY=yourSecretKey
    DATABASE_URL=postgresql://YOURDATABASEUSERNAME:YOURDATABASEPASSWORD@localhost/YOURDATABASENAME
    ```
-7.Get into your pipenv, migrate your database, seed your database, and run your flask app
+7. Get into your pipenv, migrate your database, seed your database, and run your flask app
 
    ```bash
    pipenv shell
@@ -134,7 +134,8 @@ First you will want to clone this repo and then change directories to the react-
    ```bash
    flask run
    ```
-7. Run this command from the react-app directory
+8. Run this command from the react-app directory
+
    ```JS
    npm start
    ```
