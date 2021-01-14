@@ -16,17 +16,17 @@
 
 
 .default {
-  background-image: url("../assets/splash.png")
+  background-image: url("https://drama-deets.s3.amazonaws.com/splash.png")
 }
 
 .home {
-  background-image: url("../assets/splash.png")
+  background-image: url("https://drama-deets.s3.amazonaws.com/splash.png")
 }
 
 .photographer {
-  background-image: url("../assets/photographer.png")
+  background-image: url("https://drama-deets.s3.amazonaws.com/photographer.png")
 }
 
 .Acting {
-  background-image: url("../assets/defaultHome.png");
+  background-image: url("https://drama-deets.s3.amazonaws.com/defaultHome.png");
 }
