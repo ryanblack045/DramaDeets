@@ -8,7 +8,6 @@ export default function reducer(state = {}, action) {
     case GET_BUSINESS_TYPES:
       newState["businessTypes"] = { byId: [] }
       let typeData = action.businessType.map(each => {
-        console.log(each, "each")
         return {
           id: each.id,
           title: each.title

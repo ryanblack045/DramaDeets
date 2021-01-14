@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { setLandingPage } from '../store/actions/ui'
 import LogoutButton from './auth/LogoutButton';
-// import { theme } from '../styles/Theme';
 import {
   Paper,
   AppBar,
@@ -135,7 +134,6 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
   const [open2, setOpen2] = React.useState(false)
   const dispatch = useDispatch()
   const classes = useStyles();
-  // const currentUserId = useSelector((state) => (state.session.currentUser.id));
 
   const iconClick = () => {
     dispatch(setLandingPage(true))
@@ -233,12 +231,6 @@ const NavBar = ({ setAuthenticated, authenticated }) => {
           </Typography>
           {!authenticated ?
             <>
-              {/* <img
-             style={{display:"inline", float:"middle"}}
-             className={classes.logo}
-             onClick={()=> iconClick()}
-             src="https://drama-deets.s3.amazonaws.com/DramaDeetsLogo.png"
-             alt="Logo" /> */}
             <Button background="blue" color="secondary" className={classes.signup} onClick={handleOpen}>
                 Sign Up
             </Button>

@@ -52,7 +52,6 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
       dispatch(setCurrentBusiness(business))
       dispatch(setLandingPage(true))
       const types = await fetchTypes()
-      console.log(types, "types---")
       dispatch(getAllTypes(types))
       setOpen2(false)
       setAuthenticated(true)

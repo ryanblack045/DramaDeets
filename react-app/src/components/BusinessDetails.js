@@ -307,7 +307,6 @@ export default function BusinessDetail({ currentReviews2 }) {
     const deletedLike = await deletingLike(likeToDelete)
     const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
-      console.log(likeToDelete, "please")
       return like[0].id
   }
 
@@ -325,7 +324,6 @@ export default function BusinessDetail({ currentReviews2 }) {
     let like= currentJudgmentId.filter(each => {
      if (each.avoid === true) {
        if (each.userId === currentUserId) {
-         console.log(each.id,"this")
            return each.id
         }
       }
@@ -335,7 +333,6 @@ export default function BusinessDetail({ currentReviews2 }) {
     const deletedLike = await deletingLike(likeToDelete)
     const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
-      console.log(likeToDelete, "please")
       return like[0].id
   }
 
