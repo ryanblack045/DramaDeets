@@ -160,6 +160,8 @@ const useStyles = makeStyles((theme) => ({
   reviewButton: {
     display: "block",
     width: "50%",
+    marginTop: ".5em",
+    marginBottom: ".5em",
     marginLeft: "auto",
     marginRight: "auto",
     color: "white",
