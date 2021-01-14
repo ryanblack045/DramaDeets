@@ -12,8 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
   const [errors, setErrors] = useState([]);
-  const [email, setEmail] = useState('demo@aa.io');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const history = useHistory()
 
@@ -21,6 +21,14 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
   const useStyles = makeStyles((theme) => ({
     button: {
       background: "black",
+      color: "white",
+      marginTop: "1em",
+      "&:hover": {
+        backgroundColor: "#1b4332"
+      },
+    },
+    demoButton: {
+      background: "#52b788",
       color: "white",
       marginTop: "1em",
       "&:hover": {
@@ -108,9 +116,31 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
         </div>
         <Button
           variant="contained"
-        className={classes.button}
+          className={classes.button}
           type="submit">
-          Login
+        Login
+        </Button>
+      <br></br>
+        <Button
+          variant="contained"
+          className={classes.demoButton}
+          onClick={() => {
+          setEmail("infoDramaDeets@gmail.com")
+          setPassword("metoo6447!")
+          }}
+          type="submit">
+        Admin Demo
+        </Button>
+      <br></br>
+        <Button
+          variant="contained"
+          className={classes.demoButton}
+          onClick={() => {
+          setEmail("demo@aa.io")
+          setPassword("password")
+          }}
+          type="submit">
+          User Demo
         </Button>
     </form>
   );
