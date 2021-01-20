@@ -262,7 +262,7 @@ export default function BusinessDetail({ currentReviews2 }) {
   useEffect(() => {
     dispatch(setCurrentBusiness(currentBusiness))
   }, [businesses])
-
+//https://github.com/facebook/react/issues/14476#issuecomment-471199055 take a look into this
   function canReview(currentUserId) {
    let reviewChecker= currentReviews.filter(eachReview => {
       if (eachReview.userId === currentUserId) {
@@ -506,7 +506,6 @@ export default function BusinessDetail({ currentReviews2 }) {
       <Grid container spacing={0}>
         <Grid item className={classes.buinessContainer} spacing={0} xs={12}>
           <Paper className={classes.paper}>
-            {/* <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" /> */}
             {editBusiness && currentUserId === 1 ?
               <>
                 <div className={classes.businessInfoHolder}>
