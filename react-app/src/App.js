@@ -3,12 +3,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Theme from './styles/Theme';
 import { CssBaseline } from "@material-ui/core";
 import Splash from "./components/Splash"
-import SignUpForm from "./components/auth/SignUpForm";
 import Home from "./components/Home"
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
-import User from "./components/User";
 import { authenticate } from "./services/auth";
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from './store/actions/session'
@@ -26,7 +23,6 @@ function App() {
         setAuthenticated(true);
       }
       setLoaded(true);
-      // dispatch(setCurrentUser(""))
     })();
   }, []);
 
@@ -44,9 +40,6 @@ function App() {
               authenticated={authenticated}
               setAuthenticated={setAuthenticated}
             />
-          </Route>
-          <Route path="/sign-up" exact={true}>
-            <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
           </Route>
           <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
              <Home />
