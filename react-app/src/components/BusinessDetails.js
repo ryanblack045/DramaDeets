@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import { useSelector, useDispatch } from "react-redux";
-import ReviewForm from './auth/ReviewForm'
 import {
   TextField,
   Modal,
@@ -25,7 +24,7 @@ import { getAllBusinesses } from '../store/actions/entities'
 import Map from './Map'
 import { addingLike, deletingLike, sendUpdatedReviw, deleteReview } from '../services/reviews'
 import { getBusiness, sendUpdatedBusiness, deleteBusiness, fetchBusinesses} from "../services/businesses";
-
+import {ReviewModal} from './ReviewModal'
 
 const useStyles = makeStyles((theme) => ({
   actionFooter: {
@@ -175,40 +174,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2em",
     textAlign: "center"
   },
-  reviewModal: {
-    position: 'absolute',
-    width: 400,
-    height: 600,
-    backgroundColor: "#1b4332",
-    outline: "none",
-    borderRadius: 16,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    textAlign: "center",
-  },
-  reviewModalHeader: {
-    backgroundColor: theme.palette.background.paper,
-    height: "100%",
-  },
-  reviewTitle: {
-    fontSize: "3em",
-    lineHeight: ".75em",
-    fontFamily: "brandon-grotesque, sans-serif",
-    marginBottom: ".5em",
-  },
   root: {
     flexGrow: 1,
   },
   reviewBody: {
     wordWrap:"break-word"
-  },
-  reviewSubheader: {
-    fontSize: "1.3em"
-   },
-  reviewSubheaderBold: {
-    fontSize: "1.3em",
-    fontWeight: "bold",
-    textDecoration: "underline"
   },
   saveButton: {
     background: "red",
@@ -220,23 +190,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function getModalStyle() {
-  const top =  50
-  const left = 50
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    border: "none",
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 export default function BusinessDetail({ currentReviews2 }) {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
-  const [modalStyle] = React.useState(getModalStyle);
   const [edit, setEdit] = React.useState(false);
   const [editBusiness, setEditBusiness] = React.useState(false)
   const [name, setName] = React.useState("")
@@ -356,13 +314,9 @@ export default function BusinessDetail({ currentReviews2 }) {
 }
 
 // handles opening review modal
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+const handleOpen = () => {
+  setOpen(true);
+};
 
   const handleOpen2 = () => {
     setOpen2(true);
@@ -444,31 +398,6 @@ export default function BusinessDetail({ currentReviews2 }) {
 
 
 
-
-  const submitReviewModal = (
-    <>
-    <div style={modalStyle} border="none" className={classes.reviewModal}>
-      <Paper className={classes.reviewModalHeader}>
-        <div>
-          <div className={classes.reviewTitle}>
-            <br></br>
-            Review form.
-          </div>
-          <span className={classes.reviewSubheader}>Be </span>
-          <span className={classes.reviewSubheaderBold}>fair</span>
-          <span className={classes.reviewSubheader}>, be </span>
-          <span className={classes.reviewSubheaderBold}>respectful.<br></br></span>
-          <span className={classes.reviewSubheader}> Toxic posts will be </span>
-          <span className={classes.reviewSubheaderBold}>deleted</span>
-        </div>
-        <ReviewForm className={classes.reviewForm}
-          open={open}
-          setOpen={setOpen}
-        />
-      </Paper>
-    </div>
-    </>
-  );
 
   const counter = (obj) => {
     const newObject = Object.assign({}, obj)
@@ -675,14 +604,7 @@ export default function BusinessDetail({ currentReviews2 }) {
               </Button>
                 </>
               : ""}
-              <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="Review form modal"
-              aria-describedby="Review form"
-              >
-              {submitReviewModal}
-            </Modal>
+            <ReviewModal open={open} setOpen={setOpen} />
             <Grid container spacing={3}>
 
               {currentReviews.map((each) => {

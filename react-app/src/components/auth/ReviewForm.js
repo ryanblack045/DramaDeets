@@ -21,6 +21,7 @@ const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
   const dispatch = useDispatch();
   const business_id = useSelector((state) => (state.session.currentBusiness.id))
   const user_id = useSelector((state) => (state.session.currentUser.id))
+  const thisbusiness= useSelector((state) => (state.session.currentBusiness))
 
   const useStyles = makeStyles((theme) => ({
     button: {
@@ -54,8 +55,8 @@ const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
     if (!review.errors) {
       const business = await getBusiness(business_id);
       dispatch(setCurrentBusiness(business))
-        setOpen(false)
-      }
+    }
+    setOpen(false)
     }
 
   const updateTitle = (e) => {
