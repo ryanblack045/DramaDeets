@@ -14,14 +14,11 @@ import {
 } from '@material-ui/core';
 
 
-const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
+const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [rating, setRating] = useState("");
   const dispatch = useDispatch();
-  const business_id = useSelector((state) => (state.session.currentBusiness.id))
-  const user_id = useSelector((state) => (state.session.currentUser.id))
-  const thisbusiness= useSelector((state) => (state.session.currentBusiness))
 
   const useStyles = makeStyles((theme) => ({
     button: {
@@ -51,9 +48,9 @@ const ReviewForm = ({authenticated, setAuthenticated, open, setOpen}) => {
 
   const onSubmitReview = async (e) => {
     e.preventDefault();
-      const review = await submitReview(user_id, business_id, title, body, rating);
+      const review = await submitReview(currentUserId, currentBusinessId, title, body, rating);
     if (!review.errors) {
-      const business = await getBusiness(business_id);
+      const business = await getBusiness(currentBusinessId);
       dispatch(setCurrentBusiness(business))
     }
     setOpen(false)

@@ -604,7 +604,13 @@ const handleOpen = () => {
               </Button>
                 </>
               : ""}
-            <ReviewModal open={open} setOpen={setOpen} />
+
+            <ReviewModal
+              currentBusinessId={currentBusinessId}
+              currentUserId={currentUserId}
+              open={open}
+              setOpen={setOpen} />
+
             <Grid container spacing={3}>
 
               {currentReviews.map((each) => {

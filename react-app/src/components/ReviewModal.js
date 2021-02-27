@@ -48,7 +48,7 @@ function getModalStyle() {
   };
 }
 
-export function ReviewModal({open, setOpen}) {
+export function ReviewModal({open, setOpen, currentBusinessId, currentUserId}) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
 
@@ -81,6 +81,8 @@ export function ReviewModal({open, setOpen}) {
         <ReviewForm className={classes.reviewForm}
           open={open}
           setOpen={setOpen}
+          currentBusinessId={currentBusinessId}
+          currentUserId={currentUserId}
         />
       </Paper>
       </div>
