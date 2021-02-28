@@ -26,13 +26,6 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     float: "middle",
   },
-  businessInfoHolder: {
-    flexDirection: "column",
-    display: "flex",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center"
-  },
   businessParentContainer: {
     display: "flex",
     justifyContent: "center",

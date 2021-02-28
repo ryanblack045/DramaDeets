@@ -4,7 +4,6 @@ import { ThumbUp, ThumbDown } from '@material-ui/icons';
 import { useSelector, useDispatch } from "react-redux";
 import {
   TextField,
-  Modal,
   Button,
   Typography,
   Card,
@@ -307,42 +306,6 @@ const handleOpen = () => {
   const updateRating = e => {
     setRating(e.target.value)
   }
-
-  // const updateName = e => {
-  //   setName(e.target.value)
-  // }
-
-  // const updateAddress = e => {
-  //   setAddress(e.target.value)
-  // }
-
-  // const updateCity = e => {
-  //   setCity(e.target.value)
-  // }
-
-  // const updateStateLocation = e => {
-  //   setStateLocation(e.target.value)
-  // }
-
-  // const updateZipcode = e => {
-  //   setZipcode(e.target.value)
-  // }
-
-  // const updateWebsite = e => {
-  //   setWebsite(e.target.value)
-  // }
-
-  // const updateContact = e => {
-  //   setContact(e.target.value)
-  // }
-
-  // const updateLat = e => {
-  //   setLat(e.target.value)
-  // }
-
-  // const updateLng = e => {
-  //   setLng(e.target.value)
-  // }
 
   const updateReview = async (currentReviewId) => {
     await sendUpdatedReviw(currentReviewId, title, body, rating)
