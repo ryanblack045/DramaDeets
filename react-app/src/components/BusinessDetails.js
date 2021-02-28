@@ -19,12 +19,11 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { setCurrentBusiness } from '../store/actions/session'
-import { setLandingPage } from '../store/actions/ui'
-import { getAllBusinesses } from '../store/actions/entities'
 import Map from './Map'
 import { addingLike, deletingLike, sendUpdatedReviw, deleteReview } from '../services/reviews'
 import { getBusiness, sendUpdatedBusiness, deleteBusiness, fetchBusinesses} from "../services/businesses";
-import {ReviewModal} from './ReviewModal'
+import { ReviewModal } from './ReviewModal'
+import { EditBusinessForm } from './EditBusinessForm'
 
 const useStyles = makeStyles((theme) => ({
   actionFooter: {
@@ -194,18 +193,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BusinessDetail({ currentReviews2 }) {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const [open3, setOpen3] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
-  const [editBusiness, setEditBusiness] = React.useState(false)
-  const [name, setName] = React.useState("")
-  const [lat, setLat] = React.useState("")
-  const [lng, setLng] = React.useState("")
-  const [address, setAddress] = React.useState("")
-  const [city, setCity] = React.useState("")
-  const [stateLocation, setStateLocation] = React.useState("")
-  const [zipcode, setZipcode] = React.useState("")
-  const [website, setWebsite] = React.useState("")
-  const [contact, setContact] = React.useState("")
   const [title, setTitle] = React.useState("")
   const [body, setBody] = React.useState("")
   const [rating, setRating]= React.useState("")
@@ -230,7 +218,6 @@ export default function BusinessDetail({ currentReviews2 }) {
     })
     return reviewChecker
   }
-
   // determines whether the review button displays
   const canReviewArray = canReview(currentUserId)
 
@@ -243,15 +230,7 @@ export default function BusinessDetail({ currentReviews2 }) {
       dispatch(setCurrentBusiness(business))
   }
 
-  // gives avg rating of business
-  const ratingCalculator = (currentBusiness) => {
-    let ratingSum = 0
-    const numOfReviews = currentBusiness.reviews.length
-    currentBusiness.reviews.forEach(review => {
-      ratingSum += review.rating
-    })
-    return (ratingSum/numOfReviews.toFixed(1))
-  }
+
 
 // deletes a like on a review
   const deleteLike = async (currentJudgmentId) => {
@@ -304,15 +283,6 @@ export default function BusinessDetail({ currentReviews2 }) {
       return
    }
 
-//delets business
-   const sendDeleteBusiness = async (businessId) =>{
-     await deleteBusiness(businessId)
-     const businesses = await fetchBusinesses()
-     dispatch(getAllBusinesses(businesses))
-     dispatch(setLandingPage(true))
-    return
-}
-
 // handles opening review modal
 const handleOpen = () => {
   setOpen(true);
@@ -324,14 +294,6 @@ const handleOpen = () => {
 
   const handleClose2 = () => {
     setOpen2(false);
-  };
-
-  const handleOpen3 = () => {
-    setOpen3(true);
-  };
-
-  const handleClose3 = () => {
-    setOpen3(false);
   };
 
   const updateTitle = e => {
@@ -346,41 +308,41 @@ const handleOpen = () => {
     setRating(e.target.value)
   }
 
-  const updateName = e => {
-    setName(e.target.value)
-  }
+  // const updateName = e => {
+  //   setName(e.target.value)
+  // }
 
-  const updateAddress = e => {
-    setAddress(e.target.value)
-  }
+  // const updateAddress = e => {
+  //   setAddress(e.target.value)
+  // }
 
-  const updateCity = e => {
-    setCity(e.target.value)
-  }
+  // const updateCity = e => {
+  //   setCity(e.target.value)
+  // }
 
-  const updateStateLocation = e => {
-    setStateLocation(e.target.value)
-  }
+  // const updateStateLocation = e => {
+  //   setStateLocation(e.target.value)
+  // }
 
-  const updateZipcode = e => {
-    setZipcode(e.target.value)
-  }
+  // const updateZipcode = e => {
+  //   setZipcode(e.target.value)
+  // }
 
-  const updateWebsite = e => {
-    setWebsite(e.target.value)
-  }
+  // const updateWebsite = e => {
+  //   setWebsite(e.target.value)
+  // }
 
-  const updateContact = e => {
-    setContact(e.target.value)
-  }
+  // const updateContact = e => {
+  //   setContact(e.target.value)
+  // }
 
-  const updateLat = e => {
-    setLat(e.target.value)
-  }
+  // const updateLat = e => {
+  //   setLat(e.target.value)
+  // }
 
-  const updateLng = e => {
-    setLng(e.target.value)
-  }
+  // const updateLng = e => {
+  //   setLng(e.target.value)
+  // }
 
   const updateReview = async (currentReviewId) => {
     await sendUpdatedReviw(currentReviewId, title, body, rating)
@@ -388,14 +350,6 @@ const handleOpen = () => {
     setEdit(!edit)
     dispatch(setCurrentBusiness(business))
   }
-
-  const updateBusiness = async (currentBusinessId) => {
-    await sendUpdatedBusiness(currentBusinessId, name, lat, lng, address, city, stateLocation, zipcode, website, contact)
-    const business = await getBusiness(currentBusinessId);
-    setEditBusiness(!editBusiness)
-    dispatch(setCurrentBusiness(business))
-  }
-
 
 
 
@@ -435,165 +389,12 @@ const handleOpen = () => {
       <Grid container spacing={0}>
         <Grid item className={classes.buinessContainer} spacing={0} xs={12}>
           <Paper className={classes.paper}>
-            {editBusiness && currentUserId === 1 ?
-              <>
-                <div className={classes.businessInfoHolder}>
-                  <TextField
-                    className={classes.businessInfo}
-                    value={name}
-                    onChange={updateName}
-                    label="Name"
-                    placeholder={name}
-                    variant="outlined">
-                    {currentBusiness.name}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    value={lat}
-                    onChange={updateLat}
-                    label="Lat"
-                    placeholder={lat}
-                    variant="outlined">
-                    {currentBusiness.lat}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    value={lng}
-                    onChange={updateLng}
-                    label="Lng"
-                    placeholder={lng}
-                    variant="outlined">
-                    {currentBusiness.lng}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    onChange={updateAddress}
-                    value={address}
-                    label="Address"
-                    placeholder={address}
-                    variant="outlined">
-                    {currentBusiness.address}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    onChange={updateCity}
-                    value={city}
-                    label="City"
-                    placeholder={city}
-                    variant="outlined">
-                    {currentBusiness.city}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    onChange={updateStateLocation}
-                    value={stateLocation}
-                    label="State"
-                    placeholder={stateLocation}
-                    variant="outlined">
-                    {currentBusiness.state}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    onChange={updateZipcode}
-                    value={zipcode}
-                    label="Zipcode"
-                    placeholder={zipcode}
-                    variant="outlined">
-                    {currentBusiness.zipcode}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    onChange={updateWebsite}
-                    value={website}
-                    label="Website"
-                    placeholder={website}
-                    variant="outlined">
-                    {currentBusiness.website}
-                  </TextField>
-                  <TextField
-                    className={classes.businessInfo}
-                    onChange={updateContact}
-                    value={contact}
-                    label="Contact info"
-                    placeholder={contact}
-                    variant="outlined">
-                    {currentBusiness.contact}
-                  </TextField>
-                </div>
-              </>
-                :
-              <>
-            <div className={classes.businessParentContainer}>
-              <img className={classes.businessImg} src={currentBusiness.imgURL} alt="Headshot of actress" />
-            <div className={classes.businessInfoContainer}>
-            <div className={classes.businessTitle}>{currentBusiness.name}</div>
-            <div className={classes.businessCSZ}>{currentBusiness.address}</div>
-            <div className={classes.businessCSZ}>
-              {currentBusiness.city}, {currentBusiness.state} {currentBusiness.zipcode}
-            </div>
-            <div className={classes.businessCSZ}>
-              <a href={currentBusiness.website}>{currentBusiness.website}</a>
-            </div>
-            <div className={classes.businessCSZ}>Contact: {currentBusiness.contact}</div>
-                  <div className={classes.businessRating}>Rating: {!ratingCalculator(currentBusiness) ? "No Reviews" : ratingCalculator(currentBusiness).toFixed(1) + `/10.0`}</div>
-                  </div>
-            </div>
-            </>
-            }
-                {currentUserId === 1 ?
-                  <>
-                {!editBusiness ?
-                  <>
-                      <Button
-                        onClick= { () => {
-                          setEditBusiness(!editBusiness)
-                          setName(currentBusiness.name)
-                          setAddress(currentBusiness.address)
-                          setCity(currentBusiness.city)
-                          setStateLocation(currentBusiness.state)
-                          setZipcode(currentBusiness.zipcode)
-                          setWebsite(currentBusiness.website)
-                          setContact(currentBusiness.contact)
-                          setLat(currentBusiness.lat)
-                          setLng(currentBusiness.lng)
-                        }}
-                        className={classes.reviewButton}>
-                      Edit Business
-                      </Button>
-                      <Button
-                      onClick={() => handleOpen3()}
-                      className={classes.bigSaveButton}>
-                      Delete Business
-                      </Button>
-                      <Snackbar
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'center',
-                        }}
-                        open={open3}
-                        onClose={handleClose3}
-                        autoHideDuration={10000}
-                        message= "Are you sure you want to delete"
-                        action=
-                        {
-                          <Button
-                            className={classes.deleteReviewButton}
-                            onClick={()=> sendDeleteBusiness(currentBusiness.id)}
-                            >
-                            Delete
-                          </Button>
-                        }
-                        />
-                  </>
-                      :
-                      <Button
-                        className={classes.bigSaveButton}
-                        onClick={() => updateBusiness(currentBusiness.id)}>
-                        Save
-                      </Button>}
-                  </>
-                : null}
-
+            <EditBusinessForm
+              edit={edit}
+              setEdit={setEdit}
+              currentUserId={currentUserId}
+              currentBusiness={currentBusiness}
+            />
             <Map className={classes.map} />
             <div className={classes.pageBreak} />
             <div className={classes.reviewsHeader}>Reviews</div>
