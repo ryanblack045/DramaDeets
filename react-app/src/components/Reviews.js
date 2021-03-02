@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from "react-redux";
 import { ReviewModal } from './ReviewModal'
 import { addingLike, deletingLike, sendUpdatedReviw, deleteReview } from '../services/reviews'
@@ -67,7 +66,7 @@ export default function Reviews({ currentBusiness, currentUserId, edit, setEdit,
   const postLike = async (currentReviewId) => {
     let recommend = true
     let avoid = false
-    const like = await addingLike(currentUserId, currentReviewId, currentBusiness.id, recommend, avoid)
+    await addingLike(currentUserId, currentReviewId, currentBusiness.id, recommend, avoid)
     const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
   }
@@ -82,10 +81,10 @@ export default function Reviews({ currentBusiness, currentUserId, edit, setEdit,
            return each.id
         }
       }
-      return
+      return 
     })
     let likeToDelete = like[0].id
-    const deletedLike = await deletingLike(likeToDelete)
+    await deletingLike(likeToDelete)
     const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
       return like[0].id
@@ -95,7 +94,7 @@ export default function Reviews({ currentBusiness, currentUserId, edit, setEdit,
   const postDislike = async (currentReviewId) => {
     let recommend = false
     let avoid = true
-    const like = await addingLike(currentUserId, currentReviewId, currentBusiness.id, recommend, avoid)
+    await addingLike(currentUserId, currentReviewId, currentBusiness.id, recommend, avoid)
     const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
   }
@@ -111,7 +110,7 @@ export default function Reviews({ currentBusiness, currentUserId, edit, setEdit,
       return
     })
     let likeToDelete = like[0].id
-    const deletedLike = await deletingLike(likeToDelete)
+    await deletingLike(likeToDelete)
     const business = await getBusiness(currentBusiness.id);
       dispatch(setCurrentBusiness(business))
       return like[0].id

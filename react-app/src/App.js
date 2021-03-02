@@ -7,14 +7,10 @@ import Home from "./components/Home"
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { authenticate } from "./services/auth";
-import { useDispatch } from 'react-redux';
-import { setCurrentUser } from './store/actions/session'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const dispatch = useDispatch()
-
 
   useEffect(() => {
     (async() => {

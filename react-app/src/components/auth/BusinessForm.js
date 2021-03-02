@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { Redirect, useHistory } from 'react-router-dom';
 import { newBusiness } from '../../services/businesses';
-import { fetchBusinesses, getBusiness, addBusinessType } from "../../services/businesses";
+import { fetchBusinesses, addBusinessType } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentUser, setCurrentBusiness } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
-import {businessTypes} from '../ListSideBar'
 import {
   TextField,
   makeStyles,
@@ -14,14 +11,11 @@ import {
   FormControl,
   MenuItem,
   Button,
-
 } from '@material-ui/core';
-import { setLandingPage } from '../../store/actions/ui'
-import { ImageOutlined } from "@material-ui/icons";
 
 
-const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
-  const [errors, setErrors] = useState([]);
+const BusinessForm = ({ setOpen5, open5 }) => {
+  const [setErrors] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [lat, setLat] = useState("");
@@ -35,7 +29,6 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
   const [imgURL, setImgURL] = useState("");
   const [typeId, setTypeId] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory()
   const userId = 1
 
   const businessTypes = useSelector((state) => (state.entities.businessTypes.byId))
@@ -65,16 +58,6 @@ const BusinessForm = ({ authenticated, setAuthenticated, setOpen5, open5 }) => {
     },
   }));
   const classes = useStyles();
-
-  // const addTypeToBusiness = async (e) => {
-  //   const typeAdded = await addBusinessType(newBusinessId, typeId);
-  //   if (!typeAdded.errors) {
-  //     const businesses = await fetchBusinesses()
-  //     dispatch(getAllBusinesses(businesses))
-  //   } else {
-  //     setErrors(typeAdded.errors)
-  //   }
-  // }
 
   const createBusiness = async (e) => {
     e.preventDefault();

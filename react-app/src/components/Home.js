@@ -5,9 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import { useSelector } from "react-redux";
 import LandingPage from './LandingPage';
 import Footer from './Footer';
-import AOS from 'aos';
-
-
 
 export default function Home() {
   const landingPage = useSelector((state) => (state.ui.landingPage));

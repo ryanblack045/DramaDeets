@@ -12,7 +12,7 @@ import { setLandingPage } from '../../store/actions/ui'
 
 
 const SignUpForm = ({ authenticated, setAuthenticated, setOpen }) => {
-  const [errors, setErrors] = useState([]);
+  const [setErrors] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

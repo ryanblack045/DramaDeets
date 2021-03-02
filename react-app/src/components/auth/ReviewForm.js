@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { submitReview } from "../../services/reviews";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCurrentBusiness } from '../../store/actions/session'
 import { getBusiness } from "../../services/businesses";
 import {

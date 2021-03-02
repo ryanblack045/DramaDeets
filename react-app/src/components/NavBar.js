@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLandingPage } from '../store/actions/ui'
 import LogoutButton from './auth/LogoutButton';
 import {
@@ -11,7 +11,6 @@ import {
   Modal,
   makeStyles
 } from '@material-ui/core';
-import BusinessForm from './auth/BusinessForm'
 import SignUpForm from './auth/SignUpForm'
 import LoginForm from './auth/LoginForm'
 import Background from '../assets/DramaDeetsLogo.png'
