@@ -15,7 +15,6 @@ import { sendUpdatedReview, deleteReview  } from '../services/reviews'
 import LikesDislikes from './LikesDislikes'
 
 
-
 export default function ReviewCard({
   edit,
   each,

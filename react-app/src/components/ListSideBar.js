@@ -219,10 +219,12 @@ export default function ListSideBar( setAuthenticated, authenticated) {
             return(
             <>
                 <ListItem
+                  key={onCameraClass.id}
                   button
                   onClick={() => businessClick(onCameraClass.id)}
                   className={classes.nested}>
                   <ListItemText
+                    key={onCameraClass.name}
                     primary={onCameraClass.name}
                     secondary={<div>{onCameraClass.city}, { onCameraClass.state}</div> }/>
               </ListItem>
@@ -244,10 +246,12 @@ export default function ListSideBar( setAuthenticated, authenticated) {
             return(
             <>
                 <ListItem
+                  key={actingSchool.id}
                   button
                   onClick={() => businessClick(actingSchool.id)}
                   className={classes.nested}>
                   <ListItemText
+                    key={actingSchool.name}
                     primary={actingSchool.name}
                     secondary={<div>{actingSchool.city}, { actingSchool.state}</div> }/>
               </ListItem>
@@ -269,10 +273,12 @@ export default function ListSideBar( setAuthenticated, authenticated) {
             return(
             <>
                 <ListItem
+                  key={sceneStudy.id}
                   button
                   onClick={() => businessClick(sceneStudy.id)}
                   className={classes.nested}>
                   <ListItemText
+                    key={sceneStudy.name}
                     primary={sceneStudy.name}
                     secondary={<div>{sceneStudy.city}, { sceneStudy.state}</div> }/>
               </ListItem>
@@ -293,10 +299,13 @@ export default function ListSideBar( setAuthenticated, authenticated) {
           {photographers.map((photographer) => {
             return(
             <>
-                <ListItem button
+                <ListItem
+                  button
+                  key={photographer.id}
                   onClick={() => businessClick(photographer.id)}
                   className={classes.nested}>
                   <ListItemText
+                    key={photographer.name}
                     primary={photographer.name}
                     secondary={<div>{photographer.city}, { photographer.state}</div> }/>
               </ListItem>

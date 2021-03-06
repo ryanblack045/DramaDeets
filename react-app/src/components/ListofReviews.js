@@ -3,14 +3,13 @@ import { Grid} from '@material-ui/core';
 import ReviewCard from './ReviewCard'
 
 export function ListofReviews({
-  ReviewStyles,
   currentReviews,
   currentUserId,
   edit,
+  classes,
   currentBusiness,
   setEdit }) {
 
-  const classes = ReviewStyles()
 
   const counter = (obj) => {
     const newObject = Object.assign({}, obj)
