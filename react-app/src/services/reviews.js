@@ -1,3 +1,4 @@
+
 export const submitReview = async (user_id, business_id, title, body, rating) => {
   const response = await fetch(`/api/business/${business_id}/reviews`, {
     method: "POST",
@@ -46,7 +47,7 @@ export const deletingLike = async (likeId) => {
 }
 
 
-export const sendUpdatedReviw = async (review_id, title, body, rating) => {
+export const sendUpdatedReview = async (review_id, title, body, rating) => {
   const response = await fetch(`api/reviews/${review_id}`, {
     method: "PUT",
     headers: {
@@ -71,3 +72,15 @@ export const deleteReview = async (review_id) => {
   })
     return await response.json();
 }
+
+
+  //Determines whether a user can review a business or not (only allowed one review per business)
+  export function canReview(currentUserId, currentReviews) {
+    let reviewChecker= currentReviews.filter(eachReview => {
+       if (eachReview.userId === currentUserId) {
+         return eachReview
+       }
+       return null
+     })
+     return reviewChecker
+  }

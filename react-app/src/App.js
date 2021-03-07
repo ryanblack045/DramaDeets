@@ -2,19 +2,15 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import Theme from './styles/Theme';
 import { CssBaseline } from "@material-ui/core";
-import Splash from "./components/Splash"
-import Home from "./components/Home"
+import Splash from "./views/Splash"
+import Home from "./views/Home"
 import NavBar from "./components/NavBar";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import ProtectedRoute from "./services/ProtectedRoute";
 import { authenticate } from "./services/auth";
-import { useDispatch } from 'react-redux';
-import { setCurrentUser } from './store/actions/session'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const dispatch = useDispatch()
-
 
   useEffect(() => {
     (async() => {

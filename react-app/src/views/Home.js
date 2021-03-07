@@ -1,13 +1,10 @@
 import React from 'react';
-import ListSideBar from './ListSideBar'
-import BusinessDetail from './BusinessDetails'
+import ListSideBar from '../components/ListSideBar'
+import BusinessDetail from '../components/BusinessDetails'
 import Grid from '@material-ui/core/Grid';
 import { useSelector } from "react-redux";
-import LandingPage from './LandingPage';
-import Footer from './Footer';
-import AOS from 'aos';
-
-
+import LandingPage from '../components/LandingPage';
+import Footer from '../components/Footer';
 
 export default function Home() {
   const landingPage = useSelector((state) => (state.ui.landingPage));
