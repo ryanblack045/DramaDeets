@@ -1,47 +1,9 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import BusinessStyles from '../styles/BusinessStyles'
 
-const useStyles = makeStyles((theme) => ({
-  businessContainer: {
-    width: "90"
-  },
-  businessCSZ: {
-    textAlign: "center",
-    fontSize: "1.25em"
-    // display: "inline",
-    // float: "right"
-  },
-  businessImg: {
-    display: "inline-block",
-    height: "20%",
-    width: "20%",
-    float: "middle",
-    marginRight: "2em"
-  },
-  businessInfo: {
-    width: "30em",
-    margin: ".5em"
-  },
-  businessInfoContainer: {
-    display: "inline-block",
-    float: "middle",
-  },
-  businessParentContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  businessRating: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: "1.25em"
-  },
-  businessTitle: {
-    fontSize: "3em",
-    textAlign: "center"
-  },
-}));
-export function CurrentBusinessDisplay({ currentBusiness }) {
+
+  export function CurrentBusinessDisplay({ currentBusiness }) {
+  const useStyles = BusinessStyles()
   const classes = useStyles();
     // gives avg rating of business
     const ratingCalculator = (currentBusiness) => {

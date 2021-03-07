@@ -3,6 +3,7 @@ import { newBusiness } from '../../services/businesses';
 import { fetchBusinesses, addBusinessType } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBusinesses } from '../../store/actions/entities'
+import BusinessStyles from '../../styles/BusinessStyles'
 import {
   TextField,
   makeStyles,
@@ -32,31 +33,7 @@ const BusinessForm = ({ setOpen, open }) => {
   const userId = 1
 
   const businessTypes = useSelector((state) => (state.entities.businessTypes.byId))
-  const useStyles = makeStyles((theme) => ({
-    businessFormHolder: {
-      overflow: "scroll",
-      height: "36.5em"
-    },
-    button: {
-      background: "black",
-      color: "white",
-      marginTop: ".5em",
-      marginBottom: ".5em",
-      "&:hover": {
-        backgroundColor: "#1b4332"
-      },
-    },
-    input: {
-      borderRadius: "1em",
-      backgroundColor: "white",
-      marginTop: ".5em",
-      marginBottom: ".5em"
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: "15em",
-    },
-  }));
+  const useStyles = BusinessStyles();
   const classes = useStyles();
 
   const createBusiness = async (e) => {
