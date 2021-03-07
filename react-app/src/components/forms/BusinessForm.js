@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 
-const BusinessForm = ({ setOpen5, open5 }) => {
+const BusinessForm = ({ setOpen, open }) => {
   const [setErrors] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -70,7 +70,7 @@ const BusinessForm = ({ setOpen5, open5 }) => {
         await addBusinessType(createdBusiness.id, typeId)
         const businesses = await fetchBusinesses()
         dispatch(getAllBusinesses(businesses))
-        setOpen5(!open5)
+        setOpen(!open)
       } else {
         return
       }

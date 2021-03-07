@@ -1,6 +1,6 @@
 import React from "react";
-import Carousel from "./shared/carousel";
-import Footer from './Footer';
+import Carousel from "../components/Carousel";
+import Footer from '../components/Footer';
 
 function Splash(props) {
   return (

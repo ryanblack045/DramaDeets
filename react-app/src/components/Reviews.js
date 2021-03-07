@@ -1,6 +1,7 @@
 import React from 'react';
-import { ReviewModal } from './ReviewModal'
+import { MyModal } from './Modal'
 import ReviewStyles from '../styles/ReviewStyles'
+import  ReviewForm from './forms/ReviewForm'
 import { Button } from '@material-ui/core';
 import { ListofReviews } from './ListofReviews';
 
@@ -40,11 +41,12 @@ export default function Reviews({ currentBusiness, currentUserId, edit, setEdit,
         </>
       : ""}
 
-    <ReviewModal
-      currentBusinessId={currentBusinessId}
-      currentUserId={currentUserId}
-      open={open}
-      setOpen={setOpen} />
+    <MyModal
+        currentBusinessId={currentBusinessId}
+        currentUserId={currentUserId}
+        open={open}
+        setOpen={setOpen}
+        Form={ReviewForm}/>
 
       <ListofReviews
         ReviewStyles={ReviewStyles}

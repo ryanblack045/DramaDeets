@@ -12,6 +12,7 @@ import {
   InputLabel,
   MenuItem
 } from '@material-ui/core';
+import ReviewFormStyles from '../../styles/ReviewFormStyles'
 
 
 const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
@@ -19,31 +20,7 @@ const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
   const [body, setBody] = useState("");
   const [rating, setRating] = useState("");
   const dispatch = useDispatch();
-
-  const useStyles = makeStyles((theme) => ({
-    button: {
-      background: "red",
-      color: "white",
-      marginTop: "1em",
-      "&:hover": {
-        backgroundColor: "#780202"
-      },
-    },
-    input: {
-      borderRadius: "1em",
-      backgroundColor: "white",
-      marginTop: ".5em",
-      marginBottom: ".5em"
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: "15em",
-    },
-    reviewForm: {
-      marginTop: "1.5em",
-      marginBottom: "1em"
-    }
-  }));
+  const useStyles = ReviewFormStyles()
   const classes = useStyles();
 
   const onSubmitReview = async (e) => {
@@ -69,6 +46,19 @@ const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
   };
 
   return (
+    <>
+    <div>
+    <div className={classes.reviewTitle}>
+      <br></br>
+      Review form.
+    </div>
+    <span className={classes.reviewSubheader}>Be </span>
+    <span className={classes.reviewSubheaderBold}>fair</span>
+    <span className={classes.reviewSubheader}>, be </span>
+    <span className={classes.reviewSubheaderBold}>respectful.<br></br></span>
+    <span className={classes.reviewSubheader}> Toxic posts will be </span>
+    <span className={classes.reviewSubheaderBold}>deleted</span>
+  </div>
     <form
       className={classes.reviewForm}
       onSubmit={onSubmitReview}
@@ -129,7 +119,8 @@ const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
         type="submit">
         Submit
       </Button>
-    </form>
+      </form>
+    </>
   );
 };
 

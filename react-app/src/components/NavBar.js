@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from "react-redux";
 import { setLandingPage } from '../store/actions/ui'
-import LogoutButton from './auth/LogoutButton';
+import LogoutButton from './LogoutButton';
 import {
   Paper,
   AppBar,
@@ -11,8 +11,8 @@ import {
   Modal,
   makeStyles
 } from '@material-ui/core';
-import SignUpForm from './auth/SignUpForm'
-import LoginForm from './auth/LoginForm'
+import SignUpForm from './forms/SignUpForm'
+import LoginForm from './forms/LoginForm'
 import Background from '../assets/DramaDeetsLogo.png'
 
 // const Background = "../assets/DramaDeetsLogo.png"

@@ -1,8 +1,8 @@
 import React from "react";
-import { logout } from "../../services/auth";
+import { logout } from "../services/auth";
 import { useDispatch } from 'react-redux'
-import { setCurrentUser, setCurrentBusiness } from '../../store/actions/session'
-import { setLandingPage} from '../../store/actions/ui'
+import { setCurrentUser, setCurrentBusiness } from '../store/actions/session'
+import { setLandingPage} from '../store/actions/ui'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -26,7 +26,7 @@ const LogoutButton = ({ setAuthenticated }) => {
     dispatch(setCurrentUser(""))
     dispatch(setCurrentBusiness(""))
     dispatch(setLandingPage(""))
-    
+
   };
 
   return <Button className={classes.button} onClick={onLogout}>Logout</Button>;

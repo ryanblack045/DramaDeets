@@ -5,97 +5,33 @@ import {
   ListItem,
   ListSubheader,
   Paper,
-  makeStyles,
   Collapse,
   List,
-  Modal
 } from '@material-ui/core';
-import { PhotoCamera, Face, LocationCity, MovieFilter } from '@material-ui/icons';
+import { PhotoCamera, Face, LocationCity, MovieFilter, Business } from '@material-ui/icons';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { getBusiness } from "../services/businesses";
 import { setCurrentBusiness } from '../store/actions/session'
 import { setLandingPage } from '../store/actions/ui'
 import { useSelector, useDispatch } from "react-redux";
-import BusinessForm from './auth/BusinessForm'
+import BusinessForm from './forms/BusinessForm'
+import ListSideBarStyles from '../styles/ListSideBarStyles'
+import {MyModal} from './Modal'
 
 
-const useStyles = makeStyles((theme) => ({
-  businessButton: {
-    backgroundColor: "#52b788",
-    color: "white",
-    justifyContent: "center",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "#2d6a4f",
-      color: "white"
-    },
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-  paper: {
-    position: 'absolute',
-    width: 400,
-    height: 600,
-    backgroundColor: "#1b4332",
-    outline: "none",
-    borderRadius: 16,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    textAlign: "center"
-  },
-  primeIcons: {
-    color: "blue",
-    marginLeft: "1em"
-  },
-  root: {
-    marginTop: '.5px',
-    width: '100%',
-    height: '100%',
-    maxHeight: '1000vh',
-    minHeight: '100vh',
-    maxWidth: 360,
-    minWidth:260,
-    backgroundColor: theme.palette.background.paper,
-  },
-  sidebarHeader: {
-    fontWeight: "bold",
-    fontSize: "1.25em",
-    textAlign: "center"
-  },
-  signupHeader: {
-    backgroundColor: theme.palette.background.paper,
-    height: "100%",
-  },
-}));
-
-export default function ListSideBar( setAuthenticated, authenticated) {
+export default function ListSideBar(setAuthenticated, authenticated) {
+  const useStyles = ListSideBarStyles()
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
   const dispatch = useDispatch();
-  const businesses = useSelector((state) => (state.entities.businesses));
   const businessTypes = useSelector((state) => (state.entities.businesses.byId));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
 
-
-
-  function getModalStyle() {
-    const top =  50
-    const left = 50
-
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      border: "none",
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  }
 // a function built to grab businesses out of redux by a certain type id, logic should be reused
   function typeFinder(id) {
      return Object.values(businessTypes).filter(data => {
@@ -156,22 +92,6 @@ export default function ListSideBar( setAuthenticated, authenticated) {
     setOpen5(!open5);
   };
 
-
-  const BusinessModal = (
-    <div style={modalStyle} border="none" className={classes.paper}>
-      <Paper className={classes.signupHeader}>
-        <div
-          style={{ fontSize: "1.5em", padding: ".5em", fontWeight: "bold" }}>
-          Add a new business
-        </div>
-        <BusinessForm
-          open5={open5}
-          setOpen5={setOpen5}
-        />
-      </Paper>
-      </div>
-  );
-
   return (
     <List
       component="nav"
@@ -187,21 +107,21 @@ export default function ListSideBar( setAuthenticated, authenticated) {
       }
       className={classes.root}
     >
-       {authenticated && currentUserId === 1 ?
+       {currentUserId === 1 ?
             <>
               <ListItem
                 button onClick={handleClick5}
                 className={classes.businessButton}>
                 Add Business
               </ListItem>
-              <Modal
+              <MyModal
                 open={open5}
-                onClose={handleClick5}
+                setOpen={setOpen5}
+                onClose={handleClick}
                 aria-labelledby="Create Business"
                 aria-describedby="Create businesss form"
-              >
-                {BusinessModal}
-              </Modal>
+                Form={BusinessForm}
+              />
               </>
             :
              null
