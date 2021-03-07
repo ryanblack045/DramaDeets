@@ -25,6 +25,7 @@ const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
 
   const onSubmitReview = async (e) => {
     e.preventDefault();
+    console.log(currentBusinessId, "currentBusinessId")
       const review = await submitReview(currentUserId, currentBusinessId, title, body, rating);
     if (!review.errors) {
       const business = await getBusiness(currentBusinessId);

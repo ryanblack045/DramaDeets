@@ -52,7 +52,12 @@ export function MyModal({open, setOpen, currentBusinessId, currentUserId, Form})
     >
     <div style={modalStyle} border="none" className={classes.modal}>
       <Paper className={classes.modalHeader}>
-            <Form open={open} setOpen={setOpen}/>
+            <Form
+              open={open}
+              setOpen={setOpen}
+              currentBusinessId={currentBusinessId}
+              currentUserId={currentUserId}
+            />
       </Paper>
       </div>
     </Modal>
