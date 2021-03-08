@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Paper } from '@material-ui/core';
-import ReviewForm from './forms/ReviewForm'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -34,7 +33,17 @@ function getModalStyle() {
   };
 }
 
-export function MyModal({open, setOpen, currentBusinessId, currentUserId, Form}) {
+export function MyModal({
+  open,
+  setOpen,
+  currentBusinessId,
+  currentUserId,
+  Form,
+  authenticated,
+  setAuthenticated,
+  handleOpen,
+  handleOpen2}) {
+
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
 
@@ -57,6 +66,11 @@ export function MyModal({open, setOpen, currentBusinessId, currentUserId, Form})
               setOpen={setOpen}
               currentBusinessId={currentBusinessId}
               currentUserId={currentUserId}
+              authenticated={authenticated}
+              setAuthenticated={setAuthenticated}
+              handleClose={handleClose}
+              handleOpen2={handleOpen2}
+              handleOpen={handleOpen}
             />
       </Paper>
       </div>
