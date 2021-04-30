@@ -32,6 +32,8 @@ export default function ListSideBar(setAuthenticated, authenticated) {
   const businessTypes = useSelector((state) => (state.entities.businesses.byId));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
 
+  const newBusinessTypes = Object.values(useSelector((state) => (state.entities.businessTypes.byId)))
+  console.log(newBusinessTypes, "nbt")
 // a function built to grab businesses out of redux by a certain type id, logic should be reused
   function typeFinder(id) {
      return Object.values(businessTypes).filter(data => {
