@@ -15,5 +15,4 @@ class BusinessType(db.Model):
       "id": self.id,
       "type_id": self.type_id,
       "business_id": self.business_id,
-      "type": self.type.to_dict(),
     }
