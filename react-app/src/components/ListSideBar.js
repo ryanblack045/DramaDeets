@@ -29,26 +29,10 @@ export default function ListSideBar(setAuthenticated, authenticated) {
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
   const dispatch = useDispatch();
-  const businessTypes = useSelector((state) => (state.entities.businesses.byId));
+  const businessById = useSelector((state) => (state.entities.businesses.byId));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
 
-  const newBusinessTypes = Object.values(useSelector((state) => (state.entities.businessTypes.byId)))
-  console.log(newBusinessTypes, "nbt")
-// a function built to grab businesses out of redux by a certain type id, logic should be reused
-  function typeFinder(id) {
-     return Object.values(businessTypes).filter(data => {
-      let typeArray = data.types.filter(eachType => {
-        if (eachType.type_id === id) {
-          return eachType
-        }
-        return null
-      })
-       if (typeArray.length > 0) {
-         return data
-       }
-       return null
-     })
-  }
+  const businessTypes = Object.values(useSelector((state) => (state.entities.businessTypes.byId)))
 
   //This will handle the click of a business and set it to
   //the current business so that it may be rendered in another component
@@ -58,21 +42,7 @@ export default function ListSideBar(setAuthenticated, authenticated) {
     dispatch(setCurrentBusiness(business))
   }
 
-// These are grabbing all businesses by certain types out of the redux store and sorting them in alphabetical order
-  const photographers = typeFinder(1).sort(function (a, b) {
-    return a.name.localeCompare(b.name);
-  })
-  const onCameraClasses = typeFinder(2).sort(function (a, b) {
-    return a.name.localeCompare(b.name);
-  })
-  const actingSchools = typeFinder(3).sort(function (a, b) {
-    return a.name.localeCompare(b.name);
-  })
-  const sceneStudys = typeFinder(4).sort(function (a, b) {
-    return a.name.localeCompare(b.name);
-  })
-
-// These handle opening and closing the side bar subcomoponents
+  // These handle opening and closing the side bar subcomoponents
 
   const handleClick = () => {
     setOpen(!open);
@@ -94,9 +64,65 @@ export default function ListSideBar(setAuthenticated, authenticated) {
     setOpen5(!open5);
   };
 
+  /*This function businessesSortedByType renders all of the business types and
+  all of the businesses associated with those types in alphabetical order
+  */
+  function businessesSortedByType() {
+    let iconArray = [MovieFilter, LocationCity, Face, PhotoCamera]
+    let openArray = [ open2, open3, open4, open]
+    let handleClickArray = [handleClick2, handleClick3, handleClick4, handleClick]
+    let setOpenArray = [setOpen2, setOpen3, setOpen4, setOpen]
+    
+    return(
+    businessTypes.map((type) => {
+      console.log("types")
+      console.log(type);
+      const Icon = iconArray[type.id-1]
+      let businessArray = []
+      type.businesses.forEach((business) => {
+        businessArray.push(businessById[business.business_id])
+      })
+
+      let sortedBusinessArray = businessArray.sort((a, b) => a.name.localeCompare(b.name))
+      return (
+        <>
+          <ListItem key={type.id+type.title} button onClick={handleClickArray[type.id-1]}>
+            <ListItemIcon >
+              < Icon className={classes.primeIcons}/>
+            </ListItemIcon>
+            <ListItemText primary={type.title} />
+            {openArray[type.id-1] ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={openArray[type.id-1]} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {sortedBusinessArray.map((business) => {
+                return(
+                <>
+                    <ListItem
+                      key={business.id+business.name}
+                      button
+                      onClick={() => businessClick(business.id)}
+                      className={classes.nested}>
+                      <ListItemText
+                        key={business.name}
+                        primary={business.name}
+                        secondary={<div>{business.city}, { business.state}</div> }/>
+                  </ListItem>
+                </>
+                )
+              })}
+            </List>
+          </Collapse>
+        </>
+      )
+    })
+    )
+  }
+
+
   return (
     <List
-      component="nav"
+    component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader
@@ -127,115 +153,8 @@ export default function ListSideBar(setAuthenticated, authenticated) {
               </>
             :
              null
-          }
-      <ListItem button onClick={handleClick2}>
-        <ListItemIcon >
-          <MovieFilter className={classes.primeIcons}/>
-        </ListItemIcon>
-        <ListItemText primary="On Camera Classes" />
-        {open2 ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open2} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {onCameraClasses.map((onCameraClass) => {
-            return(
-            <>
-                <ListItem
-                  key={onCameraClass.id}
-                  button
-                  onClick={() => businessClick(onCameraClass.id)}
-                  className={classes.nested}>
-                  <ListItemText
-                    key={onCameraClass.name}
-                    primary={onCameraClass.name}
-                    secondary={<div>{onCameraClass.city}, { onCameraClass.state}</div> }/>
-              </ListItem>
-            </>
-            )
-          })}
-        </List>
-      </Collapse>
-      <ListItem button onClick={handleClick3}>
-        <ListItemIcon>
-          <LocationCity className={classes.primeIcons} />
-        </ListItemIcon>
-        <ListItemText primary="Acting Schools" />
-        {open3 ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open3} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {actingSchools.map((actingSchool) => {
-            return(
-            <>
-                <ListItem
-                  key={actingSchool.id}
-                  button
-                  onClick={() => businessClick(actingSchool.id)}
-                  className={classes.nested}>
-                  <ListItemText
-                    key={actingSchool.name}
-                    primary={actingSchool.name}
-                    secondary={<div>{actingSchool.city}, { actingSchool.state}</div> }/>
-              </ListItem>
-            </>
-            )
-          })}
-        </List>
-      </Collapse>
-      <ListItem button onClick={handleClick4}>
-        <ListItemIcon>
-          <Face className={classes.primeIcons} />
-        </ListItemIcon>
-        <ListItemText primary="Scene Study" />
-        {open4 ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open4} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {sceneStudys.map((sceneStudy) => {
-            return(
-            <>
-                <ListItem
-                  key={sceneStudy.id}
-                  button
-                  onClick={() => businessClick(sceneStudy.id)}
-                  className={classes.nested}>
-                  <ListItemText
-                    key={sceneStudy.name}
-                    primary={sceneStudy.name}
-                    secondary={<div>{sceneStudy.city}, { sceneStudy.state}</div> }/>
-              </ListItem>
-            </>
-            )
-          })}
-        </List>
-      </Collapse>
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <PhotoCamera className={classes.primeIcons} />
-        </ListItemIcon>
-        <ListItemText primary="Photographers" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {photographers.map((photographer) => {
-            return(
-            <>
-                <ListItem
-                  button
-                  key={photographer.id}
-                  onClick={() => businessClick(photographer.id)}
-                  className={classes.nested}>
-                  <ListItemText
-                    key={photographer.name}
-                    primary={photographer.name}
-                    secondary={<div>{photographer.city}, { photographer.state}</div> }/>
-              </ListItem>
-            </>
-            )
-          })}
-        </List>
-      </Collapse>
+      }
+      {businessesSortedByType()}
     </List>
   );
 }
