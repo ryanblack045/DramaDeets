@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER, SET_CURRENT_BUSINESS} from '../actions/session'
+import {SET_CURRENT_USER, SET_CURRENT_BUSINESS, ADD_REVIEW} from '../actions/session'
 
 export default function reducer(state = {}, action) {
   Object.freeze(state);
@@ -11,6 +11,11 @@ export default function reducer(state = {}, action) {
         userName: action.user.username,
         reviews: action.user.reviews
       }
+      return newState
+
+    case ADD_REVIEW:
+      newState.currentBusiness = state.currentBusiness
+      newState.currentBusiness.reviews = [...state.currentBusiness.reviews, action.review]
       return newState
 
     case SET_CURRENT_BUSINESS:

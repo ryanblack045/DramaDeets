@@ -7,11 +7,17 @@ import { setCurrentUser, setCurrentBusiness } from '../../store/actions/session'
 import { getAllBusinesses } from '../../store/actions/entities'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import { setLandingPage } from '../../store/actions/ui'
+import NavBarStyles from '../../styles/NavBarStyles'
 
 
-const SignUpForm = ({ authenticated, setAuthenticated, setOpen }) => {
+const SignUpForm = ({
+  authenticated,
+  setAuthenticated,
+  setOpen,
+  handleClose,
+  handleOpen2 }) => {
+
   const [setErrors] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -19,24 +25,7 @@ const SignUpForm = ({ authenticated, setAuthenticated, setOpen }) => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const dispatch = useDispatch();
   const history = useHistory()
-
-  const useStyles = makeStyles((theme) => ({
-    button: {
-      background: "black",
-      color: "white",
-      marginTop: ".5em",
-      marginBottom: ".5em",
-      "&:hover": {
-        backgroundColor: "#1b4332"
-      },
-    },
-    input: {
-      borderRadius: "1em",
-      backgroundColor: "white",
-      marginTop: ".5em",
-      marginBottom: ".5em"
-  }
-  }));
+  const useStyles = NavBarStyles()
   const classes = useStyles();
 
   const onSignUp = async (e) => {
@@ -86,47 +75,70 @@ const SignUpForm = ({ authenticated, setAuthenticated, setOpen }) => {
   }
 
   return (
-    <form className={classes.signupForm} onSubmit={onSignUp}>
+    <>
       <div>
-        <TextField
-          variant="outlined"
-          label="User Name"
-          className={classes.input}
-          name="username"
-          onChange={updateUsername}
-          value={username}
-        />
-        <TextField
-          variant="outlined"
-          className={classes.input}
-          label="Email"
-          type="text"
-          name="email"
-          onChange={updateEmail}
-          value={email}
-        />
-        <TextField
-          variant="outlined"
-          className={classes.input}
-          label="Password"
-          type="password"
-          name="password"
-          onChange={updatePassword}
-          value={password}
-        />
-        <TextField
-          variant="outlined"
-          className={classes.input}
-          label="Repeat Password"
-          type="password"
-          name="repeat_password"
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
-        />
-      </div>
+          <div className={classes.signupTitle}>
+            <br></br>
+            Join our community.
+          </div>
+          <span className={classes.signupSubheader}>We believe through unfiltered reviews that we can all work together
+          to provide a </span>
+          <span className={classes.signupSubheaderBold}>safer</span>
+          <span className={classes.signupSubheader}>, more </span>
+          <span className={classes.signupSubheaderBold}>inclusive</span>
+          <span className={classes.signupSubheader}> and </span>
+          <span className={classes.signupSubheaderBold}>reliable</span>
+          <span className={classes.signupSubheader}> experience for </span>
+          <span className={classes.signupSubheaderBold}>everyone.</span>
+        </div>
+      <form className={classes.signupForm} onSubmit={onSignUp}>
+        <div>
+          <TextField
+            variant="outlined"
+            label="User Name"
+            className={classes.input}
+            name="username"
+            onChange={updateUsername}
+            value={username}
+          />
+          <TextField
+            variant="outlined"
+            className={classes.input}
+            label="Email"
+            type="text"
+            name="email"
+            onChange={updateEmail}
+            value={email}
+          />
+          <TextField
+            variant="outlined"
+            className={classes.input}
+            label="Password"
+            type="password"
+            name="password"
+            onChange={updatePassword}
+            value={password}
+          />
+          <TextField
+            variant="outlined"
+            className={classes.input}
+            label="Repeat Password"
+            type="password"
+            name="repeat_password"
+            onChange={updateRepeatPassword}
+            value={repeatPassword}
+            required={true}
+          />
+        </div>
       <Button className={classes.button} variant="contained" type="submit">Sign Up</Button>
-    </form>
+      </form>
+      <span>Already have an account?</span>
+        <span className={classes.textButton}
+          onClick={() => {
+            handleClose()
+            handleOpen2()
+          }}> Login</span>
+    </>
   );
 };
 

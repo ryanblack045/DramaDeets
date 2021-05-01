@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { submitReview } from "../../services/reviews";
 import { useDispatch } from 'react-redux';
-import { setCurrentBusiness } from '../../store/actions/session'
+import { setCurrentBusiness, addReview } from '../../store/actions/session'
 import { getBusiness } from "../../services/businesses";
 import {
   Button,
   TextField,
-  makeStyles,
   FormControl,
   Select,
   InputLabel,
@@ -25,10 +24,9 @@ const ReviewForm = ({currentUserId, currentBusinessId, setOpen}) => {
 
   const onSubmitReview = async (e) => {
     e.preventDefault();
-      const review = await submitReview(currentUserId, currentBusinessId, title, body, rating);
+    const review = await submitReview(currentUserId, currentBusinessId, title, body, rating);
     if (!review.errors) {
-      const business = await getBusiness(currentBusinessId);
-      dispatch(setCurrentBusiness(business))
+      dispatch(addReview(review))
     }
     setOpen(false)
     }

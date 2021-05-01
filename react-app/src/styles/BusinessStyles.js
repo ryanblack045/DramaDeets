@@ -20,6 +20,7 @@ export default function BusinessStyles(theme) {
       color: "black",
       marginTop: "1em",
       marginBottom: "1em"
+
     },
     businessContainer: {
       width: "90"
@@ -29,6 +30,10 @@ export default function BusinessStyles(theme) {
       fontSize: "1.25em"
       // display: "inline",
       // float: "right"
+    },
+    businessFormHolder: {
+      overflow: "scroll",
+      height: "36.5em"
     },
     businessImg: {
       display: "inline-block",
@@ -65,6 +70,15 @@ export default function BusinessStyles(theme) {
     businessTitle: {
       fontSize: "3em",
       textAlign: "center"
+    },
+    button: {
+      background: "black",
+      color: "white",
+      marginTop: ".5em",
+      marginBottom: ".5em",
+      "&:hover": {
+        backgroundColor: "#1b4332"
+      },
     },
     card: {
       textAlign: "center"
@@ -108,6 +122,16 @@ export default function BusinessStyles(theme) {
     editContainer: {
       display: "flex",
       flexDirection: "column"
+    },
+    input: {
+      borderRadius: "1em",
+      backgroundColor: "white",
+      marginTop: ".5em",
+      marginBottom: ".5em"
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: "15em",
     },
     likeButton: {
       color: "black",

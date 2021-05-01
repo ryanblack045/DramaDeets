@@ -8,44 +8,21 @@ import { getAllBusinesses, getAllTypes } from '../../store/actions/entities'
 import { setLandingPage } from '../../store/actions/ui'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import NavBarStyles from '../../styles/NavBarStyles'
 
-const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
+const LoginForm = ({
+  authenticated,
+  setAuthenticated,
+  setOpen,
+  handleClose,
+  handleOpen }) => {
+
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const history = useHistory()
-
-
-  const useStyles = makeStyles((theme) => ({
-    button: {
-      background: "black",
-      color: "white",
-      marginTop: "1em",
-      "&:hover": {
-        backgroundColor: "#1b4332"
-      },
-    },
-    demoButton: {
-      background: "#52b788",
-      color: "white",
-      marginTop: "1em",
-      "&:hover": {
-        backgroundColor: "#1b4332"
-      },
-    },
-    input: {
-      borderRadius: "1em",
-      backgroundColor: "white",
-      marginTop: ".5em",
-      marginBottom: ".5em"
-    },
-    loginForm: {
-      marginTop: "2.5em",
-      marginBottom: "1em"
-    }
-  }));
+  const useStyles = NavBarStyles()
   const classes = useStyles();
 
 
@@ -61,7 +38,7 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
       dispatch(setLandingPage(true))
       const types = await fetchTypes()
       dispatch(getAllTypes(types))
-      setOpen2(false)
+      setOpen(false)
       setAuthenticated(true)
       history.push("/")
     } else {
@@ -85,7 +62,20 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
 
 
   return (
-
+    <>
+    <div>
+      <div className={classes.loginTitle}>
+        <br></br>
+        Welcome back.
+      </div>
+      <div className={classes.headerBody}>
+        <span className={classes.signupSubheader}>This is not a hate forum, please be </span>
+        <span className={classes.signupSubheaderBold}>respectful</span>
+        <span className={classes.signupSubheader}> with all reviews. This was built to </span>
+        <span className={classes.signupSubheaderBold}>empower</span>
+        <span className={classes.signupSubheader}> our community, please don't use it to tear it down. </span>
+      </div>
+    </div>
     <form className={classes.loginForm} onSubmit={onLogin}>
       <div>
       <div>
@@ -142,7 +132,14 @@ const LoginForm = ({ authenticated, setAuthenticated, setOpen2}) => {
           type="submit">
           User Demo
         </Button>
-    </form>
+      </form>
+      <span>Don't have an account?</span>
+        <span className={classes.textButton}
+          onClick={() => {
+            handleClose()
+            handleOpen()
+          }}> Signup</span>
+    </>
   );
 };
 
