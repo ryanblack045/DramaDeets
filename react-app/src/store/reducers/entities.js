@@ -10,7 +10,8 @@ export default function reducer(state = {}, action) {
       let typeData = action.businessType.map(each => {
         return {
           id: each.id,
-          title: each.title
+          title: each.title,
+          businesses: each.businesses
         }
       })
       typeData.forEach(each => {
