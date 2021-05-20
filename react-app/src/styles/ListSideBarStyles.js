@@ -6,7 +6,10 @@ export default function ListSideBarStyles(theme) {
       backgroundColor: "#52b788",
       color: "white",
       justifyContent: "center",
+      width: "90%",
       fontWeight: "bold",
+      marginTop: "10px",
+      marginLeft: "10px",
       "&:hover": {
         backgroundColor: "#2d6a4f",
         color: "white"
