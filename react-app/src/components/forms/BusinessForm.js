@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { newBusiness } from '../../services/businesses';
-import { fetchBusinesses, addBusinessType } from "../../services/businesses";
+import { newBusiness, fetchBusinesses, addBusinessType } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBusinesses } from '../../store/actions/entities'
 import BusinessStyles from '../../styles/BusinessStyles'

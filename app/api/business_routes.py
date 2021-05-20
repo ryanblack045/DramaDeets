@@ -37,6 +37,14 @@ def businessTypeAdd(business_id):
     db.session.commit()
     return businessType.to_dict()
 
+@business_routes.route('/types', methods=['POST'])
+@login_required
+def typeAdd():
+    data = request.json
+    type = Type( title=data['title'])
+    db.session.add(type)
+    db.session.commit()
+    return type.to_dict()
 
 @business_routes.route('/<int:id>')
 @login_required

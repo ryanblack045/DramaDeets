@@ -1,9 +1,14 @@
-import {GET_ALL_BUSINESSES, GET_BUSINESS_TYPES} from '../actions/entities'
+import {GET_ALL_BUSINESSES, GET_BUSINESS_TYPES, ADD_TYPE} from '../actions/entities'
 
 export default function reducer(state = {}, action) {
   Object.freeze(state);
   let newState = Object.assign({}, state)
   switch (action.type) {
+
+    case ADD_TYPE:
+      console.log(action, "action")
+      newState["businessTypes"].byId = [ ...state.businessTypes.byId, {id: action.newType.id , title: action.newType.title }]
+      return newState
 
     case GET_BUSINESS_TYPES:
       newState["businessTypes"] = { byId: [] }

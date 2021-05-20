@@ -16,6 +16,7 @@ import { setCurrentBusiness } from '../store/actions/session'
 import { setLandingPage } from '../store/actions/ui'
 import { useSelector, useDispatch } from "react-redux";
 import BusinessForm from './forms/BusinessForm'
+import BusinessTypeForm from './forms/BusinessTypeForm'
 import ListSideBarStyles from '../styles/ListSideBarStyles'
 import {MyModal} from './Modal'
 
@@ -66,7 +67,7 @@ export default function ListSideBar(setAuthenticated, authenticated) {
   };
 
   const handleClick6 = () => {
-    setOpen5(!open6);
+    setOpen6(!open6);
   };
 
   /*This function businessesSortedByType renders all of the business types and
@@ -80,11 +81,9 @@ export default function ListSideBar(setAuthenticated, authenticated) {
 
     return(
     businessTypes.map((type) => {
-      console.log("types")
-      console.log(type);
       const Icon = iconArray[type.id-1]
       let businessArray = []
-      type.businesses.forEach((business) => {
+      type.businesses?.forEach((business) => {
         businessArray.push(businessById[business.business_id])
       })
 
@@ -154,6 +153,7 @@ export default function ListSideBar(setAuthenticated, authenticated) {
                 aria-labelledby="Create Business"
                 aria-describedby="Create businesss form"
                 Form={BusinessForm}
+                
           />
               <ListItem
                 button onClick={handleClick6}
