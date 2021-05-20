@@ -8,7 +8,7 @@ import {
   Collapse,
   List,
 } from '@material-ui/core';
-import { PhotoCamera, Face, LocationCity, MovieFilter, Business } from '@material-ui/icons';
+import { PhotoCamera, Face, LocationCity, MovieFilter, Business, Group, PlayCircleFilled, Star } from '@material-ui/icons';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { getBusiness } from "../services/businesses";
@@ -28,6 +28,7 @@ export default function ListSideBar(setAuthenticated, authenticated) {
   const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
+  const [open6, setOpen6] = React.useState(false);
   const dispatch = useDispatch();
   const businessById = useSelector((state) => (state.entities.businesses.byId));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
@@ -64,15 +65,19 @@ export default function ListSideBar(setAuthenticated, authenticated) {
     setOpen5(!open5);
   };
 
+  const handleClick6 = () => {
+    setOpen5(!open6);
+  };
+
   /*This function businessesSortedByType renders all of the business types and
   all of the businesses associated with those types in alphabetical order
   */
   function businessesSortedByType() {
-    let iconArray = [MovieFilter, LocationCity, Face, PhotoCamera]
+    let iconArray = [MovieFilter, LocationCity, Face, PhotoCamera, PlayCircleFilled, Group, Star]
     let openArray = [ open2, open3, open4, open]
     let handleClickArray = [handleClick2, handleClick3, handleClick4, handleClick]
     let setOpenArray = [setOpen2, setOpen3, setOpen4, setOpen]
-    
+
     return(
     businessTypes.map((type) => {
       console.log("types")
@@ -149,6 +154,19 @@ export default function ListSideBar(setAuthenticated, authenticated) {
                 aria-labelledby="Create Business"
                 aria-describedby="Create businesss form"
                 Form={BusinessForm}
+          />
+              <ListItem
+                button onClick={handleClick6}
+                className={classes.businessButton}>
+                Add Business Type
+              </ListItem>
+              <MyModal
+                open={open6}
+                setOpen={setOpen6}
+                onClose={handleClick}
+                aria-labelledby="Create Business Type"
+                aria-describedby="Create businesss type form"
+                Form={BusinessTypeForm}
               />
               </>
             :
