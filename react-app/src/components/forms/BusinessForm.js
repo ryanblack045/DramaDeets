@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { newBusiness, fetchBusinesses, addBusinessType } from "../../services/businesses";
+import { newBusiness, fetchBusinesses, addBusinessType, fetchTypes } from "../../services/businesses";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllBusinesses } from '../../store/actions/entities'
+import { getAllBusinesses, getAllTypes} from '../../store/actions/entities'
 import BusinessStyles from '../../styles/BusinessStyles'
 import {
   TextField,
@@ -46,6 +46,8 @@ const BusinessForm = ({ setOpen, open }) => {
         await addBusinessType(createdBusiness.id, typeId)
         const businesses = await fetchBusinesses()
         dispatch(getAllBusinesses(businesses))
+        const types = await fetchTypes()
+        dispatch(getAllTypes(types))
         setOpen(!open)
       } else {
         return

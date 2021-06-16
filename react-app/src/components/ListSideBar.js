@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   ListItemText,
   ListItemIcon,
@@ -9,8 +9,6 @@ import {
   List,
 } from '@material-ui/core';
 import { PhotoCamera, Face, LocationCity, MovieFilter, Business, Group, PlayCircleFilled, Star } from '@material-ui/icons';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import { getBusiness } from "../services/businesses";
 import { setCurrentBusiness } from '../store/actions/session'
 import { setLandingPage } from '../store/actions/ui'
@@ -18,10 +16,11 @@ import { useSelector, useDispatch } from "react-redux";
 import BusinessForm from './forms/BusinessForm'
 import BusinessTypeForm from './forms/BusinessTypeForm'
 import ListSideBarStyles from '../styles/ListSideBarStyles'
-import {MyModal} from './Modal'
+import { MyModal } from './Modal'
+import BusinessSideBar from './BusinessSideBar'
 
 
-export default function ListSideBar(setAuthenticated, authenticated) {
+export default function ListSideBar() {
   const useStyles = ListSideBarStyles()
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -31,10 +30,12 @@ export default function ListSideBar(setAuthenticated, authenticated) {
   const [open5, setOpen5] = React.useState(false);
   const [open6, setOpen6] = React.useState(false);
   const dispatch = useDispatch();
+
   const businessById = useSelector((state) => (state.entities.businesses.byId));
   const currentUserId = useSelector((state) => (state.session.currentUser.id));
 
   const businessTypes = Object.values(useSelector((state) => (state.entities.businessTypes.byId)))
+
 
   //This will handle the click of a business and set it to
   //the current business so that it may be rendered in another component
@@ -75,9 +76,6 @@ export default function ListSideBar(setAuthenticated, authenticated) {
   */
   function businessesSortedByType() {
     let iconArray = [MovieFilter, LocationCity, Face, PhotoCamera, PlayCircleFilled, Group, Star]
-    let openArray = [ open2, open3, open4, open]
-    let handleClickArray = [handleClick2, handleClick3, handleClick4, handleClick]
-    let setOpenArray = [setOpen2, setOpen3, setOpen4, setOpen]
 
     return(
     businessTypes.map((type) => {
@@ -89,40 +87,16 @@ export default function ListSideBar(setAuthenticated, authenticated) {
 
       let sortedBusinessArray = businessArray.sort((a, b) => a.name.localeCompare(b.name))
       return (
-        <>
-          <ListItem key={type.id+type.title} button onClick={handleClickArray[type.id-1]}>
-            <ListItemIcon >
-              < Icon className={classes.primeIcons}/>
-            </ListItemIcon>
-            <ListItemText primary={type.title} />
-            {openArray[type.id-1] ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={openArray[type.id-1]} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {sortedBusinessArray.map((business) => {
-                return(
-                <>
-                    <ListItem
-                      key={business.id+business.name}
-                      button
-                      onClick={() => businessClick(business.id)}
-                      className={classes.nested}>
-                      <ListItemText
-                        key={business.name}
-                        primary={business.name}
-                        secondary={<div>{business.city}, { business.state}</div> }/>
-                  </ListItem>
-                </>
-                )
-              })}
-            </List>
-          </Collapse>
-        </>
+        <BusinessSideBar
+          type={type}
+          sortedBusinessArray={sortedBusinessArray}
+          businessClick={businessClick}
+          Icon={Icon}
+        />
       )
     })
     )
   }
-
 
   return (
     <List
@@ -153,7 +127,7 @@ export default function ListSideBar(setAuthenticated, authenticated) {
                 aria-labelledby="Create Business"
                 aria-describedby="Create businesss form"
                 Form={BusinessForm}
-                
+
           />
               <ListItem
                 button onClick={handleClick6}
