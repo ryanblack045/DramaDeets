@@ -11,7 +11,7 @@ ENV REACT_APP_BASE_URL=https://drama-deets-fd227e0ec489.herokuapp.com/
 RUN npm install
 RUN npm run build
 
-FROM python:3.8
+FROM python:3.12
 
 # Setup Flask environment
 ENV FLASK_APP=app
