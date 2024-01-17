@@ -49,7 +49,7 @@ export default function Map() {
     <div>
       <WrappedMap
         id='map'
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&v=3.exp&libraries=geometry,drawing,places`}
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&callback=Function.prototype&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: '100% ' }} />}
         containerElement={
           <div style={{
